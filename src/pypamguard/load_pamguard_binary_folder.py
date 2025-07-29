@@ -1,6 +1,6 @@
 import glob
 from pypamguard.load_pamguard_binary_file import load_pamguard_binary_file
-from pypamguard.core.pgbfile import PAMGuardFile
+from pypamguard.core.pamguardfile import PAMGuardFile
 from pypamguard.core.filters import FILTER_POSITION
 import os
 

@@ -13,7 +13,7 @@ if __name__ == "__main__":
         # 'uidlist': WhitelistFilter([2000006, 2000003])
     })
 
-    click_v4_test1_daterange = load_pamguard_binary_file("../tests/dataset/detectors/click/click_v4_test1.pgdf", json_path="click_v4_test1.json", filters=Filters({'daterange': DateFilter(datetime.datetime.fromtimestamp(1504477746918 / 1000, tz = datetime.UTC), datetime.datetime.fromtimestamp(1504477758412 / 1000, tz = datetime.UTC), ordered=True)}))
+    # click_v4_test1_daterange = load_pamguard_binary_file("../tests/dataset/detectors/click/click_v4_test1.pgdf", json_path="click_v4_test1.json", filters=Filters({'daterange': DateFilter(datetime.datetime.fromtimestamp(1504477746918 / 1000, tz = datetime.UTC), datetime.datetime.fromtimestamp(1504477758412 / 1000, tz = datetime.UTC), ordered=True)}))
 
 
     # filterednoisemeasurement_v3_test1 = load_pamguard_binary_file("../tests/dataset/processing/filterednoisemeasurement/filterednoisemeasurement_v3_test1.pgdf", json_path="filterednoisemeasurement_v3_test1.json")
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     # noisemonitor_v2_test1_daterange = load_pamguard_binary_file("../tests/dataset/processing/noisemonitor/noisemonitor_v2_test1.pgdf", json_path="noisemonitor_v2_test1_daterange.json", filters=Filters({'daterange': DateFilter(datetime.datetime.fromtimestamp(1499572713281 / 1000, tz = datetime.UTC), datetime.datetime.fromtimestamp(1499572713291 / 1000, tz = datetime.UTC), ordered=True)}))
     # noisemonitor_v2_test1_uidlist = load_pamguard_binary_file("../tests/dataset/processing/noisemonitor/noisemonitor_v2_test1.pgdf", json_path="noisemonitor_v2_test1_uidlist.json", filters=Filters({'uidlist': WhitelistFilter([1000005])}))
 
-    noiseband_v3_test1_daterange = load_pamguard_binary_file("../tests/dataset/processing/noiseband/noiseband_v3_test1.pgdf", json_path="noiseband_v3_test1_daterange.json", filters=Filters({'daterange': DateFilter(datetime.datetime.fromtimestamp(1499572333281 / 1000, tz = datetime.UTC), datetime.datetime.fromtimestamp(1533053591103 / 1000, tz = datetime.UTC), ordered=True)}))
+    # noiseband_v3_test1_daterange = load_pamguard_binary_file("../tests/dataset/processing/noiseband/noiseband_v3_test1.pgdf", json_path="noiseband_v3_test1_daterange.json", filters=Filters({'daterange': DateFilter(datetime.datetime.fromtimestamp(1499572333281 / 1000, tz = datetime.UTC), datetime.datetime.fromtimestamp(1533053591103 / 1000, tz = datetime.UTC), ordered=True)}))
 
     # noisebandnoise_v3_test1 = load_pamguard_binary_file("../tests/dataset/processing/noiseband/noisebandnoise_v3_test1.pgdf", json_path="noisebandnoise_v3_test1.json")
     # noisebandnoise_v3_test1_daterange = load_pamguard_binary_file("../tests/dataset/processing/noiseband/noisebandnoise_v3_test1.pgdf", json_path="noisebandnoise_v3_test1_daterange.json", filters=Filters({'daterange': DateFilter(datetime.datetime.fromtimestamp(1499572713281 / 1000, tz = datetime.UTC), datetime.datetime.fromtimestamp(1499572713291 / 1000, tz = datetime.UTC), ordered=True)}))
@@ -116,7 +116,20 @@ if __name__ == "__main__":
     # deeplearningclassifier_v2_test1_models = load_pamguard_binary_file("../tests/dataset/classifiers/deeplearningclassifier/deeplearningclassifier_v2_test1_models.pgdf", json_path="deeplearningclassifier_v2_test1_models.json")
     # deeplearningclassifier_v2_test1_models = load_pamguard_binary_file("../tests/dataset/classifiers/deeplearningclassifier/deeplearningclassifier_v2_test1_models.pgdf")
 
+    deeplearningclassifier_v2_test1_models = load_pamguard_binary_file("../tests/dataset/classifiers/deeplearningclassifier/deeplearningclassifier_v2_test1_models.pgdx", verbosity=Verbosity.ERROR)
+    print(deeplearningclassifier_v2_test1_models.file_header)
+
+    print()
+    deeplearningclassifier_v2_test1_models = load_pamguard_binary_file("../tests/dataset/classifiers/deeplearningclassifier/deeplearningclassifier_v2_test1_models.pgdf", verbosity=Verbosity.ERROR)
+    print(deeplearningclassifier_v2_test1_models.file_header)
+
+
+
     # difar_v2_test3_daterange = load_pamguard_binary_file("../tests/dataset/processing/difar/difar_v2_test2.pgdf",verbosity=Verbosity.DEBUG)
     # from .load_pamguard_binary_folder import load_pamguard_binary_folder
     # ods = load_pamguard_binary_folder("../tests/dataset/detectors/gpl", "gpl*.pgdf")
     # print(ods)
+
+    # cd = load_pamguard_binary_file("../tests/dataset/detectors/click/click_v4_test1.pgdx", json_path="cd.json", verbosity=Verbosity.DEBUG)
+    # print(cd.data)
+    # print(cd.to_json())

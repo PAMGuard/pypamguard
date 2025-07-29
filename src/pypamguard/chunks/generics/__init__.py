@@ -4,3 +4,4 @@ from .genmoduleheader import GenericModuleHeader
 from .genmodulefooter import GenericModuleFooter
 from .genfilefooter import GenericFileFooter
 from .genmodule import GenericModule
+from .genbackground import GenericBackground

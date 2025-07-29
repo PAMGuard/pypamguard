@@ -41,7 +41,7 @@
 "end_reason": 2,
 "__name__": "StandardFileFooter"
 },
-"data": [
+"background": [
 {
 "millis": 946688323871,
 "date": 946688323.871,
@@ -1162,5 +1162,6 @@
 "annotations": null,
 "__name__": "SpectralBackground"
 }
-]
+],
+"data": []
 }

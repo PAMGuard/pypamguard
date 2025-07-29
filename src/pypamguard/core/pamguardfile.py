@@ -5,7 +5,7 @@ import time
 from pypamguard.core.exceptions import BinaryFileException, WarningException, CriticalException, ChunkLengthMismatch, StructuralException
 from pypamguard.chunks.base import BaseChunk
 from pypamguard.chunks.standard import StandardBackground, StandardChunkInfo, StandardFileHeader, StandardFileFooter, StandardModuleHeader, StandardModuleFooter
-from pypamguard.chunks.generics import GenericChunkInfo, GenericFileHeader, GenericFileFooter, GenericModuleHeader, GenericModuleFooter, GenericModule
+from pypamguard.chunks.generics import GenericBackground, GenericChunkInfo, GenericFileHeader, GenericFileFooter, GenericModuleHeader, GenericModuleFooter, GenericModule
 from pypamguard.core.registry import ModuleRegistry
 from pypamguard.utils.constants import IdentifierType
 from pypamguard.utils.constants import BYTE_ORDERS
@@ -44,10 +44,11 @@ class PAMGuardFile(Serializable):
         self.__module_footer: GenericModuleFooter = None
         self.__file_footer: GenericFileFooter = StandardFileFooter(self.__file_header)
         self.__data: list[GenericModule] = []
+        self.__background: list[GenericBackground] = []
 
     def __process_chunk(self, br: BinaryReader, chunk_obj: BaseChunk, chunk_info: GenericChunkInfo, correct_chunk_length = True):
         try:
-            if type(chunk_info) in (GenericModule, StandardBackground) and self.__filters.position == FILTER_POSITION.STOP: raise FilterMismatchException()
+            if type(chunk_info) in (GenericModule, GenericBackground) and self.__filters.position == FILTER_POSITION.STOP: raise FilterMismatchException()
             logger.debug(f"Processing chunk: {type(chunk_obj)}", br)
             chunk_obj.process(br, chunk_info)
             if not br.at_checkpoint(): raise ChunkLengthMismatch(br, chunk_info, chunk_obj)
@@ -118,9 +119,12 @@ class PAMGuardFile(Serializable):
                 self.report.set_context(f"{self.__module_class._background} [iter {bg_count}]")
                 if not self.__module_header: raise StructuralException(self.__fp, "Module header not found before data")
                 if self.__module_class._background is None: raise StructuralException(self.__fp, "Module class does not have a background specified")
-                data = self.__process_chunk(br, self.__module_class._background(self.__file_header, self.__module_header, self.__filters), chunk_info)
-                if data: self.__data.append(data)
+                background = self.__process_chunk(br, self.__module_class._background(self.__file_header, self.__module_header, self.__filters), chunk_info)
+                if background: self.__background.append(background)
                 bg_count += 1
+
+            elif chunk_info.identifier == IdentifierType.IGNORE.value:
+                br.goto_checkpoint()
 
             else:
                 raise StructuralException(self.__fp, f"Unknown chunk identifier: {chunk_info.identifier}")
@@ -135,7 +139,8 @@ class PAMGuardFile(Serializable):
             "module_header": self.__module_header.to_json() if self.__module_header else None,
             "module_footer": self.__module_footer.to_json() if self.__module_footer else None,
             "file_footer": self.__file_footer.to_json() if self.__file_footer else None,
-            "data": [chunk.to_json() for chunk in self.__data] if self.__data else None,
+            "data": [chunk.to_json() for chunk in self.__data] if self.__data else [],
+            "background": [chunk.to_json() for chunk in self.__background] if self.__background else [],
         }
 
     def __str__(self):
@@ -193,3 +198,7 @@ class PAMGuardFile(Serializable):
     @property
     def data(self):
         return self.__data
+
+    @property
+    def background(self):
+        return self.__background

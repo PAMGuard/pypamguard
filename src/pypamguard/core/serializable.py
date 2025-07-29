@@ -11,6 +11,7 @@ class Serializable(ABC):
             return value.to_json()
 
         if isinstance(value, (list, set, np.ndarray)):
+            if len(value) == 0: return value
             return [self.serialize(i) for i in value]
         if isinstance(value, np.floating): # remove floating point precision errors#
             return round(float(value), np.finfo(value.dtype).precision)

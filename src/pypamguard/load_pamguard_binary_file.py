@@ -1,5 +1,5 @@
 import time
-from pypamguard.core.pgbfile import PAMGuardFile
+from pypamguard.core.pamguardfile import PAMGuardFile
 from pypamguard.utils.constants import BYTE_ORDERS, DEFAULT_BUFFER_SIZE
 from pypamguard.core.filters import Filters, DateFilter
 from .logger import logger, Verbosity, logger_config

@@ -1,3 +1,24 @@
 [project]
 name = "pypamguard"
-version = "0.0.0"
+version = "0.0.1"
+authors = [
+    { name="James Sullivan", email="sullivanj041@gmail.com" }
+]
+description = "A package for processing PAMGuard binary file outputs in Python."
+readme = "README.md"
+requires-python = ">3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha"
+]
+license = "GPL-3.0-or-later"
+license-files = ["LICEN[CS]E*"]
+
+[tool.hatch.build]
+packages = ["pypamguard"]
+include = ["src/**", "README.md", "LICEN[CS]E"]
+
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"

@@ -1,10 +1,9 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
 name = "pypamguard"
-version = "0.0.1"
 authors = [
     { name="James Sullivan", email="sullivanj041@gmail.com" }
 ]
@@ -19,6 +18,7 @@ classifiers = [
 license = "GPL-3.0-or-later"
 license-files = ["LICEN[CS]E*"]
 dependencies = ["numpy"]
+dynamic = ["version"]
 
 [tool.hatch.build]
 sources = ["src"]
@@ -27,3 +27,10 @@ include = ["src/pypamguard/**"]
 [tool.hatch.metadata]
 # This will include your package automatically from `src/pypamguard`
 allow-implicit-optional-dependencies = true
+
+[tool.hatch.version]
+source = "vcs"
+local_scheme = "no-local-version"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "_version.py"

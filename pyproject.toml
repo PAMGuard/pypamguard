@@ -31,6 +31,7 @@ allow-implicit-optional-dependencies = true
 [tool.hatch.version]
 source = "vcs"
 local_scheme = "no-local-version"
+raw-options = { local_scheme = "node-and-date" }
 
 [tool.hatch.build.hooks.vcs]
-version-file = "_version.py"
+version-file = "src/pypamguard/_version.py"

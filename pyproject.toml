@@ -18,6 +18,7 @@ classifiers = [
 ]
 license = "GPL-3.0-or-later"
 license-files = ["LICEN[CS]E*"]
+dependencies = ["numpy"]
 
 [tool.hatch.build]
 sources = ["src"]

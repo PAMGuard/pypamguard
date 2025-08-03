@@ -1,0 +1,31 @@
+name: Build Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # triggers on tags like v1.0.0, v0.0.1, etc.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'  # or your target Python version
+
+    - name: Install Hatch
+      run: pip install hatch
+
+    - name: Build distributions
+      run: hatch build
+
+    - name: Upload distributions
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist-files
+        path: dist/*

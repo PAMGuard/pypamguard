@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "pypamguard"
 version = "0.0.1"
@@ -16,9 +20,9 @@ license = "GPL-3.0-or-later"
 license-files = ["LICEN[CS]E*"]
 
 [tool.hatch.build]
-packages = ["pypamguard"]
-include = ["src/**", "README.md", "LICEN[CS]E"]
+sources = ["src"]
+include = ["src/pypamguard/**"]
 
-[build-system]
-requires = ["hatchling >= 1.26"]
-build-backend = "hatchling.build"
+[tool.hatch.metadata]
+# This will include your package automatically from `src/pypamguard`
+allow-implicit-optional-dependencies = true

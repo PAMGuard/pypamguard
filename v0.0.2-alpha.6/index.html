@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>pypamguard API documentation</title>
+<meta name="description" content="This guide is an overview and explains the important features. Details are found in the PyPAMGuard api reference …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Package <code>pypamguard</code></h1>
+</header>
+<section id="section-intro">
+<p>This guide is an overview and explains the important features. Details are found in the PyPAMGuard api reference.</p>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="what-is-pypamguard">What is PyPAMGuard</h3>
+<p>PyPAMGuard is a package for processing PAMGuard binary file outputs in Python. <a href="https://www.pamguard.org/">PAMGuard</a> is a software program written in <a href="https://www.java.com/en/">Java</a> that has a number of applications related to passive acoustic monitoring. Most modules produce binary files names <em>pamguard data files</em> (.pgdf) which follow a core standard structure defined in the PAMGuard source code. The PyPAMGuard library can read these data files into python data types and objects that allow users to further process the data however they wish.</p>
+<p>Users may prefer to use the <a href="https://www.pamguard.org/matlabandr.html">MATLAB or R </a> binary file readers should they be more comfortable with these languages.</p>
+<h3 id="what-is-a-pgdf">What is a PGDF</h3>
+<p>A PAMGuard Data File (PGDF) is produced by a PAMGuard <em>module</em>. A standard PGDF must contain the following chunk types, in order:</p>
+<ul>
+<li><strong>File Header</strong> (1 exactly) contains metadata about the file and the module within it (structure is identical across all PGDFs)</li>
+<li><strong>Module Header</strong> (1 exactly) contains metadata about the data of the module (structure is module-dependent)</li>
+<li><strong>Data Set</strong> (0 or more) contains the data itself (structure is module-dependent)</li>
+<li><strong>Module Footer</strong> (1 exactly) contains further metadata about the data of the module (structure is module-dependent)</li>
+<li><strong>File Footer</strong> (1 exactly) contains metadata about the file (structure is identical across all PGDFs)</li>
+</ul>
+<p>If you want to learn more about how these files are produced, please inspect the PAMGuard source code. You can also learn more about the specific attributes in each of these chunks by loading a PGDF using this library (see: Quick Start).</p>
+<h3 id="installation">Installation</h3>
+<p>Before proceeding, ensure you have Python installed on your local Windows, Linux or MacOS system.</p>
+<h4 id="python-package-index">Python Package Index</h4>
+<blockquote>
+<p>NOT READY YET. SEE 'CLONED REPOSITORY' BELOW FOR ALTERNATIVE.</p>
+</blockquote>
+<p>You can install PyPAMGuard from the <a href="https://pypi.org/">Python Package Index</a> using the following command.</p>
+<pre><code>pip install pypamguard
+</code></pre>
+<h4 id="cloned-repository">Cloned Repository</h4>
+<p>Clone the PyPAMGuard repository onto your local system using <code>git clone</code>. Note that this will download all assets of the program including the automated tests and associated binary files (for a leightweight version take what is in the <code>src</code> directory or download <code><a title="pypamguard" href="#pypamguard">pypamguard</a></code> from Pip).</p>
+<p>Install dependencies in a <a href="https://docs.python.org/3/library/venv.html">Python Virtual Environment</a> by running <code>pip install -r requirements.txt</code> from the root directory.</p>
+<p>From within the <code>src/</code> directory, start a Python shell. If running another program with a PyPAMGuard dependency, ensure <code>src/pypamguard/</code> is in the working directory. You can now follow the Quick Start guide below for basic functionality.</p>
+<h3 id="quick-start">Quick Start</h3>
+<p>Processing a data file using PyPAMGuard is as easy as importing the library, and calling one function, passing in the path to the data file. This will return a <code>core.PGBFile</code> object.</p>
+<pre><code class="language-python"># file.py
+import pypamguard
+df = pypamguard.load_binary_data_file('path/to/data/file.pgdf')
+</code></pre>
+<p>You can then access the file headers and footers from the <code>PGBFile</code> object like so.</p>
+<pre><code class="language-python">df.file_header # file header
+df.module_header # module header
+df.module_footer # module footer
+df.file_footer # file footer
+</code></pre>
+<p>Access the module data itself like so.</p>
+<pre><code class="language-python">len(df.data) # number of module data chunks
+df.data[0] # the first module data chunk
+</code></pre>
+<p>All headers, footers, and module data, contain attributes that were read from the binary file. For example, each file header will <strong>always</strong> contain a <code>version</code>. This can intuitively be accessed like an attribute of an object. Some example are shown below.</p>
+<pre><code class="language-python">df.file_header.version # integer
+df.file_header.module_type # bytes
+</code></pre>
+<p>You can access a detailed list of all attributes of each chunk by converting it to a string and/or printing it. Exact attributes of each header, footer or module data chunk are not listed in this README as they may change in between file versions. It is recommended to run the library yourself on a particular data file and find the attributes yourself.</p>
+<pre><code class="language-python">print(df.file_header)
+
+# OUTPUT
+#
+# File Header
+#         length (&lt;class 'int'&gt;): 103
+#         identifier (&lt;class 'int'&gt;): -1
+#         file_format (&lt;class 'int'&gt;): 0
+#         pamguard (&lt;class 'bytes'&gt;): b'PAMGUARDDATA'
+#         version (&lt;class 'bytes'&gt;): b'1.15.03'
+#         branch (&lt;class 'bytes'&gt;): b'BETA'
+#         data_date (&lt;class 'datetime.datetime'&gt;): 2016-09-03 00:42:14+00:00
+#         analysis_date (&lt;class 'datetime.datetime'&gt;): 2016-10-27 19:43:26.511000+00:00
+#         start_sample (&lt;class 'int'&gt;): 0
+#         module_type (&lt;class 'bytes'&gt;): b'Click Detector'
+#         module_name (&lt;class 'bytes'&gt;): b'Click Detector'
+#         stream_name (&lt;class 'bytes'&gt;): b'Clicks'
+#         extra_info_len (&lt;class 'int'&gt;): 0
+</code></pre>
+<p>See the extended README file below, and the API reference for more information on data types, filtering, and creating your own modules.</p>
+<h2 id="customisation">Customisation</h2>
+<h3 id="logger-verbosity">Logger Verbosity</h3>
+<p>PyPAMGuard has its own logging capabilities to Python's standard output stream. You can pass in an argument <code>verbosity</code> to <code>load_pamguard_data_file</code> using a class of imported enums from <code><a title="pypamguard.logger" href="logger.html">pypamguard.logger</a></code> (see below).</p>
+<pre><code class="language-python">import pypamguard
+debug_verbosity = pypamguard.logger.Verbosity.DEBUG
+pypamguard.load_pamguard_binary_file('path/to/data/file.pgdf' verbosity=debug_verbosity)
+</code></pre>
+<p>The <code>Verbosity</code> enum that can be imported from <code><a title="pypamguard.logger" href="logger.html">pypamguard.logger</a></code> can be set to the following values:</p>
+<ul>
+<li><code>Verbosity.DEBUG</code> print debug info, info, warnings and errors</li>
+<li><code>Verbosity.INFO</code> print info, warnings and errors</li>
+<li><code>Verbosity.WARNING</code> print warnings and errors</li>
+<li><code>Verbosity.ERROR</code> print errors</li>
+</ul>
+<h3 id="filtering">Filtering</h3>
+<p>PyPAMGuard allows you to filter data as it is being streamed into its internal data structures. This offers various speed and memory efficiencies, particularly with large data files. To do this, you must pass in a <code>Filters</code> object from <code><a title="pypamguard.core.filters" href="core/filters.html">pypamguard.core.filters</a></code> as shown below.</p>
+<pre><code class="language-python">from pypamguard.core.filters import Filters
+from pypamguard import load_pamguard_binary_file
+
+filters = Filters()
+df = load_pamguard_binary_file('path/to/data/file.pgdf', filters=filters)
+</code></pre>
+<p>An empty <code>Filters</code> object will have no effect on filtering. The following filters were defined at the time of writing this documentation, however you can access the most up-to-date list by printing <code><a title="pypamguard.core.filters.Filters.INSTALLED_FILTERS" href="core/filters.html#pypamguard.core.filters.Filters.INSTALLED_FILTERS">Filters.INSTALLED_FILTERS</a></code>.</p>
+<pre><code class="language-python">{
+    'uidlist': &lt;class 'pypamguard.core.filters.WhitelistFilter'&gt;,
+    'uidrange': &lt;class 'pypamguard.core.filters.RangeFilter'&gt;,
+    'daterange': &lt;class 'pypamguard.core.filters.DateFilter'&gt;
+}
+</code></pre>
+<h4 id="uid-list-filter">UID List Filter</h4>
+<p>Filtering by whitelist allows you to define a specific list of values that can be accepted.</p>
+<pre><code class="language-python">from pypamguard.core.filters import Filter, WhitelistFilter
+from pypamguard import load_pamguard_binary_file
+filters = Filters({
+    'uidlist': WhitelistFilter([1,2,3,10])
+})
+load_pamguard_binary_file('path/to/data/file.pgdf', filters=filters)
+</code></pre>
+<h4 id="uid-range-filter">UID Range Filter</h4>
+<p>A range filter is a kind of filter that takes a start and end point, and includes all the date between these (inclusive). Define a range filter like so.</p>
+<blockquote>
+<p>WARNING: passing <code>ordered=True</code> will cause data chunks to be skipped once the first item out of the upper bound is reached, so is dangerous to use on unordered or unknown data.</p>
+</blockquote>
+<pre><code class="language-python">from pypamguard.core.filters import Filters, RangeFilter
+from pypamguard import load_pamguard_binary_file
+filters = Filters({
+    'uidlist': RangeFilter(start=1, end=10, ordered=False)
+})
+load_pamguard_binary_file('path/to/data/file.pgdf', filters=filters)
+</code></pre>
+<h4 id="date-range-filter">Date Range Filter</h4>
+<p>Filtering by date range is similar to filtering by generic range, except you pass in <code>datetime.datetime</code> objects to the constructor of the filter. Note that the datetime objects must contain UTC timezone information, otherwise the filter will throw a <code>ValueError</code> exception.</p>
+<pre><code class="language-python">from pypamguard.core.filters import Filters, DateFilter
+from pypamguard import load_pamguard_binary_file
+import datetime
+
+from_timestamp: datetime.datetime # some UTC datetime object
+to_timestamp: datetime.datetime # some UTC datetime object
+
+filters = Filters({
+    'daterange': DateFilter(from_timestamp, to_timestamp, ordered=True)
+})
+load_pamguard_binary_file('path/to/data/file.pgdf', filters=filters)
+</code></pre>
+<h2 id="fundamentals">Fundamentals</h2>
+<h3 id="data-types">Data Types</h3>
+<p>Headers, footers and module data automatically read data into their <em>native</em> (or close to) Python data types, to allow for easy use. </p>
+<p>Python-core and standard third-party data types are:</p>
+<ul>
+<li><code>int</code> (whole numbers)</li>
+<li><code>float</code> (decimal numbers)</li>
+<li><code>bytes</code> (strings) </li>
+<li><code>datetime.datetime</code> (dates and times)</li>
+<li><code>numpy.array</code> (arrays of ints or floats)</li>
+</ul>
+<p>PyPAMGuard has its own <code>core.Bitmap</code> class which is used to abstract the reading and processing of integer bitmap flags. A brief example is given below on how to interact with a Bitmap, but more information can be found in the API reference.</p>
+<pre><code class="language-python">import pypamguard
+# the 4-bit representation of 2 in binary is 0010
+bm = pypamguard.utils.bitmap.Bitmap(size=4, value=2) 
+bm.get_set_bits() # returns [1]
+bm.set(3) # sets bit 3
+bm.get_set_bits() # returns [1, 3]
+bm.clear(1) # clears bit 1
+bm.get_set_bits() # returns [3] 
+</code></pre>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="pypamguard.chunks" href="chunks/index.html">pypamguard.chunks</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="pypamguard.core" href="core/index.html">pypamguard.core</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="pypamguard.load_pamguard_binary_file" href="load_pamguard_binary_file.html">pypamguard.load_pamguard_binary_file</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="pypamguard.load_pamguard_binary_folder" href="load_pamguard_binary_folder.html">pypamguard.load_pamguard_binary_folder</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="pypamguard.load_pamguard_multi_file" href="load_pamguard_multi_file.html">pypamguard.load_pamguard_multi_file</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="pypamguard.logger" href="logger.html">pypamguard.logger</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="pypamguard.main" href="main.html">pypamguard.main</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="pypamguard.utils" href="utils/index.html">pypamguard.utils</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#getting-started">Getting Started</a><ul>
+<li><a href="#what-is-pypamguard">What is PyPAMGuard</a></li>
+<li><a href="#what-is-a-pgdf">What is a PGDF</a></li>
+<li><a href="#installation">Installation</a><ul>
+<li><a href="#python-package-index">Python Package Index</a></li>
+<li><a href="#cloned-repository">Cloned Repository</a></li>
+</ul>
+</li>
+<li><a href="#quick-start">Quick Start</a></li>
+</ul>
+</li>
+<li><a href="#customisation">Customisation</a><ul>
+<li><a href="#logger-verbosity">Logger Verbosity</a></li>
+<li><a href="#filtering">Filtering</a><ul>
+<li><a href="#uid-list-filter">UID List Filter</a></li>
+<li><a href="#uid-range-filter">UID Range Filter</a></li>
+<li><a href="#date-range-filter">Date Range Filter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#fundamentals">Fundamentals</a><ul>
+<li><a href="#data-types">Data Types</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="pypamguard.chunks" href="chunks/index.html">pypamguard.chunks</a></code></li>
+<li><code><a title="pypamguard.core" href="core/index.html">pypamguard.core</a></code></li>
+<li><code><a title="pypamguard.load_pamguard_binary_file" href="load_pamguard_binary_file.html">pypamguard.load_pamguard_binary_file</a></code></li>
+<li><code><a title="pypamguard.load_pamguard_binary_folder" href="load_pamguard_binary_folder.html">pypamguard.load_pamguard_binary_folder</a></code></li>
+<li><code><a title="pypamguard.load_pamguard_multi_file" href="load_pamguard_multi_file.html">pypamguard.load_pamguard_multi_file</a></code></li>
+<li><code><a title="pypamguard.logger" href="logger.html">pypamguard.logger</a></code></li>
+<li><code><a title="pypamguard.main" href="main.html">pypamguard.main</a></code></li>
+<li><code><a title="pypamguard.utils" href="utils/index.html">pypamguard.utils</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

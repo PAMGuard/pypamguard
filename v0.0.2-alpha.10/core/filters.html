@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>pypamguard.core.filters API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pypamguard.core.filters</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pypamguard.core.filters.BaseFilter"><code class="flex name class">
+<span>class <span class="ident">BaseFilter</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BaseFilter(Serializable, ABC):
+    &#34;&#34;&#34;Base class for all filters.&#34;&#34;&#34;
+
+    @abstractmethod
+    def check(self, value) -&gt; FILTER_POSITION:
+        &#34;&#34;&#34;
+        Apply the filter to the value and return either `KEEP`, `SKIP` or `STOP`
+        from the `FILTER_POSITION` enum. 
+        &#34;&#34;&#34;
+        raise NotImplementedError
+
+    @classmethod
+    def from_json(self, json):
+        name = json.pop(&#34;__name__&#34;)
+        if name == &#34;WhitelistFilter&#34;:
+            return WhitelistFilter.from_json(json)
+        elif name == &#34;RangeFilter&#34;:
+            return RangeFilter.from_json(json)
+        elif name == &#34;DateFilter&#34;:
+            return DateFilter.from_json(json)
+        else:
+            raise NotImplementedError(f&#34;Implement the .from_json() method for the {name} filter to deserialize from JSON.&#34;)</code></pre>
+</details>
+<div class="desc"><p>Base class for all filters.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pypamguard.core.serializable.Serializable" href="serializable.html#pypamguard.core.serializable.Serializable">Serializable</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pypamguard.core.filters.RangeFilter" href="#pypamguard.core.filters.RangeFilter">RangeFilter</a></li>
+<li><a title="pypamguard.core.filters.WhitelistFilter" href="#pypamguard.core.filters.WhitelistFilter">WhitelistFilter</a></li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="pypamguard.core.filters.BaseFilter.from_json"><code class="name flex">
+<span>def <span class="ident">from_json</span></span>(<span>json)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pypamguard.core.filters.BaseFilter.check"><code class="name flex">
+<span>def <span class="ident">check</span></span>(<span>self, value) ‑> <a title="pypamguard.core.filters.FILTER_POSITION" href="#pypamguard.core.filters.FILTER_POSITION">FILTER_POSITION</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def check(self, value) -&gt; FILTER_POSITION:
+    &#34;&#34;&#34;
+    Apply the filter to the value and return either `KEEP`, `SKIP` or `STOP`
+    from the `FILTER_POSITION` enum. 
+    &#34;&#34;&#34;
+    raise NotImplementedError</code></pre>
+</details>
+<div class="desc"><p>Apply the filter to the value and return either <code>KEEP</code>, <code>SKIP</code> or <code>STOP</code>
+from the <code><a title="pypamguard.core.filters.FILTER_POSITION" href="#pypamguard.core.filters.FILTER_POSITION">FILTER_POSITION</a></code> enum.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="pypamguard.core.filters.DateFilter"><code class="flex name class">
+<span>class <span class="ident">DateFilter</span></span>
+<span>(</span><span>start_date, end_date, ordered=False, ignore_timezone=False, ignore_none=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DateFilter(RangeFilter):
+    def __init__(self, start_date, end_date, ordered=False, ignore_timezone=False, ignore_none=False):
+        &#34;&#34;&#34;
+        Process a datetime object and return KEEP either when the date
+        is between the start and end date or when the date is None. Return
+        SKIP when the date is before the start date and STOP when the date
+        is after the end date.
+        &#34;&#34;&#34;
+        self.ignore_timezone = ignore_timezone
+        if not ignore_timezone and start_date.tzinfo is None:
+            raise ValueError(&#34;Start date must be timezone aware&#34;)
+        if not ignore_timezone and end_date.tzinfo is None:
+            raise ValueError(&#34;End date must be timezone aware&#34;) 
+
+        super().__init__(start_date, end_date, ordered=ordered, ignore_none=ignore_none)
+
+    def check(self, value: datetime.datetime):
+        if value and not self.ignore_timezone and value.tzinfo is None:
+            raise ValueError(&#34;Value must be timezone aware&#34;)
+        return super().check(value)
+
+    def __str__(self):
+        return f&#34;DateFilter(start={self.start}, end={self.end}, ordered={self.ordered}, ignore_timezone={self.ignore_timezone}, ignore_none={self.ignore_none})&#34;
+
+    @classmethod
+    def from_json(cls, json):
+        return cls(datetime.datetime.fromtimestamp(json[&#34;start&#34;], tz=datetime.UTC), datetime.datetime.fromtimestamp(json[&#34;end&#34;], tz=datetime.UTC), json[&#34;ordered&#34;], json[&#34;ignore_timezone&#34;], json[&#34;ignore_none&#34;])</code></pre>
+</details>
+<div class="desc"><p>Base class for all filters.</p>
+<p>Process a datetime object and return KEEP either when the date
+is between the start and end date or when the date is None. Return
+SKIP when the date is before the start date and STOP when the date
+is after the end date.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pypamguard.core.filters.RangeFilter" href="#pypamguard.core.filters.RangeFilter">RangeFilter</a></li>
+<li><a title="pypamguard.core.filters.BaseFilter" href="#pypamguard.core.filters.BaseFilter">BaseFilter</a></li>
+<li><a title="pypamguard.core.serializable.Serializable" href="serializable.html#pypamguard.core.serializable.Serializable">Serializable</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="pypamguard.core.filters.DateFilter.from_json"><code class="name flex">
+<span>def <span class="ident">from_json</span></span>(<span>json)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pypamguard.core.filters.RangeFilter" href="#pypamguard.core.filters.RangeFilter">RangeFilter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pypamguard.core.filters.RangeFilter.check" href="#pypamguard.core.filters.BaseFilter.check">check</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pypamguard.core.filters.FILTER_POSITION"><code class="flex name class">
+<span>class <span class="ident">FILTER_POSITION</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FILTER_POSITION(enum.Enum):
+    SKIP = 0 # ignore this object but keep reading
+    KEEP = 1 # include this object
+    STOP = 2 # ignore this, and all following objects</code></pre>
+</details>
+<div class="desc"><p>Create a collection of name/value pairs.</p>
+<p>Example enumeration:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; class Color(Enum):
+...     RED = 1
+...     BLUE = 2
+...     GREEN = 3
+</code></pre>
+<p>Access them by:</p>
+<ul>
+<li>attribute access:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Color.RED
+<Color.RED: 1></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>value lookup:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Color(1)
+<Color.RED: 1></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>name lookup:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Color['RED']
+<Color.RED: 1></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>Enumerations can be iterated over, and know how many members they have:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; len(Color)
+3
+</code></pre>
+<pre><code class="language-python-repl">&gt;&gt;&gt; list(Color)
+[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]
+</code></pre>
+<p>Methods can be added to enumerations, and members can have their own
+attributes &ndash; see the documentation for details.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="pypamguard.core.filters.FILTER_POSITION.KEEP"><code class="name">var <span class="ident">KEEP</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.filters.FILTER_POSITION.SKIP"><code class="name">var <span class="ident">SKIP</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.filters.FILTER_POSITION.STOP"><code class="name">var <span class="ident">STOP</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="pypamguard.core.filters.FilterMismatchException"><code class="flex name class">
+<span>class <span class="ident">FilterMismatchException</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FilterMismatchException(Exception):
+    &#34;&#34;&#34;
+    Raised when a filter is applied to a value and is not met. It is automatically
+    thrown by the `Filters` class.
+    &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+<div class="desc"><p>Raised when a filter is applied to a value and is not met. It is automatically
+thrown by the <code><a title="pypamguard.core.filters.Filters" href="#pypamguard.core.filters.Filters">Filters</a></code> class.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+<dt id="pypamguard.core.filters.Filters"><code class="flex name class">
+<span>class <span class="ident">Filters</span></span>
+<span>(</span><span>filters: dict[str, <a title="pypamguard.core.filters.BaseFilter" href="#pypamguard.core.filters.BaseFilter">BaseFilter</a>] = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Filters:
+
+    INSTALLED_FILTERS = {
+        &#39;uidlist&#39;: WhitelistFilter,
+        &#39;uidrange&#39;: RangeFilter,
+        &#39;daterange&#39;: DateFilter,
+    }
+
+
+    def __init__(self, filters: dict[str, BaseFilter] = None):
+        if not filters: filters = {}
+        for key, value in filters.items():
+            self.__validate(key, value)
+
+        self.__filters: dict[str, BaseFilter] = filters
+        self.position: FILTER_POSITION = None
+    
+    def add(self, key, value):
+        self.__validate(key, value)
+        self.__filters[key] = value
+    
+    def to_json(self):
+        return {
+            key: value.to_json() for key, value in self.__filters.items()
+        }
+
+    def __validate(self, key, value):
+        if key in self.INSTALLED_FILTERS and not isinstance(value, self.INSTALLED_FILTERS[key]):
+            raise ValueError(f&#34;Filter {key} must be of type {self.INSTALLED_FILTERS[key]}&#34;)
+        if key not in self.INSTALLED_FILTERS and not isinstance(value, BaseFilter):
+            raise ValueError(f&#34;Custom filter {key} must be of type FilterBinaryFile&#34;)
+
+    def filter(self, key, value):
+
+        if key in self.__filters:
+            self.position = self.__filters[key].check(value)
+        else:
+            self.position = FILTER_POSITION.KEEP
+        
+        if not self.position == FILTER_POSITION.KEEP:
+            raise FilterMismatchException()
+
+    def __str__(self):
+        if len(self.__filters) == 0:
+            return &#34;No filters&#34;
+        ret = f&#34;Filters ({len(self.__filters)}):\n&#34;
+        for filter in self.__filters:
+            ret += f&#34;\t{filter}: {self.__filters[filter]}\n&#34;
+        return ret
+    
+    def __len__(self):
+        return len(self.__filters)</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="pypamguard.core.filters.Filters.INSTALLED_FILTERS"><code class="name">var <span class="ident">INSTALLED_FILTERS</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pypamguard.core.filters.Filters.add"><code class="name flex">
+<span>def <span class="ident">add</span></span>(<span>self, key, value)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add(self, key, value):
+    self.__validate(key, value)
+    self.__filters[key] = value</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.filters.Filters.filter"><code class="name flex">
+<span>def <span class="ident">filter</span></span>(<span>self, key, value)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def filter(self, key, value):
+
+    if key in self.__filters:
+        self.position = self.__filters[key].check(value)
+    else:
+        self.position = FILTER_POSITION.KEEP
+    
+    if not self.position == FILTER_POSITION.KEEP:
+        raise FilterMismatchException()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.filters.Filters.to_json"><code class="name flex">
+<span>def <span class="ident">to_json</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_json(self):
+    return {
+        key: value.to_json() for key, value in self.__filters.items()
+    }</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="pypamguard.core.filters.RangeFilter"><code class="flex name class">
+<span>class <span class="ident">RangeFilter</span></span>
+<span>(</span><span>start, end, comparator=None, validation_func=None, ordered=False, ignore_none=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RangeFilter(BaseFilter):
+    def __init__(self, start, end, comparator=None, validation_func=None, ordered=False, ignore_none=False):
+        &#34;&#34;&#34;
+        Process a value and return KEEP either when the value is between the start and end values.
+        Return SKIP or STOP when the value is outside the range, depending on the ordered flag.
+
+        @param start: The start value of the range.
+        @param end: The end value of the range.
+        @param comparator: A function that takes two values and returns a boolean (defaults to &lt;=).
+        @param validation_func: A function that takes a value and returns a boolean (defaults to None).
+        @param ordered: A boolean that indicates if the range is ordered (defaults to False). An ordered filter
+                        will offer improved efficiency as once it gets outside of range it will throw a `STOP`.
+        @param ignore_none: A boolean that indicates if None values should be ignored (defaults to False). If
+                        set to True it will return `KEEP` if the value is None.
+        &#34;&#34;&#34;
+        self.start = start
+        self.end = end
+        self.comparator = comparator or self.default_comparator
+        self.validation_func = validation_func
+        self.ordered = ordered
+        self.ignore_none = ignore_none
+
+    def default_comparator(self, a, b):
+        return a &lt; b
+
+    def _validate(self, value):
+        if self.validation_func:
+            return self.validation_func(value)
+        return True
+
+    def check(self, value):
+        # if end is 3 and value is 2 then self.comparator(end, value) -&gt; 3 &lt; 2
+        if value is None:
+            return FILTER_POSITION.KEEP if self.ignore_none else FILTER_POSITION.SKIP
+        if not self._validate(value):
+            return FILTER_POSITION.SKIP
+        if self.comparator(value, self.start):
+            return FILTER_POSITION.SKIP
+        if self.comparator(self.end, value):
+            return FILTER_POSITION.STOP if self.ordered else FILTER_POSITION.SKIP
+        return FILTER_POSITION.KEEP
+    
+    def __str__(self):
+        return f&#34;RangeFilter(start={self.start}, end={self.end}, ordered={self.ordered}, ignore_none={self.ignore_none})&#34;
+
+    @classmethod
+    def from_json(cls, json):
+        return cls(json[&#34;start&#34;], json[&#34;end&#34;], json[&#34;ordered&#34;], json[&#34;ignore_none&#34;])</code></pre>
+</details>
+<div class="desc"><p>Base class for all filters.</p>
+<p>Process a value and return KEEP either when the value is between the start and end values.
+Return SKIP or STOP when the value is outside the range, depending on the ordered flag.</p>
+<p>@param start: The start value of the range.
+@param end: The end value of the range.
+@param comparator: A function that takes two values and returns a boolean (defaults to &lt;=).
+@param validation_func: A function that takes a value and returns a boolean (defaults to None).
+@param ordered: A boolean that indicates if the range is ordered (defaults to False). An ordered filter
+will offer improved efficiency as once it gets outside of range it will throw a <code>STOP</code>.
+@param ignore_none: A boolean that indicates if None values should be ignored (defaults to False). If
+set to True it will return <code>KEEP</code> if the value is None.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pypamguard.core.filters.BaseFilter" href="#pypamguard.core.filters.BaseFilter">BaseFilter</a></li>
+<li><a title="pypamguard.core.serializable.Serializable" href="serializable.html#pypamguard.core.serializable.Serializable">Serializable</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pypamguard.core.filters.DateFilter" href="#pypamguard.core.filters.DateFilter">DateFilter</a></li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="pypamguard.core.filters.RangeFilter.from_json"><code class="name flex">
+<span>def <span class="ident">from_json</span></span>(<span>json)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pypamguard.core.filters.RangeFilter.default_comparator"><code class="name flex">
+<span>def <span class="ident">default_comparator</span></span>(<span>self, a, b)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def default_comparator(self, a, b):
+    return a &lt; b</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pypamguard.core.filters.BaseFilter" href="#pypamguard.core.filters.BaseFilter">BaseFilter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pypamguard.core.filters.BaseFilter.check" href="#pypamguard.core.filters.BaseFilter.check">check</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pypamguard.core.filters.WhitelistFilter"><code class="flex name class">
+<span>class <span class="ident">WhitelistFilter</span></span>
+<span>(</span><span>whitelist: set | list)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class WhitelistFilter(BaseFilter):
+    &#34;&#34;&#34;A filter that checks if a value is in a set of whitelisted values.&#34;&#34;&#34;
+
+    def __init__(self, whitelist: set | list):
+        &#34;&#34;&#34;Pass in an unordered list or a set of values to include in the whitelist.&#34;&#34;&#34;
+        self.whitelist = set(whitelist)
+
+    def check(self, value):
+        if value in self.whitelist:
+            return FILTER_POSITION.KEEP
+        return FILTER_POSITION.SKIP
+
+    def __str__(self):
+        return f&#34;WhitelistFilter({len(self.whitelist)} elements)&#34;
+
+    @classmethod
+    def from_json(cls, json):
+        self = cls(whitelist=set(json[&#34;whitelist&#34;]))
+        return self</code></pre>
+</details>
+<div class="desc"><p>A filter that checks if a value is in a set of whitelisted values.</p>
+<p>Pass in an unordered list or a set of values to include in the whitelist.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pypamguard.core.filters.BaseFilter" href="#pypamguard.core.filters.BaseFilter">BaseFilter</a></li>
+<li><a title="pypamguard.core.serializable.Serializable" href="serializable.html#pypamguard.core.serializable.Serializable">Serializable</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="pypamguard.core.filters.WhitelistFilter.from_json"><code class="name flex">
+<span>def <span class="ident">from_json</span></span>(<span>json)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pypamguard.core.filters.BaseFilter" href="#pypamguard.core.filters.BaseFilter">BaseFilter</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pypamguard.core.filters.BaseFilter.check" href="#pypamguard.core.filters.BaseFilter.check">check</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pypamguard.core" href="index.html">pypamguard.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pypamguard.core.filters.BaseFilter" href="#pypamguard.core.filters.BaseFilter">BaseFilter</a></code></h4>
+<ul class="">
+<li><code><a title="pypamguard.core.filters.BaseFilter.check" href="#pypamguard.core.filters.BaseFilter.check">check</a></code></li>
+<li><code><a title="pypamguard.core.filters.BaseFilter.from_json" href="#pypamguard.core.filters.BaseFilter.from_json">from_json</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pypamguard.core.filters.DateFilter" href="#pypamguard.core.filters.DateFilter">DateFilter</a></code></h4>
+<ul class="">
+<li><code><a title="pypamguard.core.filters.DateFilter.from_json" href="#pypamguard.core.filters.DateFilter.from_json">from_json</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pypamguard.core.filters.FILTER_POSITION" href="#pypamguard.core.filters.FILTER_POSITION">FILTER_POSITION</a></code></h4>
+<ul class="">
+<li><code><a title="pypamguard.core.filters.FILTER_POSITION.KEEP" href="#pypamguard.core.filters.FILTER_POSITION.KEEP">KEEP</a></code></li>
+<li><code><a title="pypamguard.core.filters.FILTER_POSITION.SKIP" href="#pypamguard.core.filters.FILTER_POSITION.SKIP">SKIP</a></code></li>
+<li><code><a title="pypamguard.core.filters.FILTER_POSITION.STOP" href="#pypamguard.core.filters.FILTER_POSITION.STOP">STOP</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pypamguard.core.filters.FilterMismatchException" href="#pypamguard.core.filters.FilterMismatchException">FilterMismatchException</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pypamguard.core.filters.Filters" href="#pypamguard.core.filters.Filters">Filters</a></code></h4>
+<ul class="">
+<li><code><a title="pypamguard.core.filters.Filters.INSTALLED_FILTERS" href="#pypamguard.core.filters.Filters.INSTALLED_FILTERS">INSTALLED_FILTERS</a></code></li>
+<li><code><a title="pypamguard.core.filters.Filters.add" href="#pypamguard.core.filters.Filters.add">add</a></code></li>
+<li><code><a title="pypamguard.core.filters.Filters.filter" href="#pypamguard.core.filters.Filters.filter">filter</a></code></li>
+<li><code><a title="pypamguard.core.filters.Filters.to_json" href="#pypamguard.core.filters.Filters.to_json">to_json</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pypamguard.core.filters.RangeFilter" href="#pypamguard.core.filters.RangeFilter">RangeFilter</a></code></h4>
+<ul class="">
+<li><code><a title="pypamguard.core.filters.RangeFilter.default_comparator" href="#pypamguard.core.filters.RangeFilter.default_comparator">default_comparator</a></code></li>
+<li><code><a title="pypamguard.core.filters.RangeFilter.from_json" href="#pypamguard.core.filters.RangeFilter.from_json">from_json</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pypamguard.core.filters.WhitelistFilter" href="#pypamguard.core.filters.WhitelistFilter">WhitelistFilter</a></code></h4>
+<ul class="">
+<li><code><a title="pypamguard.core.filters.WhitelistFilter.from_json" href="#pypamguard.core.filters.WhitelistFilter.from_json">from_json</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

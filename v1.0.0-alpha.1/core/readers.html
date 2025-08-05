@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>pypamguard.core.readers API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pypamguard.core.readers</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pypamguard.core.readers.br_report"><code class="name flex">
+<span>def <span class="ident">br_report</span></span>(<span>br: <a title="pypamguard.core.readers.BinaryReader" href="#pypamguard.core.readers.BinaryReader">BinaryReader</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@contextmanager
+def br_report(br: BinaryReader):
+    try:
+        yield
+    except WarningException as e:
+        br.report.add_warning(e)
+    except ErrorException as e:
+        br.report.add_error(e)
+    except CriticalException as e:
+        raise e
+    except Exception as e:
+        br.report.add_error(ErrorException(br=br, message=str(e)))</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pypamguard.core.readers.BinaryReader"><code class="flex name class">
+<span>class <span class="ident">BinaryReader</span></span>
+<span>(</span><span>fp: mmap.mmap,<br>report: <a title="pypamguard.core.readers.Report" href="#pypamguard.core.readers.Report">Report</a>,<br>endianess=&#x27;&gt;&#x27;)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BinaryReader:
+
+    def __init__(self, fp: mmap.mmap, report: Report, endianess=&#39;&gt;&#39;):
+        self.fp = fp
+        self._endianess = endianess
+        self.report = report
+    
+    
+    def set_endianess(self, endianess):
+        if not endianess in (&#39;&gt;&#39;, &#39;&lt;&#39;): raise ValueError(&#34;Endianess must be one of &#39;&gt;&#39; (big) or &#39;&lt;&#39; (small)&#34;)
+        self._endianess = endianess
+
+    def __collate(self, data, dtypes, shape):
+        for i, dtype_i in enumerate(dtypes):            
+            d = data[f&#39;f{i}&#39;][0] if (len(shape) == 1 and shape[0] == 1) else data[f&#39;f{i}&#39;].reshape(shape)
+            yield dtype_i[1](d) if dtype_i[1] is not None else d
+
+    def __read(self, length: int) -&gt; bytes:
+        data = self.fp.read(length)
+        return data
+
+    def tell(self):
+        return self.fp.tell()
+
+    def seek(self, offset, whence: int = io.SEEK_SET):
+        return self.fp.seek(offset, whence)
+
+    def set_checkpoint(self, offset: int):
+        self.next_checkpoint = self.tell() + offset
+
+    def goto_checkpoint(self):
+        self.seek(self.next_checkpoint)
+    
+    def at_checkpoint(self):
+        if self.tell() == self.next_checkpoint: return True
+        else: return False
+
+    def bin_read(self, dtype: list[tuple[DTYPES, Callable[[np.ndarray], np.ndarray]]], shape: tuple = (1,)) -&gt; int | float | np.ndarray | tuple[np.ndarray]:
+        &#34;&#34;&#34;
+        Read data from the file. This function is polymorphic in the sense that it
+        can be used for any of the following purposes:
+
+        1. Read in a single value of a given datatype (for example `read_numeric(DTYPES.INT32)`).
+        2. Read in an array of values of a given datatype (for example `read_numeric(DTYPES.INT32, (5,))`).
+        3. Read in an n-dimensional array of values of a given datatype (for example `read_numeric(DTYPES.INT32, (5, 5))`).
+        4. Read in an interleaved array of values of a given datatype (for example `read_numeric([DTYPES.INT32, DTYPES.INT32], (5,))`).
+
+        Read in an array of 5 integers (32-bit).
+        Return a single `np.ndarray` of type `np.int32`.
+        ```python
+        bin_read(DTYPES.INT32, (5,))
+        ```
+
+        Read in two 5-length arrays (interleaved int32, int32).
+        Return a tuple of two `np.ndarray`s of type `np.int16`
+        and `np.int64`.
+        ```python
+        bin_read([DTYPES.INT16, DTYPES.INT64], (5,))
+        ```
+
+        Read in a single float (32-bit) and divide by 100.
+        Return a single `np.float32`.
+        ```python
+        bin_read((DTYPES.FLOAT32, lambda x: x / 100))
+        ```
+
+        Read in two 5-length arrays (interleaved float32, int8).
+        Divide the int8 array by 100.
+        Return a tuple of two `np.ndarray`s of type `np.float32` and `np.float32`.
+        (NOTE: the int8 array is returned as a float32 array due to the division by 100.)
+        ```python
+        bin_read([(DTYPES.FLOAT32), (DTYPES.INT8, lambda x: x/100)], (5,))
+        ```
+
+        Read in a single 5x2 array of floats (32-bit).
+        Return a 2d `np.ndarray` of type `np.float32`.
+        ```python
+        bin_read(DTYPES.FLOAT32, (5, 2))
+        ```
+        &#34;&#34;&#34;
+        if type(shape) != tuple: shape = (shape,)
+        dtypes = [(dtype_i, None) if isinstance(dtype_i, DTYPES) else dtype_i for dtype_i in ([dtype] if not isinstance(dtype, list) else dtype)]
+        data = np.frombuffer(self.__read(sum(dtype_i[0].value.itemsize for dtype_i in dtypes) * np.prod(shape)   ), dtype=[(f&#39;f{i}&#39;, dtype_i[0].value.newbyteorder(self._endianess)) for i, dtype_i in enumerate(dtypes)])
+        ret_val = tuple(self.__collate(data, dtypes, shape))
+        return ret_val[0] if len(ret_val) == 1 else ret_val
+
+    @classmethod
+    def millis_to_timestamp(self, millis):
+        # datetime.datetime.fromtimestamp() requires millis to be in seconds
+        return datetime.datetime.fromtimestamp(millis / 1000, tz=datetime.UTC)
+
+    def timestamp_read(self) -&gt; tuple[int, datetime.datetime]:
+        with br_report(self):
+            millis = self.bin_read(DTYPES.INT64)
+            return millis, self.millis_to_timestamp(millis)
+        return millis, None # in case timestamp conversion does not work
+
+    def nstring_read(self, length: int) -&gt; str:
+        with br_report(self):
+            return self.__read(length).decode(&#34;utf-8&#34;)
+
+    def string_read(self) -&gt; str:
+        with br_report(self):
+            return self.nstring_read(self.bin_read(DTYPES.INT16))
+    
+    def bitmap_read(self, dtype: DTYPES, labels: list[str] = None) -&gt; Bitmap:
+        with br_report(self):
+            return Bitmap(dtype.value.itemsize, labels, int(self.bin_read(dtype)))</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="pypamguard.core.readers.BinaryReader.millis_to_timestamp"><code class="name flex">
+<span>def <span class="ident">millis_to_timestamp</span></span>(<span>millis)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pypamguard.core.readers.BinaryReader.at_checkpoint"><code class="name flex">
+<span>def <span class="ident">at_checkpoint</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def at_checkpoint(self):
+    if self.tell() == self.next_checkpoint: return True
+    else: return False</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.readers.BinaryReader.bin_read"><code class="name flex">
+<span>def <span class="ident">bin_read</span></span>(<span>self,<br>dtype: list[tuple[<a title="pypamguard.core.readers.DTYPES" href="#pypamguard.core.readers.DTYPES">DTYPES</a>, typing.Callable[[numpy.ndarray], numpy.ndarray]]],<br>shape: tuple = (1,)) ‑> int | float | numpy.ndarray | tuple[numpy.ndarray]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bin_read(self, dtype: list[tuple[DTYPES, Callable[[np.ndarray], np.ndarray]]], shape: tuple = (1,)) -&gt; int | float | np.ndarray | tuple[np.ndarray]:
+    &#34;&#34;&#34;
+    Read data from the file. This function is polymorphic in the sense that it
+    can be used for any of the following purposes:
+
+    1. Read in a single value of a given datatype (for example `read_numeric(DTYPES.INT32)`).
+    2. Read in an array of values of a given datatype (for example `read_numeric(DTYPES.INT32, (5,))`).
+    3. Read in an n-dimensional array of values of a given datatype (for example `read_numeric(DTYPES.INT32, (5, 5))`).
+    4. Read in an interleaved array of values of a given datatype (for example `read_numeric([DTYPES.INT32, DTYPES.INT32], (5,))`).
+
+    Read in an array of 5 integers (32-bit).
+    Return a single `np.ndarray` of type `np.int32`.
+    ```python
+    bin_read(DTYPES.INT32, (5,))
+    ```
+
+    Read in two 5-length arrays (interleaved int32, int32).
+    Return a tuple of two `np.ndarray`s of type `np.int16`
+    and `np.int64`.
+    ```python
+    bin_read([DTYPES.INT16, DTYPES.INT64], (5,))
+    ```
+
+    Read in a single float (32-bit) and divide by 100.
+    Return a single `np.float32`.
+    ```python
+    bin_read((DTYPES.FLOAT32, lambda x: x / 100))
+    ```
+
+    Read in two 5-length arrays (interleaved float32, int8).
+    Divide the int8 array by 100.
+    Return a tuple of two `np.ndarray`s of type `np.float32` and `np.float32`.
+    (NOTE: the int8 array is returned as a float32 array due to the division by 100.)
+    ```python
+    bin_read([(DTYPES.FLOAT32), (DTYPES.INT8, lambda x: x/100)], (5,))
+    ```
+
+    Read in a single 5x2 array of floats (32-bit).
+    Return a 2d `np.ndarray` of type `np.float32`.
+    ```python
+    bin_read(DTYPES.FLOAT32, (5, 2))
+    ```
+    &#34;&#34;&#34;
+    if type(shape) != tuple: shape = (shape,)
+    dtypes = [(dtype_i, None) if isinstance(dtype_i, DTYPES) else dtype_i for dtype_i in ([dtype] if not isinstance(dtype, list) else dtype)]
+    data = np.frombuffer(self.__read(sum(dtype_i[0].value.itemsize for dtype_i in dtypes) * np.prod(shape)   ), dtype=[(f&#39;f{i}&#39;, dtype_i[0].value.newbyteorder(self._endianess)) for i, dtype_i in enumerate(dtypes)])
+    ret_val = tuple(self.__collate(data, dtypes, shape))
+    return ret_val[0] if len(ret_val) == 1 else ret_val</code></pre>
+</details>
+<div class="desc"><p>Read data from the file. This function is polymorphic in the sense that it
+can be used for any of the following purposes:</p>
+<ol>
+<li>Read in a single value of a given datatype (for example <code>read_numeric(<a title="pypamguard.core.readers.DTYPES.INT32" href="#pypamguard.core.readers.DTYPES.INT32">DTYPES.INT32</a>)</code>).</li>
+<li>Read in an array of values of a given datatype (for example <code>read_numeric(<a title="pypamguard.core.readers.DTYPES.INT32" href="#pypamguard.core.readers.DTYPES.INT32">DTYPES.INT32</a>, (5,))</code>).</li>
+<li>Read in an n-dimensional array of values of a given datatype (for example <code>read_numeric(<a title="pypamguard.core.readers.DTYPES.INT32" href="#pypamguard.core.readers.DTYPES.INT32">DTYPES.INT32</a>, (5, 5))</code>).</li>
+<li>Read in an interleaved array of values of a given datatype (for example <code>read_numeric([<a title="pypamguard.core.readers.DTYPES.INT32" href="#pypamguard.core.readers.DTYPES.INT32">DTYPES.INT32</a>, <a title="pypamguard.core.readers.DTYPES.INT32" href="#pypamguard.core.readers.DTYPES.INT32">DTYPES.INT32</a>], (5,))</code>).</li>
+</ol>
+<p>Read in an array of 5 integers (32-bit).
+Return a single <code>np.ndarray</code> of type <code>np.int32</code>.</p>
+<pre><code class="language-python">bin_read(DTYPES.INT32, (5,))
+</code></pre>
+<p>Read in two 5-length arrays (interleaved int32, int32).
+Return a tuple of two <code>np.ndarray</code>s of type <code>np.int16</code>
+and <code>np.int64</code>.</p>
+<pre><code class="language-python">bin_read([DTYPES.INT16, DTYPES.INT64], (5,))
+</code></pre>
+<p>Read in a single float (32-bit) and divide by 100.
+Return a single <code>np.float32</code>.</p>
+<pre><code class="language-python">bin_read((DTYPES.FLOAT32, lambda x: x / 100))
+</code></pre>
+<p>Read in two 5-length arrays (interleaved float32, int8).
+Divide the int8 array by 100.
+Return a tuple of two <code>np.ndarray</code>s of type <code>np.float32</code> and <code>np.float32</code>.
+(NOTE: the int8 array is returned as a float32 array due to the division by 100.)</p>
+<pre><code class="language-python">bin_read([(DTYPES.FLOAT32), (DTYPES.INT8, lambda x: x/100)], (5,))
+</code></pre>
+<p>Read in a single 5x2 array of floats (32-bit).
+Return a 2d <code>np.ndarray</code> of type <code>np.float32</code>.</p>
+<pre><code class="language-python">bin_read(DTYPES.FLOAT32, (5, 2))
+</code></pre></div>
+</dd>
+<dt id="pypamguard.core.readers.BinaryReader.bitmap_read"><code class="name flex">
+<span>def <span class="ident">bitmap_read</span></span>(<span>self,<br>dtype: <a title="pypamguard.core.readers.DTYPES" href="#pypamguard.core.readers.DTYPES">DTYPES</a>,<br>labels: list[str] = None) ‑> <a title="pypamguard.utils.bitmap.Bitmap" href="../utils/bitmap.html#pypamguard.utils.bitmap.Bitmap">Bitmap</a></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bitmap_read(self, dtype: DTYPES, labels: list[str] = None) -&gt; Bitmap:
+    with br_report(self):
+        return Bitmap(dtype.value.itemsize, labels, int(self.bin_read(dtype)))</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.readers.BinaryReader.goto_checkpoint"><code class="name flex">
+<span>def <span class="ident">goto_checkpoint</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def goto_checkpoint(self):
+    self.seek(self.next_checkpoint)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.readers.BinaryReader.nstring_read"><code class="name flex">
+<span>def <span class="ident">nstring_read</span></span>(<span>self, length: int) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def nstring_read(self, length: int) -&gt; str:
+    with br_report(self):
+        return self.__read(length).decode(&#34;utf-8&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.readers.BinaryReader.seek"><code class="name flex">
+<span>def <span class="ident">seek</span></span>(<span>self, offset, whence: int = 0)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def seek(self, offset, whence: int = io.SEEK_SET):
+    return self.fp.seek(offset, whence)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.readers.BinaryReader.set_checkpoint"><code class="name flex">
+<span>def <span class="ident">set_checkpoint</span></span>(<span>self, offset: int)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_checkpoint(self, offset: int):
+    self.next_checkpoint = self.tell() + offset</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.readers.BinaryReader.set_endianess"><code class="name flex">
+<span>def <span class="ident">set_endianess</span></span>(<span>self, endianess)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_endianess(self, endianess):
+    if not endianess in (&#39;&gt;&#39;, &#39;&lt;&#39;): raise ValueError(&#34;Endianess must be one of &#39;&gt;&#39; (big) or &#39;&lt;&#39; (small)&#34;)
+    self._endianess = endianess</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.readers.BinaryReader.string_read"><code class="name flex">
+<span>def <span class="ident">string_read</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def string_read(self) -&gt; str:
+    with br_report(self):
+        return self.nstring_read(self.bin_read(DTYPES.INT16))</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.readers.BinaryReader.tell"><code class="name flex">
+<span>def <span class="ident">tell</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tell(self):
+    return self.fp.tell()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.readers.BinaryReader.timestamp_read"><code class="name flex">
+<span>def <span class="ident">timestamp_read</span></span>(<span>self) ‑> tuple[int, datetime.datetime]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def timestamp_read(self) -&gt; tuple[int, datetime.datetime]:
+    with br_report(self):
+        millis = self.bin_read(DTYPES.INT64)
+        return millis, self.millis_to_timestamp(millis)
+    return millis, None # in case timestamp conversion does not work</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="pypamguard.core.readers.DTYPES"><code class="flex name class">
+<span>class <span class="ident">DTYPES</span></span>
+<span>(</span><span>*args, **kwds)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DTYPES(enum.Enum):
+    INT8 = np.dtype(np.int8)
+    UINT8 = np.dtype(np.uint8)
+    INT16 = np.dtype(np.int16)
+    UINT16 = np.dtype(np.uint16)
+    INT32 = np.dtype(np.int32)
+    UINT32 = np.dtype(np.uint32)
+    INT64 = np.dtype(np.int64)
+    UINT64 = np.dtype(np.uint64)
+    FLOAT32 = np.dtype(np.float32)
+    FLOAT64 = np.dtype(np.float64)</code></pre>
+</details>
+<div class="desc"><p>Create a collection of name/value pairs.</p>
+<p>Example enumeration:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; class Color(Enum):
+...     RED = 1
+...     BLUE = 2
+...     GREEN = 3
+</code></pre>
+<p>Access them by:</p>
+<ul>
+<li>attribute access:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Color.RED
+<Color.RED: 1></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>value lookup:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Color(1)
+<Color.RED: 1></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li>name lookup:</li>
+</ul>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Color['RED']
+<Color.RED: 1></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>Enumerations can be iterated over, and know how many members they have:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; len(Color)
+3
+</code></pre>
+<pre><code class="language-python-repl">&gt;&gt;&gt; list(Color)
+[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]
+</code></pre>
+<p>Methods can be added to enumerations, and members can have their own
+attributes &ndash; see the documentation for details.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="pypamguard.core.readers.DTYPES.FLOAT32"><code class="name">var <span class="ident">FLOAT32</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.readers.DTYPES.FLOAT64"><code class="name">var <span class="ident">FLOAT64</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.readers.DTYPES.INT16"><code class="name">var <span class="ident">INT16</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.readers.DTYPES.INT32"><code class="name">var <span class="ident">INT32</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.readers.DTYPES.INT64"><code class="name">var <span class="ident">INT64</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.readers.DTYPES.INT8"><code class="name">var <span class="ident">INT8</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.readers.DTYPES.UINT16"><code class="name">var <span class="ident">UINT16</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.readers.DTYPES.UINT32"><code class="name">var <span class="ident">UINT32</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.readers.DTYPES.UINT64"><code class="name">var <span class="ident">UINT64</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.readers.DTYPES.UINT8"><code class="name">var <span class="ident">UINT8</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="pypamguard.core.readers.Report"><code class="flex name class">
+<span>class <span class="ident">Report</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Report(Serializable):
+    warnings = []
+    errors: list[ErrorException] = []
+    errors_tb: list = []
+
+    def __init__(self):
+        self.current_context = &#34;&#34;
+        self.warnings = []
+    
+    def set_context(self, context):
+        self.current_context = context
+
+    def add_warning(self, warning: WarningException):
+        warning.add_context(self.current_context)
+        self.warnings.append(warning)
+        logger.warning(warning)
+    
+    def add_error(self, error: Exception):
+        error.add_context(self.current_context)
+        self.errors.append(error)
+        logger.error(error)
+        tb = traceback.format_stack()
+        self.errors_tb.append(tb)
+    
+    
+    def __str__(self):
+        string = &#34;### REPORT SUMMARY ###\n&#34;
+        if len(self.warnings) != 0:
+            string += f&#34; - {len(self.warnings)} warnings (access warnings via .warnings list).\n&#34;
+        if len(self.errors) != 0:
+            string += f&#34; - {len(self.errors)} errors (access errors via .errors list and tracebacks via .errors_tb parallel list).\n&#34;
+        string += &#34;### END OF REPORT ###&#34;
+        return string</code></pre>
+</details>
+<div class="desc"><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pypamguard.core.serializable.Serializable" href="serializable.html#pypamguard.core.serializable.Serializable">Serializable</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="pypamguard.core.readers.Report.errors"><code class="name">var <span class="ident">errors</span> : list[<a title="pypamguard.core.exceptions.ErrorException" href="exceptions.html#pypamguard.core.exceptions.ErrorException">ErrorException</a>]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.readers.Report.errors_tb"><code class="name">var <span class="ident">errors_tb</span> : list</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="pypamguard.core.readers.Report.warnings"><code class="name">var <span class="ident">warnings</span></code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pypamguard.core.readers.Report.add_error"><code class="name flex">
+<span>def <span class="ident">add_error</span></span>(<span>self, error: Exception)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_error(self, error: Exception):
+    error.add_context(self.current_context)
+    self.errors.append(error)
+    logger.error(error)
+    tb = traceback.format_stack()
+    self.errors_tb.append(tb)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.readers.Report.add_warning"><code class="name flex">
+<span>def <span class="ident">add_warning</span></span>(<span>self,<br>warning: <a title="pypamguard.core.exceptions.WarningException" href="exceptions.html#pypamguard.core.exceptions.WarningException">WarningException</a>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_warning(self, warning: WarningException):
+    warning.add_context(self.current_context)
+    self.warnings.append(warning)
+    logger.warning(warning)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pypamguard.core.readers.Report.set_context"><code class="name flex">
+<span>def <span class="ident">set_context</span></span>(<span>self, context)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_context(self, context):
+    self.current_context = context</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="pypamguard.core.readers.Shape"><code class="flex name class">
+<span>class <span class="ident">Shape</span></span>
+<span>(</span><span>shape, length: int)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Shape:
+    def __init__(self, shape, length: int):
+        self.shape = shape
+        self.length = length
+        
+        if type(self.shape) == self.__class__:
+            self.size = self.length * self.shape.size
+        elif type(self.shape) == DTYPES:
+            self.size = self.length * self.shape.value.itemsize
+            self.shape = self.shape.value
+        else:
+            raise ValueError(f&#34;shape must be of type Shape or np.dtype (got {type(self.shape)}).&#34;)
+
+    def __str__(self):
+        if type(self.shape) == self.__class__:
+            return f&#34;{self.length} * ({self.shape})&#34;
+        else:
+            return f&#34;{self.length} * {self.shape}&#34;</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pypamguard.core" href="index.html">pypamguard.core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="pypamguard.core.readers.br_report" href="#pypamguard.core.readers.br_report">br_report</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pypamguard.core.readers.BinaryReader" href="#pypamguard.core.readers.BinaryReader">BinaryReader</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pypamguard.core.readers.BinaryReader.at_checkpoint" href="#pypamguard.core.readers.BinaryReader.at_checkpoint">at_checkpoint</a></code></li>
+<li><code><a title="pypamguard.core.readers.BinaryReader.bin_read" href="#pypamguard.core.readers.BinaryReader.bin_read">bin_read</a></code></li>
+<li><code><a title="pypamguard.core.readers.BinaryReader.bitmap_read" href="#pypamguard.core.readers.BinaryReader.bitmap_read">bitmap_read</a></code></li>
+<li><code><a title="pypamguard.core.readers.BinaryReader.goto_checkpoint" href="#pypamguard.core.readers.BinaryReader.goto_checkpoint">goto_checkpoint</a></code></li>
+<li><code><a title="pypamguard.core.readers.BinaryReader.millis_to_timestamp" href="#pypamguard.core.readers.BinaryReader.millis_to_timestamp">millis_to_timestamp</a></code></li>
+<li><code><a title="pypamguard.core.readers.BinaryReader.nstring_read" href="#pypamguard.core.readers.BinaryReader.nstring_read">nstring_read</a></code></li>
+<li><code><a title="pypamguard.core.readers.BinaryReader.seek" href="#pypamguard.core.readers.BinaryReader.seek">seek</a></code></li>
+<li><code><a title="pypamguard.core.readers.BinaryReader.set_checkpoint" href="#pypamguard.core.readers.BinaryReader.set_checkpoint">set_checkpoint</a></code></li>
+<li><code><a title="pypamguard.core.readers.BinaryReader.set_endianess" href="#pypamguard.core.readers.BinaryReader.set_endianess">set_endianess</a></code></li>
+<li><code><a title="pypamguard.core.readers.BinaryReader.string_read" href="#pypamguard.core.readers.BinaryReader.string_read">string_read</a></code></li>
+<li><code><a title="pypamguard.core.readers.BinaryReader.tell" href="#pypamguard.core.readers.BinaryReader.tell">tell</a></code></li>
+<li><code><a title="pypamguard.core.readers.BinaryReader.timestamp_read" href="#pypamguard.core.readers.BinaryReader.timestamp_read">timestamp_read</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pypamguard.core.readers.DTYPES" href="#pypamguard.core.readers.DTYPES">DTYPES</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pypamguard.core.readers.DTYPES.FLOAT32" href="#pypamguard.core.readers.DTYPES.FLOAT32">FLOAT32</a></code></li>
+<li><code><a title="pypamguard.core.readers.DTYPES.FLOAT64" href="#pypamguard.core.readers.DTYPES.FLOAT64">FLOAT64</a></code></li>
+<li><code><a title="pypamguard.core.readers.DTYPES.INT16" href="#pypamguard.core.readers.DTYPES.INT16">INT16</a></code></li>
+<li><code><a title="pypamguard.core.readers.DTYPES.INT32" href="#pypamguard.core.readers.DTYPES.INT32">INT32</a></code></li>
+<li><code><a title="pypamguard.core.readers.DTYPES.INT64" href="#pypamguard.core.readers.DTYPES.INT64">INT64</a></code></li>
+<li><code><a title="pypamguard.core.readers.DTYPES.INT8" href="#pypamguard.core.readers.DTYPES.INT8">INT8</a></code></li>
+<li><code><a title="pypamguard.core.readers.DTYPES.UINT16" href="#pypamguard.core.readers.DTYPES.UINT16">UINT16</a></code></li>
+<li><code><a title="pypamguard.core.readers.DTYPES.UINT32" href="#pypamguard.core.readers.DTYPES.UINT32">UINT32</a></code></li>
+<li><code><a title="pypamguard.core.readers.DTYPES.UINT64" href="#pypamguard.core.readers.DTYPES.UINT64">UINT64</a></code></li>
+<li><code><a title="pypamguard.core.readers.DTYPES.UINT8" href="#pypamguard.core.readers.DTYPES.UINT8">UINT8</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pypamguard.core.readers.Report" href="#pypamguard.core.readers.Report">Report</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pypamguard.core.readers.Report.add_error" href="#pypamguard.core.readers.Report.add_error">add_error</a></code></li>
+<li><code><a title="pypamguard.core.readers.Report.add_warning" href="#pypamguard.core.readers.Report.add_warning">add_warning</a></code></li>
+<li><code><a title="pypamguard.core.readers.Report.errors" href="#pypamguard.core.readers.Report.errors">errors</a></code></li>
+<li><code><a title="pypamguard.core.readers.Report.errors_tb" href="#pypamguard.core.readers.Report.errors_tb">errors_tb</a></code></li>
+<li><code><a title="pypamguard.core.readers.Report.set_context" href="#pypamguard.core.readers.Report.set_context">set_context</a></code></li>
+<li><code><a title="pypamguard.core.readers.Report.warnings" href="#pypamguard.core.readers.Report.warnings">warnings</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pypamguard.core.readers.Shape" href="#pypamguard.core.readers.Shape">Shape</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

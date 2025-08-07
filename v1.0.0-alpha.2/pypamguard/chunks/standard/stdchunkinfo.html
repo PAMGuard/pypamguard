@@ -42,6 +42,9 @@
                         <li>
                                 <a class="variable" href="#StandardChunkInfo.identifier">identifier</a>
                         </li>
+                        <li>
+                                <a class="variable" href="#StandardChunkInfo.file_path">file_path</a>
+                        </li>
                 </ul>
 
             </li>
@@ -74,15 +77,16 @@
 </span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>
 </span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StandardChunkInfo</span><span class="p">(</span><span class="n">GenericChunkInfo</span><span class="p">):</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>    
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 </span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">:</span> <span class="n">BinaryReader</span><span class="p">):</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="n">bin_read</span><span class="p">([</span><span class="n">DTYPES</span><span class="o">.</span><span class="n">INT32</span><span class="p">,</span> <span class="n">DTYPES</span><span class="o">.</span><span class="n">INT32</span><span class="p">])</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">IdentifierType</span><span class="p">):</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>            <span class="k">raise</span> <span class="n">FileCorruptedException</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">file_path</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">:</span> <span class="n">BinaryReader</span><span class="p">):</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="n">bin_read</span><span class="p">([</span><span class="n">DTYPES</span><span class="o">.</span><span class="n">INT32</span><span class="p">,</span> <span class="n">DTYPES</span><span class="o">.</span><span class="n">INT32</span><span class="p">])</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">IdentifierType</span><span class="p">):</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>            <span class="k">raise</span> <span class="n">FileCorruptedException</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -100,15 +104,16 @@
     <a class="headerlink" href="#StandardChunkInfo"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="StandardChunkInfo-8"><a href="#StandardChunkInfo-8"><span class="linenos"> 8</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StandardChunkInfo</span><span class="p">(</span><span class="n">GenericChunkInfo</span><span class="p">):</span>
 </span><span id="StandardChunkInfo-9"><a href="#StandardChunkInfo-9"><span class="linenos"> 9</span></a>    
-</span><span id="StandardChunkInfo-10"><a href="#StandardChunkInfo-10"><span class="linenos">10</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="StandardChunkInfo-10"><a href="#StandardChunkInfo-10"><span class="linenos">10</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 </span><span id="StandardChunkInfo-11"><a href="#StandardChunkInfo-11"><span class="linenos">11</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </span><span id="StandardChunkInfo-12"><a href="#StandardChunkInfo-12"><span class="linenos">12</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="StandardChunkInfo-13"><a href="#StandardChunkInfo-13"><span class="linenos">13</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="StandardChunkInfo-14"><a href="#StandardChunkInfo-14"><span class="linenos">14</span></a>
-</span><span id="StandardChunkInfo-15"><a href="#StandardChunkInfo-15"><span class="linenos">15</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">:</span> <span class="n">BinaryReader</span><span class="p">):</span>
-</span><span id="StandardChunkInfo-16"><a href="#StandardChunkInfo-16"><span class="linenos">16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="n">bin_read</span><span class="p">([</span><span class="n">DTYPES</span><span class="o">.</span><span class="n">INT32</span><span class="p">,</span> <span class="n">DTYPES</span><span class="o">.</span><span class="n">INT32</span><span class="p">])</span>
-</span><span id="StandardChunkInfo-17"><a href="#StandardChunkInfo-17"><span class="linenos">17</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">IdentifierType</span><span class="p">):</span>
-</span><span id="StandardChunkInfo-18"><a href="#StandardChunkInfo-18"><span class="linenos">18</span></a>            <span class="k">raise</span> <span class="n">FileCorruptedException</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+</span><span id="StandardChunkInfo-14"><a href="#StandardChunkInfo-14"><span class="linenos">14</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">file_path</span>
+</span><span id="StandardChunkInfo-15"><a href="#StandardChunkInfo-15"><span class="linenos">15</span></a>
+</span><span id="StandardChunkInfo-16"><a href="#StandardChunkInfo-16"><span class="linenos">16</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">:</span> <span class="n">BinaryReader</span><span class="p">):</span>
+</span><span id="StandardChunkInfo-17"><a href="#StandardChunkInfo-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="n">bin_read</span><span class="p">([</span><span class="n">DTYPES</span><span class="o">.</span><span class="n">INT32</span><span class="p">,</span> <span class="n">DTYPES</span><span class="o">.</span><span class="n">INT32</span><span class="p">])</span>
+</span><span id="StandardChunkInfo-18"><a href="#StandardChunkInfo-18"><span class="linenos">18</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">IdentifierType</span><span class="p">):</span>
+</span><span id="StandardChunkInfo-19"><a href="#StandardChunkInfo-19"><span class="linenos">19</span></a>            <span class="k">raise</span> <span class="n">FileCorruptedException</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -121,16 +126,17 @@ inheritance.</p>
                                         <input id="StandardChunkInfo.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
-        <span class="name">StandardChunkInfo</span><span class="signature pdoc-code condensed">(<span class="param"><span class="o">*</span><span class="n">args</span>, </span><span class="param"><span class="o">**</span><span class="n">kwargs</span></span>)</span>
+        <span class="name">StandardChunkInfo</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">file_path</span>, </span><span class="param"><span class="o">*</span><span class="n">args</span>, </span><span class="param"><span class="o">**</span><span class="n">kwargs</span></span>)</span>
 
                 <label class="view-source-button" for="StandardChunkInfo.__init__-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#StandardChunkInfo.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="StandardChunkInfo.__init__-10"><a href="#StandardChunkInfo.__init__-10"><span class="linenos">10</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="StandardChunkInfo.__init__-10"><a href="#StandardChunkInfo.__init__-10"><span class="linenos">10</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 </span><span id="StandardChunkInfo.__init__-11"><a href="#StandardChunkInfo.__init__-11"><span class="linenos">11</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </span><span id="StandardChunkInfo.__init__-12"><a href="#StandardChunkInfo.__init__-12"><span class="linenos">12</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="StandardChunkInfo.__init__-13"><a href="#StandardChunkInfo.__init__-13"><span class="linenos">13</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="StandardChunkInfo.__init__-14"><a href="#StandardChunkInfo.__init__-14"><span class="linenos">14</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">file_path</span>
 </span></pre></div>
 
 
@@ -155,6 +161,17 @@ inheritance.</p>
         
     </div>
     <a class="headerlink" href="#StandardChunkInfo.identifier"></a>
+    
+    
+
+                            </div>
+                            <div id="StandardChunkInfo.file_path" class="classattr">
+                                <div class="attr variable">
+            <span class="name">file_path</span><span class="annotation">: str</span>
+
+        
+    </div>
+    <a class="headerlink" href="#StandardChunkInfo.file_path"></a>
     
     
 

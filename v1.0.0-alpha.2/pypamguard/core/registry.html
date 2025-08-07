@@ -31,55 +31,7 @@
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
-                    <a class="variable" href="#ais_config">ais_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#click_config">click_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#clipgenerator_config">clipgenerator_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#deeplearningclassifier_config">deeplearningclassifier_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#dbht_config">dbht_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#difar_config">difar_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#noisemonitor_config">noisemonitor_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#noiseband_config">noiseband_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#gpl_config">gpl_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#rwedge_config">rwedge_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#whistleandmoan_config">whistleandmoan_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#longtermspectralaverage_config">longtermspectralaverage_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#ishmael_config">ishmael_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#spermwhaleipi_config">spermwhaleipi_config</a>
-            </li>
-            <li>
-                    <a class="variable" href="#geminithreshold_config">geminithreshold_config</a>
-            </li>
-            <li>
                     <a class="variable" href="#MODULES">MODULES</a>
-            </li>
-            <li>
-                    <a class="function" href="#module_metadata">module_metadata</a>
             </li>
             <li>
                     <a class="class" href="#ModuleRegistry">ModuleRegistry</a>
@@ -99,9 +51,6 @@
                 </ul>
 
             </li>
-            <li>
-                    <a class="function" href="#register_preinstalled_modules">register_preinstalled_modules</a>
-            </li>
     </ul>
 
 
@@ -118,325 +67,172 @@
                     <h1 class="modulename">
 <a href="./../../pypamguard.html">pypamguard</a><wbr>.<a href="./../core.html">core</a><wbr>.registry    </h1>
 
-                
+                        <div class="docstring"><p>A package for registering custom PAMGuard modules, and registering in-built
+PAMGuard modules. See <code><a href="#ModuleRegistry">ModuleRegistry</a></code>. Effectively
+a registration is a mapping from a module name (and possible stream) to a 
+class found in <code><a href="../chunks/modules.html">pypamguard.chunks.modules</a></code>. When a file header is read, the
+registry is used to load the correct module class corresponding to the module
+type specified in the header.</p>
+
+<p><code><a href="#MODULES">MODULES</a></code> dict includes all default mappings. Any
+nested dict is a stream-specification rather than just module name.</p>
+</div>
+
                         <input id="mod-registry-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 
                         <label class="view-source-button" for="mod-registry-view-source"><span>View Source</span></label>
 
-                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">  1</span></a><span class="c1"># registry.py</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="c1"># A module for registering the available modules (subclasses of PAMChunk)</span>
-</span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a>
-</span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.generics</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenericModule</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleNotFoundException</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.ais</span><span class="w"> </span><span class="kn">import</span> <span class="n">AISProcessing</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="n">ais_config</span> <span class="o">=</span> <span class="n">AISProcessing</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a>
-</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.detectors.click</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClickDetector</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.detectors.clicktriggerbackground</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClickTriggerBackground</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="n">click_config</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a>    <span class="s2">&quot;Clicks&quot;</span><span class="p">:</span> <span class="n">ClickDetector</span><span class="p">,</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a>    <span class="s2">&quot;Trigger Background&quot;</span><span class="p">:</span> <span class="n">ClickTriggerBackground</span><span class="p">,</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="p">}</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a>
-</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.clipgenerator</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClipGenerator</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="n">clipgenerator_config</span> <span class="o">=</span> <span class="n">ClipGenerator</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a>
-</span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.classifiers.deeplearningclassifier</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLCDetections</span><span class="p">,</span> <span class="n">DLCModels</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="n">deeplearningclassifier_config</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a>    <span class="s2">&quot;DL_detection&quot;</span><span class="p">:</span> <span class="n">DLCDetections</span><span class="p">,</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a>    <span class="s2">&quot;DL detection&quot;</span><span class="p">:</span> <span class="n">DLCDetections</span><span class="p">,</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a>    <span class="s2">&quot;DL_Model_Data&quot;</span><span class="p">:</span> <span class="n">DLCModels</span><span class="p">,</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a>    <span class="s2">&quot;DL Model Data&quot;</span><span class="p">:</span> <span class="n">DLCModels</span><span class="p">,</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a><span class="p">}</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a>
-</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.dbht</span><span class="w"> </span><span class="kn">import</span> <span class="n">DbHtProcessing</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a><span class="n">dbht_config</span> <span class="o">=</span> <span class="n">DbHtProcessing</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos"> 30</span></a>
-</span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.difar</span><span class="w"> </span><span class="kn">import</span> <span class="n">DIFARProcessing</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos"> 32</span></a><span class="n">difar_config</span> <span class="o">=</span> <span class="n">DIFARProcessing</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a>
-</span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.noisemonitor</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoiseMonitor</span>
-</span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a><span class="n">noisemonitor_config</span> <span class="o">=</span> <span class="n">NoiseMonitor</span>
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">  1</span></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="sd">A package for registering custom PAMGuard modules, and registering in-built</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a><span class="sd">PAMGuard modules. See `ModuleRegistry`. Effectively</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="sd">a registration is a mapping from a module name (and possible stream) to a </span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="sd">class found in `pypamguard.chunks.modules`. When a file header is read, the</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="sd">registry is used to load the correct module class corresponding to the module</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="sd">type specified in the header.</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a>
+</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="sd">`MODULES` dict includes all default mappings. Any</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="sd">nested dict is a stream-specification rather than just module name.</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a>
+</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.generics</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenericModule</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleNotFoundException</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a>
+</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.ais</span><span class="w"> </span><span class="kn">import</span> <span class="n">AISProcessing</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="n">__ais_config</span> <span class="o">=</span> <span class="n">AISProcessing</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a>
+</span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.detectors.click</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClickDetector</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.detectors.clicktriggerbackground</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClickTriggerBackground</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="n">__click_config</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a>    <span class="s2">&quot;Clicks&quot;</span><span class="p">:</span> <span class="n">ClickDetector</span><span class="p">,</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a>    <span class="s2">&quot;Trigger Background&quot;</span><span class="p">:</span> <span class="n">ClickTriggerBackground</span><span class="p">,</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a><span class="p">}</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a>
+</span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.clipgenerator</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClipGenerator</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a><span class="n">__clipgenerator_config</span> <span class="o">=</span> <span class="n">ClipGenerator</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a>
+</span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.classifiers.deeplearningclassifier</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLCDetections</span><span class="p">,</span> <span class="n">DLCModels</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos"> 30</span></a><span class="n">__deeplearningclassifier_config</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a>    <span class="s2">&quot;DL_detection&quot;</span><span class="p">:</span> <span class="n">DLCDetections</span><span class="p">,</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos"> 32</span></a>    <span class="s2">&quot;DL detection&quot;</span><span class="p">:</span> <span class="n">DLCDetections</span><span class="p">,</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a>    <span class="s2">&quot;DL_Model_Data&quot;</span><span class="p">:</span> <span class="n">DLCModels</span><span class="p">,</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a>    <span class="s2">&quot;DL Model Data&quot;</span><span class="p">:</span> <span class="n">DLCModels</span><span class="p">,</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a><span class="p">}</span>
 </span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a>
-</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.noiseband</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoiseBandMonitor</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="n">noiseband_config</span> <span class="o">=</span> <span class="n">NoiseBandMonitor</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.dbht</span><span class="w"> </span><span class="kn">import</span> <span class="n">DbHtProcessing</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="n">__dbht_config</span> <span class="o">=</span> <span class="n">DbHtProcessing</span>
 </span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>
-</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.detectors.gpl</span><span class="w"> </span><span class="kn">import</span> <span class="n">GPLDetector</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a><span class="n">gpl_config</span> <span class="o">=</span> <span class="n">GPLDetector</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.difar</span><span class="w"> </span><span class="kn">import</span> <span class="n">DIFARProcessing</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a><span class="n">__difar_config</span> <span class="o">=</span> <span class="n">DIFARProcessing</span>
 </span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>
-</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.detectors.rwedge</span><span class="w"> </span><span class="kn">import</span> <span class="n">RWEdgeDetector</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a><span class="n">rwedge_config</span> <span class="o">=</span> <span class="n">RWEdgeDetector</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.noisemonitor</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoiseMonitor</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a><span class="n">__noisemonitor_config</span> <span class="o">=</span> <span class="n">NoiseMonitor</span>
 </span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>
-</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.detectors.whistleandmoan</span><span class="w"> </span><span class="kn">import</span> <span class="n">WhistleAndMoanDetector</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="n">whistleandmoan_config</span> <span class="o">=</span> <span class="n">WhistleAndMoanDetector</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.noiseband</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoiseBandMonitor</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="n">__noiseband_config</span> <span class="o">=</span> <span class="n">NoiseBandMonitor</span>
 </span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>
-</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.longtermspectralaverage</span><span class="w"> </span><span class="kn">import</span> <span class="n">LongTermSpectralAverage</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="n">longtermspectralaverage_config</span> <span class="o">=</span> <span class="n">LongTermSpectralAverage</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.detectors.gpl</span><span class="w"> </span><span class="kn">import</span> <span class="n">GPLDetector</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="n">__gpl_config</span> <span class="o">=</span> <span class="n">GPLDetector</span>
 </span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>
-</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.ishmael</span><span class="w"> </span><span class="kn">import</span> <span class="n">IshmaelData</span><span class="p">,</span> <span class="n">IshmaelDetections</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="n">ishmael_config</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>    <span class="s2">&quot;Ishmael Peak Data&quot;</span><span class="p">:</span> <span class="n">IshmaelData</span><span class="p">,</span> <span class="c1"># Not currently output from the detector</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>    <span class="s2">&quot;Ishmael Detections&quot;</span><span class="p">:</span> <span class="n">IshmaelDetections</span><span class="p">,</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a><span class="p">}</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.detectors.rwedge</span><span class="w"> </span><span class="kn">import</span> <span class="n">RWEdgeDetector</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="n">__rwedge_config</span> <span class="o">=</span> <span class="n">RWEdgeDetector</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>
+</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.detectors.whistleandmoan</span><span class="w"> </span><span class="kn">import</span> <span class="n">WhistleAndMoanDetector</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a><span class="n">__whistleandmoan_config</span> <span class="o">=</span> <span class="n">WhistleAndMoanDetector</span>
 </span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.plugins.spermwhaleipi</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpermWhaleIPI</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="n">spermwhaleipi_config</span> <span class="o">=</span> <span class="n">SpermWhaleIPI</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.longtermspectralaverage</span><span class="w"> </span><span class="kn">import</span> <span class="n">LongTermSpectralAverage</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="n">__longtermspectralaverage_config</span> <span class="o">=</span> <span class="n">LongTermSpectralAverage</span>
 </span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.plugins.geminithreshold</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeminiThresholdDetector</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="n">geminithreshold_config</span> <span class="o">=</span> <span class="n">GeminiThresholdDetector</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>
-</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a><span class="n">MODULES</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>    <span class="s2">&quot;AIS Processing&quot;</span><span class="p">:</span> <span class="n">ais_config</span><span class="p">,</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>    <span class="s2">&quot;Click Detector&quot;</span><span class="p">:</span> <span class="n">click_config</span><span class="p">,</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>    <span class="s2">&quot;SoundTrap Click Detector&quot;</span><span class="p">:</span> <span class="n">click_config</span><span class="p">,</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>    <span class="s2">&quot;Clip Generator&quot;</span><span class="p">:</span> <span class="n">clipgenerator_config</span><span class="p">,</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>    <span class="s2">&quot;Deep Learning Classifier&quot;</span><span class="p">:</span> <span class="n">deeplearningclassifier_config</span><span class="p">,</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>    <span class="s2">&quot;DbHt&quot;</span><span class="p">:</span> <span class="n">dbht_config</span><span class="p">,</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>    <span class="s2">&quot;DIFAR Processing&quot;</span><span class="p">:</span> <span class="n">difar_config</span><span class="p">,</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>    <span class="s2">&quot;LTSA&quot;</span><span class="p">:</span> <span class="n">longtermspectralaverage_config</span><span class="p">,</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>    <span class="s2">&quot;Noise Monitor&quot;</span><span class="p">:</span> <span class="n">noisemonitor_config</span><span class="p">,</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>    <span class="s2">&quot;Noise Band&quot;</span><span class="p">:</span> <span class="n">noisemonitor_config</span><span class="p">,</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>    <span class="s2">&quot;NoiseBand&quot;</span><span class="p">:</span> <span class="n">noiseband_config</span><span class="p">,</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>    <span class="s2">&quot;GPL Detector&quot;</span><span class="p">:</span> <span class="n">gpl_config</span><span class="p">,</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>    <span class="s2">&quot;RW Edge Detector&quot;</span><span class="p">:</span> <span class="n">rwedge_config</span><span class="p">,</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="s2">&quot;WhistlesMoans&quot;</span><span class="p">:</span> <span class="n">whistleandmoan_config</span><span class="p">,</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>    <span class="s2">&quot;Energy Sum Detector&quot;</span><span class="p">:</span> <span class="n">ishmael_config</span><span class="p">,</span>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>    <span class="s2">&quot;Spectrogram Correlation Detector&quot;</span><span class="p">:</span> <span class="n">ishmael_config</span><span class="p">,</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>    <span class="s2">&quot;Matched Filter Detector&quot;</span><span class="p">:</span> <span class="n">ishmael_config</span><span class="p">,</span>
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>    <span class="s2">&quot;Ipi module&quot;</span><span class="p">:</span> <span class="n">spermwhaleipi_config</span><span class="p">,</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a>    <span class="s2">&quot;Gemini Threshold Detector&quot;</span><span class="p">:</span> <span class="n">geminithreshold_config</span><span class="p">,</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="p">}</span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="k">def</span><span class="w"> </span><span class="nf">module_metadata</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
-</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>    <span class="k">return</span> <span class="p">{</span>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">module</span><span class="p">,</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="n">MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">],</span>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>        <span class="s2">&quot;minimum_version&quot;</span><span class="p">:</span> <span class="n">MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">]</span><span class="o">.</span><span class="n">_minimum_version</span><span class="p">,</span>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>        <span class="s2">&quot;maximum_version&quot;</span><span class="p">:</span> <span class="n">MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">]</span><span class="o">.</span><span class="n">_maximum_version</span><span class="p">,</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>    <span class="p">}</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>
+</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.processing.ishmael</span><span class="w"> </span><span class="kn">import</span> <span class="n">IshmaelData</span><span class="p">,</span> <span class="n">IshmaelDetections</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="n">__ishmael_config</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>    <span class="s2">&quot;Ishmael Peak Data&quot;</span><span class="p">:</span> <span class="n">IshmaelData</span><span class="p">,</span> <span class="c1"># Not currently output from the detector</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>    <span class="s2">&quot;Ishmael Detections&quot;</span><span class="p">:</span> <span class="n">IshmaelDetections</span><span class="p">,</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="p">}</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>
+</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.plugins.spermwhaleipi</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpermWhaleIPI</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="n">__spermwhaleipi_config</span> <span class="o">=</span> <span class="n">SpermWhaleIPI</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.chunks.modules.plugins.geminithreshold</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeminiThresholdDetector</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="n">__geminithreshold_config</span> <span class="o">=</span> <span class="n">GeminiThresholdDetector</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a><span class="n">MODULES</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>    <span class="s2">&quot;AIS Processing&quot;</span><span class="p">:</span> <span class="n">__ais_config</span><span class="p">,</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>    <span class="s2">&quot;Click Detector&quot;</span><span class="p">:</span> <span class="n">__click_config</span><span class="p">,</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>    <span class="s2">&quot;SoundTrap Click Detector&quot;</span><span class="p">:</span> <span class="n">__click_config</span><span class="p">,</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>    <span class="s2">&quot;Clip Generator&quot;</span><span class="p">:</span> <span class="n">__clipgenerator_config</span><span class="p">,</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="s2">&quot;Deep Learning Classifier&quot;</span><span class="p">:</span> <span class="n">__deeplearningclassifier_config</span><span class="p">,</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>    <span class="s2">&quot;DbHt&quot;</span><span class="p">:</span> <span class="n">__dbht_config</span><span class="p">,</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>    <span class="s2">&quot;DIFAR Processing&quot;</span><span class="p">:</span> <span class="n">__difar_config</span><span class="p">,</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>    <span class="s2">&quot;LTSA&quot;</span><span class="p">:</span> <span class="n">__longtermspectralaverage_config</span><span class="p">,</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>    <span class="s2">&quot;Noise Monitor&quot;</span><span class="p">:</span> <span class="n">__noisemonitor_config</span><span class="p">,</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a>    <span class="s2">&quot;Noise Band&quot;</span><span class="p">:</span> <span class="n">__noisemonitor_config</span><span class="p">,</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a>    <span class="s2">&quot;NoiseBand&quot;</span><span class="p">:</span> <span class="n">__noiseband_config</span><span class="p">,</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>    <span class="s2">&quot;GPL Detector&quot;</span><span class="p">:</span> <span class="n">__gpl_config</span><span class="p">,</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>    <span class="s2">&quot;RW Edge Detector&quot;</span><span class="p">:</span> <span class="n">__rwedge_config</span><span class="p">,</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>    <span class="s2">&quot;WhistlesMoans&quot;</span><span class="p">:</span> <span class="n">__whistleandmoan_config</span><span class="p">,</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>    <span class="s2">&quot;Energy Sum Detector&quot;</span><span class="p">:</span> <span class="n">__ishmael_config</span><span class="p">,</span>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>    <span class="s2">&quot;Spectrogram Correlation Detector&quot;</span><span class="p">:</span> <span class="n">__ishmael_config</span><span class="p">,</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>    <span class="s2">&quot;Matched Filter Detector&quot;</span><span class="p">:</span> <span class="n">__ishmael_config</span><span class="p">,</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>    <span class="s2">&quot;Ipi module&quot;</span><span class="p">:</span> <span class="n">__spermwhaleipi_config</span><span class="p">,</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>    <span class="s2">&quot;Gemini Threshold Detector&quot;</span><span class="p">:</span> <span class="n">__geminithreshold_config</span><span class="p">,</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a><span class="p">}</span>
 </span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>
 </span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModuleRegistry</span><span class="p">:</span>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>        <span class="n">register_preinstalled_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_class</span><span class="p">:</span> <span class="n">GenericModule</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">):</span>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a new module (must be a subclass of GenericModule or a dictionary)&quot;&quot;&quot;</span>
-</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2"> is already registered. Deregister module first by calling `deregister_module(&#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39;)`.&quot;</span><span class="p">)</span>
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_class</span>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>    
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">deregister_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Deregister a module. Returns the number of modules deregistered (either 0 or 1)&quot;&quot;&quot;</span>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>            <span class="k">return</span> <span class="mi">1</span>
-</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>        <span class="k">return</span> <span class="mi">0</span>
-</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>    
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GenericModule</span><span class="p">:</span>
-</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>            <span class="k">if</span> <span class="n">module_stream</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]:</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">module_stream</span><span class="p">]</span>
-</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered for stream &#39;</span><span class="si">{</span><span class="n">module_stream</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">],</span> <span class="n">GenericModule</span><span class="p">):</span>
-</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered correctly.&quot;</span><span class="p">)</span>
-</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered.&quot;</span><span class="p">)</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>
-</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="k">def</span><span class="w"> </span><span class="nf">register_preinstalled_modules</span><span class="p">(</span><span class="n">registry</span><span class="p">:</span> <span class="n">ModuleRegistry</span><span class="p">):</span>
-</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>    <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">MODULES</span><span class="p">:</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>        <span class="n">registry</span><span class="o">.</span><span class="n">register_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">])</span>
+</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="sd">    A class which stores mappings from module types and streams to module classes</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">    found in `pypamguard.chunks.modules` (or custom user-defined modules). All</span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="sd">    default modules are in `MODULES`. Usually a module registry is automatically</span>
+</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a><span class="sd">    created when a `PAMGuard` file is opened. The only time that you might need to</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a><span class="sd">    pass your own `ModuleRegistry` in is when creating custom modules.</span>
+</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">GenericModule</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">GenericModule</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__register_preinstalled_modules</span><span class="p">()</span>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_class</span><span class="p">:</span> <span class="n">GenericModule</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a><span class="sd">        Register a new module.</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a><span class="sd">        </span>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a><span class="sd">        If a module is valid for all streams, then</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="sd">        ```python</span>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="sd">        registry.register_module(&quot;Module Type&quot;, ModuleClass)</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="sd">        ```</span>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">        </span>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="sd">        If a module is stream-specific, then</span>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="sd">        ```python</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">        registry.register_module(&quot;Module Type&quot;, {&quot;Stream A&quot;: ModuleClass, &quot;Stream B&quot;: ModuleClass})</span>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a><span class="sd">        ```</span>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2"> is already registered. Deregister module first by calling `deregister_module(&#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39;)`.&quot;</span><span class="p">)</span>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_class</span>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>    
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">deregister_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Deregister a module. Returns the number of modules deregistered (either 0 or 1)&quot;&quot;&quot;</span>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>            <span class="k">return</span> <span class="mi">1</span>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>        <span class="k">return</span> <span class="mi">0</span>
+</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a>    
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GenericModule</span><span class="p">:</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>        <span class="nb">print</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">module_stream</span><span class="p">)</span>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>            <span class="k">if</span> <span class="n">module_stream</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]:</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">module_stream</span><span class="p">]</span>
+</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered for stream &#39;</span><span class="si">{</span><span class="n">module_stream</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">],</span> <span class="n">GenericModule</span><span class="p">):</span>
+</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
+</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered correctly.&quot;</span><span class="p">)</span>
+</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered.&quot;</span><span class="p">)</span>
+</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>
+</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__register_preinstalled_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">MODULES</span><span class="p">:</span>
+</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">register_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">])</span>
 </span></pre></div>
 
 
             </section>
-                <section id="ais_config">
-                    <div class="attr variable">
-            <span class="name">ais_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/processing/ais.html#AISProcessing">pypamguard.chunks.modules.processing.ais.AISProcessing</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#ais_config"></a>
-    
-    
-
-                </section>
-                <section id="click_config">
-                    <div class="attr variable">
-            <span class="name">click_config</span>        =
-<input id="click_config-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="click_config-view-value"></label><span class="default_value">{&#39;Clicks&#39;: &lt;class &#39;<a href="../chunks/modules/detectors/click.html#ClickDetector">pypamguard.chunks.modules.detectors.click.ClickDetector</a>&#39;&gt;, &#39;Trigger Background&#39;: &lt;class &#39;<a href="../chunks/modules/detectors/clicktriggerbackground.html#ClickTriggerBackground">pypamguard.chunks.modules.detectors.clicktriggerbackground.ClickTriggerBackground</a>&#39;&gt;}</span>
-
-        
-    </div>
-    <a class="headerlink" href="#click_config"></a>
-    
-    
-
-                </section>
-                <section id="clipgenerator_config">
-                    <div class="attr variable">
-            <span class="name">clipgenerator_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/processing/clipgenerator.html#ClipGenerator">pypamguard.chunks.modules.processing.clipgenerator.ClipGenerator</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#clipgenerator_config"></a>
-    
-    
-
-                </section>
-                <section id="deeplearningclassifier_config">
-                    <div class="attr variable">
-            <span class="name">deeplearningclassifier_config</span>        =
-<input id="deeplearningclassifier_config-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="deeplearningclassifier_config-view-value"></label><span class="default_value">{&#39;DL_detection&#39;: &lt;class &#39;<a href="../chunks/modules/classifiers/deeplearningclassifier.html#DLCDetections">pypamguard.chunks.modules.classifiers.deeplearningclassifier.DLCDetections</a>&#39;&gt;, &#39;DL detection&#39;: &lt;class &#39;<a href="../chunks/modules/classifiers/deeplearningclassifier.html#DLCDetections">pypamguard.chunks.modules.classifiers.deeplearningclassifier.DLCDetections</a>&#39;&gt;, &#39;DL_Model_Data&#39;: &lt;class &#39;<a href="../chunks/modules/classifiers/deeplearningclassifier.html#DLCModels">pypamguard.chunks.modules.classifiers.deeplearningclassifier.DLCModels</a>&#39;&gt;, &#39;DL Model Data&#39;: &lt;class &#39;<a href="../chunks/modules/classifiers/deeplearningclassifier.html#DLCModels">pypamguard.chunks.modules.classifiers.deeplearningclassifier.DLCModels</a>&#39;&gt;}</span>
-
-        
-    </div>
-    <a class="headerlink" href="#deeplearningclassifier_config"></a>
-    
-    
-
-                </section>
-                <section id="dbht_config">
-                    <div class="attr variable">
-            <span class="name">dbht_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/processing/dbht.html#DbHtProcessing">pypamguard.chunks.modules.processing.dbht.DbHtProcessing</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#dbht_config"></a>
-    
-    
-
-                </section>
-                <section id="difar_config">
-                    <div class="attr variable">
-            <span class="name">difar_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/processing/difar.html#DIFARProcessing">pypamguard.chunks.modules.processing.difar.DIFARProcessing</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#difar_config"></a>
-    
-    
-
-                </section>
-                <section id="noisemonitor_config">
-                    <div class="attr variable">
-            <span class="name">noisemonitor_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/processing/noisemonitor.html#NoiseMonitor">pypamguard.chunks.modules.processing.noisemonitor.NoiseMonitor</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#noisemonitor_config"></a>
-    
-    
-
-                </section>
-                <section id="noiseband_config">
-                    <div class="attr variable">
-            <span class="name">noiseband_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/processing/noiseband.html#NoiseBandMonitor">pypamguard.chunks.modules.processing.noiseband.NoiseBandMonitor</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#noiseband_config"></a>
-    
-    
-
-                </section>
-                <section id="gpl_config">
-                    <div class="attr variable">
-            <span class="name">gpl_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/detectors/gpl.html#GPLDetector">pypamguard.chunks.modules.detectors.gpl.GPLDetector</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#gpl_config"></a>
-    
-    
-
-                </section>
-                <section id="rwedge_config">
-                    <div class="attr variable">
-            <span class="name">rwedge_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/detectors/rwedge.html#RWEdgeDetector">pypamguard.chunks.modules.detectors.rwedge.RWEdgeDetector</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#rwedge_config"></a>
-    
-    
-
-                </section>
-                <section id="whistleandmoan_config">
-                    <div class="attr variable">
-            <span class="name">whistleandmoan_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/detectors/whistleandmoan.html#WhistleAndMoanDetector">pypamguard.chunks.modules.detectors.whistleandmoan.WhistleAndMoanDetector</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#whistleandmoan_config"></a>
-    
-    
-
-                </section>
-                <section id="longtermspectralaverage_config">
-                    <div class="attr variable">
-            <span class="name">longtermspectralaverage_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/processing/longtermspectralaverage.html#LongTermSpectralAverage">pypamguard.chunks.modules.processing.longtermspectralaverage.LongTermSpectralAverage</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#longtermspectralaverage_config"></a>
-    
-    
-
-                </section>
-                <section id="ishmael_config">
-                    <div class="attr variable">
-            <span class="name">ishmael_config</span>        =
-<input id="ishmael_config-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="ishmael_config-view-value"></label><span class="default_value">{&#39;Ishmael Peak Data&#39;: &lt;class &#39;<a href="../chunks/modules/processing/ishmael.html#IshmaelData">pypamguard.chunks.modules.processing.ishmael.IshmaelData</a>&#39;&gt;, &#39;Ishmael Detections&#39;: &lt;class &#39;<a href="../chunks/modules/processing/ishmael.html#IshmaelDetections">pypamguard.chunks.modules.processing.ishmael.IshmaelDetections</a>&#39;&gt;}</span>
-
-        
-    </div>
-    <a class="headerlink" href="#ishmael_config"></a>
-    
-    
-
-                </section>
-                <section id="spermwhaleipi_config">
-                    <div class="attr variable">
-            <span class="name">spermwhaleipi_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/plugins/spermwhaleipi.html#SpermWhaleIPI">pypamguard.chunks.modules.plugins.spermwhaleipi.SpermWhaleIPI</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#spermwhaleipi_config"></a>
-    
-    
-
-                </section>
-                <section id="geminithreshold_config">
-                    <div class="attr variable">
-            <span class="name">geminithreshold_config</span>        =
-<span class="default_value">&lt;class &#39;<a href="../chunks/modules/plugins/geminithreshold.html#GeminiThresholdDetector">pypamguard.chunks.modules.plugins.geminithreshold.GeminiThresholdDetector</a>&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#geminithreshold_config"></a>
-    
-    
-
-                </section>
                 <section id="MODULES">
                     <div class="attr variable">
             <span class="name">MODULES</span>        =
@@ -447,30 +243,6 @@
     </div>
     <a class="headerlink" href="#MODULES"></a>
     
-    
-
-                </section>
-                <section id="module_metadata">
-                            <input id="module_metadata-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">module_metadata</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">module</span></span><span class="return-annotation">):</span></span>
-
-                <label class="view-source-button" for="module_metadata-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#module_metadata"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="module_metadata-87"><a href="#module_metadata-87"><span class="linenos">87</span></a><span class="k">def</span><span class="w"> </span><span class="nf">module_metadata</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
-</span><span id="module_metadata-88"><a href="#module_metadata-88"><span class="linenos">88</span></a>    <span class="k">return</span> <span class="p">{</span>
-</span><span id="module_metadata-89"><a href="#module_metadata-89"><span class="linenos">89</span></a>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">module</span><span class="p">,</span>
-</span><span id="module_metadata-90"><a href="#module_metadata-90"><span class="linenos">90</span></a>        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="n">MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">],</span>
-</span><span id="module_metadata-91"><a href="#module_metadata-91"><span class="linenos">91</span></a>        <span class="s2">&quot;minimum_version&quot;</span><span class="p">:</span> <span class="n">MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">]</span><span class="o">.</span><span class="n">_minimum_version</span><span class="p">,</span>
-</span><span id="module_metadata-92"><a href="#module_metadata-92"><span class="linenos">92</span></a>        <span class="s2">&quot;maximum_version&quot;</span><span class="p">:</span> <span class="n">MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">]</span><span class="o">.</span><span class="n">_maximum_version</span><span class="p">,</span>
-</span><span id="module_metadata-93"><a href="#module_metadata-93"><span class="linenos">93</span></a>    <span class="p">}</span>
-</span></pre></div>
-
-
     
 
                 </section>
@@ -486,41 +258,72 @@
     </div>
     <a class="headerlink" href="#ModuleRegistry"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="ModuleRegistry-96"><a href="#ModuleRegistry-96"><span class="linenos"> 96</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModuleRegistry</span><span class="p">:</span>
-</span><span id="ModuleRegistry-97"><a href="#ModuleRegistry-97"><span class="linenos"> 97</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="ModuleRegistry-98"><a href="#ModuleRegistry-98"><span class="linenos"> 98</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="ModuleRegistry-99"><a href="#ModuleRegistry-99"><span class="linenos"> 99</span></a>        <span class="n">register_preinstalled_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</span><span id="ModuleRegistry-100"><a href="#ModuleRegistry-100"><span class="linenos">100</span></a>
-</span><span id="ModuleRegistry-101"><a href="#ModuleRegistry-101"><span class="linenos">101</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_class</span><span class="p">:</span> <span class="n">GenericModule</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">):</span>
-</span><span id="ModuleRegistry-102"><a href="#ModuleRegistry-102"><span class="linenos">102</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a new module (must be a subclass of GenericModule or a dictionary)&quot;&quot;&quot;</span>
-</span><span id="ModuleRegistry-103"><a href="#ModuleRegistry-103"><span class="linenos">103</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-</span><span id="ModuleRegistry-104"><a href="#ModuleRegistry-104"><span class="linenos">104</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2"> is already registered. Deregister module first by calling `deregister_module(&#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39;)`.&quot;</span><span class="p">)</span>
-</span><span id="ModuleRegistry-105"><a href="#ModuleRegistry-105"><span class="linenos">105</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_class</span>
-</span><span id="ModuleRegistry-106"><a href="#ModuleRegistry-106"><span class="linenos">106</span></a>    
-</span><span id="ModuleRegistry-107"><a href="#ModuleRegistry-107"><span class="linenos">107</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">deregister_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="ModuleRegistry-108"><a href="#ModuleRegistry-108"><span class="linenos">108</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Deregister a module. Returns the number of modules deregistered (either 0 or 1)&quot;&quot;&quot;</span>
-</span><span id="ModuleRegistry-109"><a href="#ModuleRegistry-109"><span class="linenos">109</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-</span><span id="ModuleRegistry-110"><a href="#ModuleRegistry-110"><span class="linenos">110</span></a>            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
-</span><span id="ModuleRegistry-111"><a href="#ModuleRegistry-111"><span class="linenos">111</span></a>            <span class="k">return</span> <span class="mi">1</span>
-</span><span id="ModuleRegistry-112"><a href="#ModuleRegistry-112"><span class="linenos">112</span></a>        <span class="k">return</span> <span class="mi">0</span>
-</span><span id="ModuleRegistry-113"><a href="#ModuleRegistry-113"><span class="linenos">113</span></a>    
-</span><span id="ModuleRegistry-114"><a href="#ModuleRegistry-114"><span class="linenos">114</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GenericModule</span><span class="p">:</span>
-</span><span id="ModuleRegistry-115"><a href="#ModuleRegistry-115"><span class="linenos">115</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
-</span><span id="ModuleRegistry-116"><a href="#ModuleRegistry-116"><span class="linenos">116</span></a>            <span class="k">if</span> <span class="n">module_stream</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]:</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">module_stream</span><span class="p">]</span>
-</span><span id="ModuleRegistry-117"><a href="#ModuleRegistry-117"><span class="linenos">117</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered for stream &#39;</span><span class="si">{</span><span class="n">module_stream</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-</span><span id="ModuleRegistry-118"><a href="#ModuleRegistry-118"><span class="linenos">118</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">],</span> <span class="n">GenericModule</span><span class="p">):</span>
-</span><span id="ModuleRegistry-119"><a href="#ModuleRegistry-119"><span class="linenos">119</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
-</span><span id="ModuleRegistry-120"><a href="#ModuleRegistry-120"><span class="linenos">120</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-</span><span id="ModuleRegistry-121"><a href="#ModuleRegistry-121"><span class="linenos">121</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered correctly.&quot;</span><span class="p">)</span>
-</span><span id="ModuleRegistry-122"><a href="#ModuleRegistry-122"><span class="linenos">122</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="ModuleRegistry-123"><a href="#ModuleRegistry-123"><span class="linenos">123</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered.&quot;</span><span class="p">)</span>
+</span><span id="ModuleRegistry-97"><a href="#ModuleRegistry-97"><span class="linenos"> 97</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ModuleRegistry-98"><a href="#ModuleRegistry-98"><span class="linenos"> 98</span></a><span class="sd">    A class which stores mappings from module types and streams to module classes</span>
+</span><span id="ModuleRegistry-99"><a href="#ModuleRegistry-99"><span class="linenos"> 99</span></a><span class="sd">    found in `pypamguard.chunks.modules` (or custom user-defined modules). All</span>
+</span><span id="ModuleRegistry-100"><a href="#ModuleRegistry-100"><span class="linenos">100</span></a><span class="sd">    default modules are in `MODULES`. Usually a module registry is automatically</span>
+</span><span id="ModuleRegistry-101"><a href="#ModuleRegistry-101"><span class="linenos">101</span></a><span class="sd">    created when a `PAMGuard` file is opened. The only time that you might need to</span>
+</span><span id="ModuleRegistry-102"><a href="#ModuleRegistry-102"><span class="linenos">102</span></a><span class="sd">    pass your own `ModuleRegistry` in is when creating custom modules.</span>
+</span><span id="ModuleRegistry-103"><a href="#ModuleRegistry-103"><span class="linenos">103</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="ModuleRegistry-104"><a href="#ModuleRegistry-104"><span class="linenos">104</span></a>
+</span><span id="ModuleRegistry-105"><a href="#ModuleRegistry-105"><span class="linenos">105</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="ModuleRegistry-106"><a href="#ModuleRegistry-106"><span class="linenos">106</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">GenericModule</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">GenericModule</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="ModuleRegistry-107"><a href="#ModuleRegistry-107"><span class="linenos">107</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__register_preinstalled_modules</span><span class="p">()</span>
+</span><span id="ModuleRegistry-108"><a href="#ModuleRegistry-108"><span class="linenos">108</span></a>
+</span><span id="ModuleRegistry-109"><a href="#ModuleRegistry-109"><span class="linenos">109</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_class</span><span class="p">:</span> <span class="n">GenericModule</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span id="ModuleRegistry-110"><a href="#ModuleRegistry-110"><span class="linenos">110</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ModuleRegistry-111"><a href="#ModuleRegistry-111"><span class="linenos">111</span></a><span class="sd">        Register a new module.</span>
+</span><span id="ModuleRegistry-112"><a href="#ModuleRegistry-112"><span class="linenos">112</span></a><span class="sd">        </span>
+</span><span id="ModuleRegistry-113"><a href="#ModuleRegistry-113"><span class="linenos">113</span></a><span class="sd">        If a module is valid for all streams, then</span>
+</span><span id="ModuleRegistry-114"><a href="#ModuleRegistry-114"><span class="linenos">114</span></a><span class="sd">        ```python</span>
+</span><span id="ModuleRegistry-115"><a href="#ModuleRegistry-115"><span class="linenos">115</span></a><span class="sd">        registry.register_module(&quot;Module Type&quot;, ModuleClass)</span>
+</span><span id="ModuleRegistry-116"><a href="#ModuleRegistry-116"><span class="linenos">116</span></a><span class="sd">        ```</span>
+</span><span id="ModuleRegistry-117"><a href="#ModuleRegistry-117"><span class="linenos">117</span></a><span class="sd">        </span>
+</span><span id="ModuleRegistry-118"><a href="#ModuleRegistry-118"><span class="linenos">118</span></a><span class="sd">        If a module is stream-specific, then</span>
+</span><span id="ModuleRegistry-119"><a href="#ModuleRegistry-119"><span class="linenos">119</span></a><span class="sd">        ```python</span>
+</span><span id="ModuleRegistry-120"><a href="#ModuleRegistry-120"><span class="linenos">120</span></a><span class="sd">        registry.register_module(&quot;Module Type&quot;, {&quot;Stream A&quot;: ModuleClass, &quot;Stream B&quot;: ModuleClass})</span>
+</span><span id="ModuleRegistry-121"><a href="#ModuleRegistry-121"><span class="linenos">121</span></a><span class="sd">        ```</span>
+</span><span id="ModuleRegistry-122"><a href="#ModuleRegistry-122"><span class="linenos">122</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="ModuleRegistry-123"><a href="#ModuleRegistry-123"><span class="linenos">123</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+</span><span id="ModuleRegistry-124"><a href="#ModuleRegistry-124"><span class="linenos">124</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2"> is already registered. Deregister module first by calling `deregister_module(&#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39;)`.&quot;</span><span class="p">)</span>
+</span><span id="ModuleRegistry-125"><a href="#ModuleRegistry-125"><span class="linenos">125</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_class</span>
+</span><span id="ModuleRegistry-126"><a href="#ModuleRegistry-126"><span class="linenos">126</span></a>    
+</span><span id="ModuleRegistry-127"><a href="#ModuleRegistry-127"><span class="linenos">127</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">deregister_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="ModuleRegistry-128"><a href="#ModuleRegistry-128"><span class="linenos">128</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Deregister a module. Returns the number of modules deregistered (either 0 or 1)&quot;&quot;&quot;</span>
+</span><span id="ModuleRegistry-129"><a href="#ModuleRegistry-129"><span class="linenos">129</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+</span><span id="ModuleRegistry-130"><a href="#ModuleRegistry-130"><span class="linenos">130</span></a>            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
+</span><span id="ModuleRegistry-131"><a href="#ModuleRegistry-131"><span class="linenos">131</span></a>            <span class="k">return</span> <span class="mi">1</span>
+</span><span id="ModuleRegistry-132"><a href="#ModuleRegistry-132"><span class="linenos">132</span></a>        <span class="k">return</span> <span class="mi">0</span>
+</span><span id="ModuleRegistry-133"><a href="#ModuleRegistry-133"><span class="linenos">133</span></a>    
+</span><span id="ModuleRegistry-134"><a href="#ModuleRegistry-134"><span class="linenos">134</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GenericModule</span><span class="p">:</span>
+</span><span id="ModuleRegistry-135"><a href="#ModuleRegistry-135"><span class="linenos">135</span></a>        <span class="nb">print</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">module_stream</span><span class="p">)</span>
+</span><span id="ModuleRegistry-136"><a href="#ModuleRegistry-136"><span class="linenos">136</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="ModuleRegistry-137"><a href="#ModuleRegistry-137"><span class="linenos">137</span></a>            <span class="k">if</span> <span class="n">module_stream</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]:</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">module_stream</span><span class="p">]</span>
+</span><span id="ModuleRegistry-138"><a href="#ModuleRegistry-138"><span class="linenos">138</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered for stream &#39;</span><span class="si">{</span><span class="n">module_stream</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+</span><span id="ModuleRegistry-139"><a href="#ModuleRegistry-139"><span class="linenos">139</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">],</span> <span class="n">GenericModule</span><span class="p">):</span>
+</span><span id="ModuleRegistry-140"><a href="#ModuleRegistry-140"><span class="linenos">140</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
+</span><span id="ModuleRegistry-141"><a href="#ModuleRegistry-141"><span class="linenos">141</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+</span><span id="ModuleRegistry-142"><a href="#ModuleRegistry-142"><span class="linenos">142</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered correctly.&quot;</span><span class="p">)</span>
+</span><span id="ModuleRegistry-143"><a href="#ModuleRegistry-143"><span class="linenos">143</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="ModuleRegistry-144"><a href="#ModuleRegistry-144"><span class="linenos">144</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered.&quot;</span><span class="p">)</span>
+</span><span id="ModuleRegistry-145"><a href="#ModuleRegistry-145"><span class="linenos">145</span></a>
+</span><span id="ModuleRegistry-146"><a href="#ModuleRegistry-146"><span class="linenos">146</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__register_preinstalled_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="ModuleRegistry-147"><a href="#ModuleRegistry-147"><span class="linenos">147</span></a>        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">MODULES</span><span class="p">:</span>
+</span><span id="ModuleRegistry-148"><a href="#ModuleRegistry-148"><span class="linenos">148</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">register_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">])</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>A class which stores mappings from module types and streams to module classes
+found in <code><a href="../chunks/modules.html">pypamguard.chunks.modules</a></code> (or custom user-defined modules). All
+default modules are in <code><a href="#MODULES">MODULES</a></code>. Usually a module registry is automatically
+created when a <code>PAMGuard</code> file is opened. The only time that you might need to
+pass your own <code><a href="#ModuleRegistry">ModuleRegistry</a></code> in is when creating custom modules.</p>
+</div>
+
 
                             <div id="ModuleRegistry.modules" class="classattr">
                                 <div class="attr variable">
-            <span class="name">modules</span>
+            <span class="name">modules</span><span class="annotation">: dict[str, <a href="../chunks/generics/genmodule.html#GenericModule">pypamguard.chunks.generics.genmodule.GenericModule</a> | dict[str, <a href="../chunks/generics/genmodule.html#GenericModule">pypamguard.chunks.generics.genmodule.GenericModule</a>]]</span>
 
         
     </div>
@@ -540,15 +343,41 @@
 
     </div>
     <a class="headerlink" href="#ModuleRegistry.register_module"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ModuleRegistry.register_module-101"><a href="#ModuleRegistry.register_module-101"><span class="linenos">101</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_class</span><span class="p">:</span> <span class="n">GenericModule</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">):</span>
-</span><span id="ModuleRegistry.register_module-102"><a href="#ModuleRegistry.register_module-102"><span class="linenos">102</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a new module (must be a subclass of GenericModule or a dictionary)&quot;&quot;&quot;</span>
-</span><span id="ModuleRegistry.register_module-103"><a href="#ModuleRegistry.register_module-103"><span class="linenos">103</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-</span><span id="ModuleRegistry.register_module-104"><a href="#ModuleRegistry.register_module-104"><span class="linenos">104</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2"> is already registered. Deregister module first by calling `deregister_module(&#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39;)`.&quot;</span><span class="p">)</span>
-</span><span id="ModuleRegistry.register_module-105"><a href="#ModuleRegistry.register_module-105"><span class="linenos">105</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_class</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ModuleRegistry.register_module-109"><a href="#ModuleRegistry.register_module-109"><span class="linenos">109</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_class</span><span class="p">:</span> <span class="n">GenericModule</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span id="ModuleRegistry.register_module-110"><a href="#ModuleRegistry.register_module-110"><span class="linenos">110</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ModuleRegistry.register_module-111"><a href="#ModuleRegistry.register_module-111"><span class="linenos">111</span></a><span class="sd">        Register a new module.</span>
+</span><span id="ModuleRegistry.register_module-112"><a href="#ModuleRegistry.register_module-112"><span class="linenos">112</span></a><span class="sd">        </span>
+</span><span id="ModuleRegistry.register_module-113"><a href="#ModuleRegistry.register_module-113"><span class="linenos">113</span></a><span class="sd">        If a module is valid for all streams, then</span>
+</span><span id="ModuleRegistry.register_module-114"><a href="#ModuleRegistry.register_module-114"><span class="linenos">114</span></a><span class="sd">        ```python</span>
+</span><span id="ModuleRegistry.register_module-115"><a href="#ModuleRegistry.register_module-115"><span class="linenos">115</span></a><span class="sd">        registry.register_module(&quot;Module Type&quot;, ModuleClass)</span>
+</span><span id="ModuleRegistry.register_module-116"><a href="#ModuleRegistry.register_module-116"><span class="linenos">116</span></a><span class="sd">        ```</span>
+</span><span id="ModuleRegistry.register_module-117"><a href="#ModuleRegistry.register_module-117"><span class="linenos">117</span></a><span class="sd">        </span>
+</span><span id="ModuleRegistry.register_module-118"><a href="#ModuleRegistry.register_module-118"><span class="linenos">118</span></a><span class="sd">        If a module is stream-specific, then</span>
+</span><span id="ModuleRegistry.register_module-119"><a href="#ModuleRegistry.register_module-119"><span class="linenos">119</span></a><span class="sd">        ```python</span>
+</span><span id="ModuleRegistry.register_module-120"><a href="#ModuleRegistry.register_module-120"><span class="linenos">120</span></a><span class="sd">        registry.register_module(&quot;Module Type&quot;, {&quot;Stream A&quot;: ModuleClass, &quot;Stream B&quot;: ModuleClass})</span>
+</span><span id="ModuleRegistry.register_module-121"><a href="#ModuleRegistry.register_module-121"><span class="linenos">121</span></a><span class="sd">        ```</span>
+</span><span id="ModuleRegistry.register_module-122"><a href="#ModuleRegistry.register_module-122"><span class="linenos">122</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="ModuleRegistry.register_module-123"><a href="#ModuleRegistry.register_module-123"><span class="linenos">123</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+</span><span id="ModuleRegistry.register_module-124"><a href="#ModuleRegistry.register_module-124"><span class="linenos">124</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2"> is already registered. Deregister module first by calling `deregister_module(&#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39;)`.&quot;</span><span class="p">)</span>
+</span><span id="ModuleRegistry.register_module-125"><a href="#ModuleRegistry.register_module-125"><span class="linenos">125</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_class</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Register a new module (must be a subclass of GenericModule or a dictionary)</p>
+            <div class="docstring"><p>Register a new module.</p>
+
+<p>If a module is valid for all streams, then</p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code><span class="n">registry</span><span class="o">.</span><span class="n">register_module</span><span class="p">(</span><span class="s2">&quot;Module Type&quot;</span><span class="p">,</span> <span class="n">ModuleClass</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>If a module is stream-specific, then</p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code><span class="n">registry</span><span class="o">.</span><span class="n">register_module</span><span class="p">(</span><span class="s2">&quot;Module Type&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;Stream A&quot;</span><span class="p">:</span> <span class="n">ModuleClass</span><span class="p">,</span> <span class="s2">&quot;Stream B&quot;</span><span class="p">:</span> <span class="n">ModuleClass</span><span class="p">})</span>
+</code></pre>
+</div>
 </div>
 
 
@@ -564,12 +393,12 @@
 
     </div>
     <a class="headerlink" href="#ModuleRegistry.deregister_module"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ModuleRegistry.deregister_module-107"><a href="#ModuleRegistry.deregister_module-107"><span class="linenos">107</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">deregister_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="ModuleRegistry.deregister_module-108"><a href="#ModuleRegistry.deregister_module-108"><span class="linenos">108</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Deregister a module. Returns the number of modules deregistered (either 0 or 1)&quot;&quot;&quot;</span>
-</span><span id="ModuleRegistry.deregister_module-109"><a href="#ModuleRegistry.deregister_module-109"><span class="linenos">109</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-</span><span id="ModuleRegistry.deregister_module-110"><a href="#ModuleRegistry.deregister_module-110"><span class="linenos">110</span></a>            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
-</span><span id="ModuleRegistry.deregister_module-111"><a href="#ModuleRegistry.deregister_module-111"><span class="linenos">111</span></a>            <span class="k">return</span> <span class="mi">1</span>
-</span><span id="ModuleRegistry.deregister_module-112"><a href="#ModuleRegistry.deregister_module-112"><span class="linenos">112</span></a>        <span class="k">return</span> <span class="mi">0</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ModuleRegistry.deregister_module-127"><a href="#ModuleRegistry.deregister_module-127"><span class="linenos">127</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">deregister_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="ModuleRegistry.deregister_module-128"><a href="#ModuleRegistry.deregister_module-128"><span class="linenos">128</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Deregister a module. Returns the number of modules deregistered (either 0 or 1)&quot;&quot;&quot;</span>
+</span><span id="ModuleRegistry.deregister_module-129"><a href="#ModuleRegistry.deregister_module-129"><span class="linenos">129</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+</span><span id="ModuleRegistry.deregister_module-130"><a href="#ModuleRegistry.deregister_module-130"><span class="linenos">130</span></a>            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
+</span><span id="ModuleRegistry.deregister_module-131"><a href="#ModuleRegistry.deregister_module-131"><span class="linenos">131</span></a>            <span class="k">return</span> <span class="mi">1</span>
+</span><span id="ModuleRegistry.deregister_module-132"><a href="#ModuleRegistry.deregister_module-132"><span class="linenos">132</span></a>        <span class="k">return</span> <span class="mi">0</span>
 </span></pre></div>
 
 
@@ -589,43 +418,23 @@
 
     </div>
     <a class="headerlink" href="#ModuleRegistry.get_module"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ModuleRegistry.get_module-114"><a href="#ModuleRegistry.get_module-114"><span class="linenos">114</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GenericModule</span><span class="p">:</span>
-</span><span id="ModuleRegistry.get_module-115"><a href="#ModuleRegistry.get_module-115"><span class="linenos">115</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
-</span><span id="ModuleRegistry.get_module-116"><a href="#ModuleRegistry.get_module-116"><span class="linenos">116</span></a>            <span class="k">if</span> <span class="n">module_stream</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]:</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">module_stream</span><span class="p">]</span>
-</span><span id="ModuleRegistry.get_module-117"><a href="#ModuleRegistry.get_module-117"><span class="linenos">117</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered for stream &#39;</span><span class="si">{</span><span class="n">module_stream</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-</span><span id="ModuleRegistry.get_module-118"><a href="#ModuleRegistry.get_module-118"><span class="linenos">118</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">],</span> <span class="n">GenericModule</span><span class="p">):</span>
-</span><span id="ModuleRegistry.get_module-119"><a href="#ModuleRegistry.get_module-119"><span class="linenos">119</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
-</span><span id="ModuleRegistry.get_module-120"><a href="#ModuleRegistry.get_module-120"><span class="linenos">120</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-</span><span id="ModuleRegistry.get_module-121"><a href="#ModuleRegistry.get_module-121"><span class="linenos">121</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered correctly.&quot;</span><span class="p">)</span>
-</span><span id="ModuleRegistry.get_module-122"><a href="#ModuleRegistry.get_module-122"><span class="linenos">122</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="ModuleRegistry.get_module-123"><a href="#ModuleRegistry.get_module-123"><span class="linenos">123</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered.&quot;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ModuleRegistry.get_module-134"><a href="#ModuleRegistry.get_module-134"><span class="linenos">134</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_stream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GenericModule</span><span class="p">:</span>
+</span><span id="ModuleRegistry.get_module-135"><a href="#ModuleRegistry.get_module-135"><span class="linenos">135</span></a>        <span class="nb">print</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">module_stream</span><span class="p">)</span>
+</span><span id="ModuleRegistry.get_module-136"><a href="#ModuleRegistry.get_module-136"><span class="linenos">136</span></a>        <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="ModuleRegistry.get_module-137"><a href="#ModuleRegistry.get_module-137"><span class="linenos">137</span></a>            <span class="k">if</span> <span class="n">module_stream</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]:</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">][</span><span class="n">module_stream</span><span class="p">]</span>
+</span><span id="ModuleRegistry.get_module-138"><a href="#ModuleRegistry.get_module-138"><span class="linenos">138</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered for stream &#39;</span><span class="si">{</span><span class="n">module_stream</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+</span><span id="ModuleRegistry.get_module-139"><a href="#ModuleRegistry.get_module-139"><span class="linenos">139</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">],</span> <span class="n">GenericModule</span><span class="p">):</span>
+</span><span id="ModuleRegistry.get_module-140"><a href="#ModuleRegistry.get_module-140"><span class="linenos">140</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
+</span><span id="ModuleRegistry.get_module-141"><a href="#ModuleRegistry.get_module-141"><span class="linenos">141</span></a>        <span class="k">elif</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+</span><span id="ModuleRegistry.get_module-142"><a href="#ModuleRegistry.get_module-142"><span class="linenos">142</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered correctly.&quot;</span><span class="p">)</span>
+</span><span id="ModuleRegistry.get_module-143"><a href="#ModuleRegistry.get_module-143"><span class="linenos">143</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="ModuleRegistry.get_module-144"><a href="#ModuleRegistry.get_module-144"><span class="linenos">144</span></a>            <span class="k">raise</span> <span class="n">ModuleNotFoundException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Module &#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39; is not registered.&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
     
 
                             </div>
-                </section>
-                <section id="register_preinstalled_modules">
-                            <input id="register_preinstalled_modules-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">register_preinstalled_modules</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">registry</span><span class="p">:</span> <span class="n"><a href="#ModuleRegistry">ModuleRegistry</a></span></span><span class="return-annotation">):</span></span>
-
-                <label class="view-source-button" for="register_preinstalled_modules-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#register_preinstalled_modules"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="register_preinstalled_modules-125"><a href="#register_preinstalled_modules-125"><span class="linenos">125</span></a><span class="k">def</span><span class="w"> </span><span class="nf">register_preinstalled_modules</span><span class="p">(</span><span class="n">registry</span><span class="p">:</span> <span class="n">ModuleRegistry</span><span class="p">):</span>
-</span><span id="register_preinstalled_modules-126"><a href="#register_preinstalled_modules-126"><span class="linenos">126</span></a>
-</span><span id="register_preinstalled_modules-127"><a href="#register_preinstalled_modules-127"><span class="linenos">127</span></a>    <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">MODULES</span><span class="p">:</span>
-</span><span id="register_preinstalled_modules-128"><a href="#register_preinstalled_modules-128"><span class="linenos">128</span></a>        <span class="n">registry</span><span class="o">.</span><span class="n">register_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">MODULES</span><span class="p">[</span><span class="n">module</span><span class="p">])</span>
-</span></pre></div>
-
-
-    
-
                 </section>
     </main>
 <script>

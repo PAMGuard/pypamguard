@@ -84,6 +84,42 @@
                 </ul>
 
             </li>
+            <li>
+                    <a class="class" href="#DTYPES">DTYPES</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#DTYPES.INT8">INT8</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DTYPES.UINT8">UINT8</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DTYPES.INT16">INT16</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DTYPES.UINT16">UINT16</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DTYPES.INT32">INT32</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DTYPES.UINT32">UINT32</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DTYPES.INT64">INT64</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DTYPES.UINT64">UINT64</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DTYPES.FLOAT32">FLOAT32</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DTYPES.FLOAT64">FLOAT64</a>
+                        </li>
+                </ul>
+
+            </li>
     </ul>
 
 
@@ -106,28 +142,41 @@
                         <label class="view-source-button" for="mod-constants-view-source"><span>View Source</span></label>
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a>
-</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="c1"># Arguments that can be used when reading</span>
-</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="n">TIME_RANGE</span> <span class="o">=</span> <span class="s2">&quot;timerange&quot;</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="n">UID_RANGE</span> <span class="o">=</span> <span class="s2">&quot;uidrange&quot;</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="n">UID_LIST</span> <span class="o">=</span> <span class="s2">&quot;uidlist&quot;</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="n">FILTER</span> <span class="o">=</span> <span class="s2">&quot;filter&quot;</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="n">CHANNEL</span> <span class="o">=</span> <span class="s2">&quot;channel&quot;</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="n">DEFAULT_BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">1024</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BYTE_ORDERS</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="n">LITTLE_ENDIAN</span> <span class="o">=</span> <span class="s2">&quot;&lt;&quot;</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="n">BIG_ENDIAN</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="c1"># Arguments that can be used when reading</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="n">TIME_RANGE</span> <span class="o">=</span> <span class="s2">&quot;timerange&quot;</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="n">UID_RANGE</span> <span class="o">=</span> <span class="s2">&quot;uidrange&quot;</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="n">UID_LIST</span> <span class="o">=</span> <span class="s2">&quot;uidlist&quot;</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="n">FILTER</span> <span class="o">=</span> <span class="s2">&quot;filter&quot;</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="n">CHANNEL</span> <span class="o">=</span> <span class="s2">&quot;channel&quot;</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="n">DEFAULT_BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">1024</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BYTE_ORDERS</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="n">LITTLE_ENDIAN</span> <span class="o">=</span> <span class="s2">&quot;&lt;&quot;</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="n">BIG_ENDIAN</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span>
 </span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="k">class</span><span class="w"> </span><span class="nc">IdentifierType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="n">FILE_HEADER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="n">FILE_FOOTER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">MODULE_HEADER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">MODULE_FOOTER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="n">IGNORE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="n">FILE_BACKGROUND</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="k">class</span><span class="w"> </span><span class="nc">IdentifierType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="n">FILE_HEADER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">FILE_FOOTER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">MODULE_HEADER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="n">MODULE_FOOTER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="n">IGNORE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="n">FILE_BACKGROUND</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DTYPES</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>    <span class="n">INT8</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="n">UINT8</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="n">INT16</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="n">UINT16</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    <span class="n">INT32</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="n">UINT32</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="n">INT64</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>    <span class="n">UINT64</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint64</span><span class="p">)</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>    <span class="n">FLOAT32</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>    <span class="n">FLOAT64</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -215,9 +264,9 @@
 
     </div>
     <a class="headerlink" href="#BYTE_ORDERS"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="BYTE_ORDERS-13"><a href="#BYTE_ORDERS-13"><span class="linenos">13</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BYTE_ORDERS</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-</span><span id="BYTE_ORDERS-14"><a href="#BYTE_ORDERS-14"><span class="linenos">14</span></a>    <span class="n">LITTLE_ENDIAN</span> <span class="o">=</span> <span class="s2">&quot;&lt;&quot;</span>
-</span><span id="BYTE_ORDERS-15"><a href="#BYTE_ORDERS-15"><span class="linenos">15</span></a>    <span class="n">BIG_ENDIAN</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BYTE_ORDERS-14"><a href="#BYTE_ORDERS-14"><span class="linenos">14</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BYTE_ORDERS</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="BYTE_ORDERS-15"><a href="#BYTE_ORDERS-15"><span class="linenos">15</span></a>    <span class="n">LITTLE_ENDIAN</span> <span class="o">=</span> <span class="s2">&quot;&lt;&quot;</span>
+</span><span id="BYTE_ORDERS-16"><a href="#BYTE_ORDERS-16"><span class="linenos">16</span></a>    <span class="n">BIG_ENDIAN</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span>
 </span></pre></div>
 
 
@@ -259,13 +308,13 @@
 
     </div>
     <a class="headerlink" href="#IdentifierType"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="IdentifierType-18"><a href="#IdentifierType-18"><span class="linenos">18</span></a><span class="k">class</span><span class="w"> </span><span class="nc">IdentifierType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-</span><span id="IdentifierType-19"><a href="#IdentifierType-19"><span class="linenos">19</span></a>    <span class="n">FILE_HEADER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-</span><span id="IdentifierType-20"><a href="#IdentifierType-20"><span class="linenos">20</span></a>    <span class="n">FILE_FOOTER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
-</span><span id="IdentifierType-21"><a href="#IdentifierType-21"><span class="linenos">21</span></a>    <span class="n">MODULE_HEADER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
-</span><span id="IdentifierType-22"><a href="#IdentifierType-22"><span class="linenos">22</span></a>    <span class="n">MODULE_FOOTER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
-</span><span id="IdentifierType-23"><a href="#IdentifierType-23"><span class="linenos">23</span></a>    <span class="n">IGNORE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
-</span><span id="IdentifierType-24"><a href="#IdentifierType-24"><span class="linenos">24</span></a>    <span class="n">FILE_BACKGROUND</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="IdentifierType-19"><a href="#IdentifierType-19"><span class="linenos">19</span></a><span class="k">class</span><span class="w"> </span><span class="nc">IdentifierType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="IdentifierType-20"><a href="#IdentifierType-20"><span class="linenos">20</span></a>    <span class="n">FILE_HEADER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span id="IdentifierType-21"><a href="#IdentifierType-21"><span class="linenos">21</span></a>    <span class="n">FILE_FOOTER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+</span><span id="IdentifierType-22"><a href="#IdentifierType-22"><span class="linenos">22</span></a>    <span class="n">MODULE_HEADER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
+</span><span id="IdentifierType-23"><a href="#IdentifierType-23"><span class="linenos">23</span></a>    <span class="n">MODULE_FOOTER</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
+</span><span id="IdentifierType-24"><a href="#IdentifierType-24"><span class="linenos">24</span></a>    <span class="n">IGNORE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+</span><span id="IdentifierType-25"><a href="#IdentifierType-25"><span class="linenos">25</span></a>    <span class="n">FILE_BACKGROUND</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span>
 </span></pre></div>
 
 
@@ -339,6 +388,154 @@
         
     </div>
     <a class="headerlink" href="#IdentifierType.FILE_BACKGROUND"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="DTYPES">
+                            <input id="DTYPES-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">DTYPES</span><wbr>(<span class="base">enum.Enum</span>):
+
+                <label class="view-source-button" for="DTYPES-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DTYPES"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DTYPES-27"><a href="#DTYPES-27"><span class="linenos">27</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DTYPES</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="DTYPES-28"><a href="#DTYPES-28"><span class="linenos">28</span></a>    <span class="n">INT8</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+</span><span id="DTYPES-29"><a href="#DTYPES-29"><span class="linenos">29</span></a>    <span class="n">UINT8</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+</span><span id="DTYPES-30"><a href="#DTYPES-30"><span class="linenos">30</span></a>    <span class="n">INT16</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+</span><span id="DTYPES-31"><a href="#DTYPES-31"><span class="linenos">31</span></a>    <span class="n">UINT16</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+</span><span id="DTYPES-32"><a href="#DTYPES-32"><span class="linenos">32</span></a>    <span class="n">INT32</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+</span><span id="DTYPES-33"><a href="#DTYPES-33"><span class="linenos">33</span></a>    <span class="n">UINT32</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+</span><span id="DTYPES-34"><a href="#DTYPES-34"><span class="linenos">34</span></a>    <span class="n">INT64</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+</span><span id="DTYPES-35"><a href="#DTYPES-35"><span class="linenos">35</span></a>    <span class="n">UINT64</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint64</span><span class="p">)</span>
+</span><span id="DTYPES-36"><a href="#DTYPES-36"><span class="linenos">36</span></a>    <span class="n">FLOAT32</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+</span><span id="DTYPES-37"><a href="#DTYPES-37"><span class="linenos">37</span></a>    <span class="n">FLOAT64</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            <div id="DTYPES.INT8" class="classattr">
+                                <div class="attr variable">
+            <span class="name">INT8</span>        =
+<span class="default_value">&lt;<a href="#DTYPES.INT8">DTYPES.INT8</a>: dtype(&#39;int8&#39;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DTYPES.INT8"></a>
+    
+    
+
+                            </div>
+                            <div id="DTYPES.UINT8" class="classattr">
+                                <div class="attr variable">
+            <span class="name">UINT8</span>        =
+<span class="default_value">&lt;<a href="#DTYPES.UINT8">DTYPES.UINT8</a>: dtype(&#39;uint8&#39;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DTYPES.UINT8"></a>
+    
+    
+
+                            </div>
+                            <div id="DTYPES.INT16" class="classattr">
+                                <div class="attr variable">
+            <span class="name">INT16</span>        =
+<span class="default_value">&lt;<a href="#DTYPES.INT16">DTYPES.INT16</a>: dtype(&#39;int16&#39;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DTYPES.INT16"></a>
+    
+    
+
+                            </div>
+                            <div id="DTYPES.UINT16" class="classattr">
+                                <div class="attr variable">
+            <span class="name">UINT16</span>        =
+<span class="default_value">&lt;<a href="#DTYPES.UINT16">DTYPES.UINT16</a>: dtype(&#39;uint16&#39;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DTYPES.UINT16"></a>
+    
+    
+
+                            </div>
+                            <div id="DTYPES.INT32" class="classattr">
+                                <div class="attr variable">
+            <span class="name">INT32</span>        =
+<span class="default_value">&lt;<a href="#DTYPES.INT32">DTYPES.INT32</a>: dtype(&#39;int32&#39;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DTYPES.INT32"></a>
+    
+    
+
+                            </div>
+                            <div id="DTYPES.UINT32" class="classattr">
+                                <div class="attr variable">
+            <span class="name">UINT32</span>        =
+<span class="default_value">&lt;<a href="#DTYPES.UINT32">DTYPES.UINT32</a>: dtype(&#39;uint32&#39;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DTYPES.UINT32"></a>
+    
+    
+
+                            </div>
+                            <div id="DTYPES.INT64" class="classattr">
+                                <div class="attr variable">
+            <span class="name">INT64</span>        =
+<span class="default_value">&lt;<a href="#DTYPES.INT64">DTYPES.INT64</a>: dtype(&#39;int64&#39;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DTYPES.INT64"></a>
+    
+    
+
+                            </div>
+                            <div id="DTYPES.UINT64" class="classattr">
+                                <div class="attr variable">
+            <span class="name">UINT64</span>        =
+<span class="default_value">&lt;<a href="#DTYPES.UINT64">DTYPES.UINT64</a>: dtype(&#39;uint64&#39;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DTYPES.UINT64"></a>
+    
+    
+
+                            </div>
+                            <div id="DTYPES.FLOAT32" class="classattr">
+                                <div class="attr variable">
+            <span class="name">FLOAT32</span>        =
+<span class="default_value">&lt;<a href="#DTYPES.FLOAT32">DTYPES.FLOAT32</a>: dtype(&#39;float32&#39;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DTYPES.FLOAT32"></a>
+    
+    
+
+                            </div>
+                            <div id="DTYPES.FLOAT64" class="classattr">
+                                <div class="attr variable">
+            <span class="name">FLOAT64</span>        =
+<span class="default_value">&lt;<a href="#DTYPES.FLOAT64">DTYPES.FLOAT64</a>: dtype(&#39;float64&#39;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DTYPES.FLOAT64"></a>
     
     
 

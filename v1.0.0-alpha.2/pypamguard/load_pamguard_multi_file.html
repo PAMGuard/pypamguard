@@ -31,6 +31,24 @@
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
+                    <a class="variable" href="#last_root">last_root</a>
+            </li>
+            <li>
+                    <a class="variable" href="#last_mask">last_mask</a>
+            </li>
+            <li>
+                    <a class="variable" href="#master_list">master_list</a>
+            </li>
+            <li>
+                    <a class="variable" href="#master_dict">master_dict</a>
+            </li>
+            <li>
+                    <a class="variable" href="#MAX_NAME_LEN">MAX_NAME_LEN</a>
+            </li>
+            <li>
+                    <a class="function" href="#find_binary_file">find_binary_file</a>
+            </li>
+            <li>
                     <a class="function" href="#load_pamguard_multi_file">load_pamguard_multi_file</a>
             </li>
     </ul>
@@ -54,86 +72,252 @@
 
                         <label class="view-source-button" for="mod-load_pamguard_multi_file-view-source"><span>View Source</span></label>
 
-                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">glob</span>
 </span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.core.filters</span><span class="w"> </span><span class="kn">import</span> <span class="n">Filters</span><span class="p">,</span> <span class="n">WhitelistFilter</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.load_pamguard_binary_file</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_pamguard_binary_file</span>
-</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Verbosity</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="k">def</span><span class="w"> </span><span class="nf">load_pamguard_multi_file</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">file_names</span><span class="p">,</span> <span class="n">item_uid</span><span class="p">,</span> <span class="n">verbosity</span><span class="p">:</span> <span class="n">Verbosity</span> <span class="o">=</span> <span class="n">Verbosity</span><span class="o">.</span><span class="n">WARNING</span><span class="p">):</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>    <span class="n">file_name_dict</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>    <span class="n">event_data</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>    <span class="n">event_data_list</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>    <span class="c1"># Each file name has one or more UIDs. Better represented by dict.</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="k">for</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">uid</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">file_names</span><span class="p">,</span> <span class="n">item_uid</span><span class="p">):</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>        <span class="k">if</span> <span class="n">file_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_name_dict</span><span class="p">:</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>            <span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_name_dict</span><span class="p">:</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>        <span class="n">filter_obj</span> <span class="o">=</span> <span class="n">Filters</span><span class="p">({</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>            <span class="s2">&quot;uid_list&quot;</span><span class="p">:</span> <span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>        <span class="p">})</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>        <span class="n">file_data</span> <span class="o">=</span> <span class="n">load_pamguard_binary_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="n">filters</span><span class="o">=</span><span class="n">filter_obj</span><span class="p">)</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>        <span class="c1"># event_data[file_name] = file_data</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>        <span class="c1"># OR</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="n">event_data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_data</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>        <span class="c1"># TODO: PUT FILENAME IN load_pamguard_binary_file()</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>        <span class="c1"># THIS SEEMS LIKE A ROUNDABOUT WAY OF DOING OPTION 1</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>        <span class="c1"># FROM MATLAB CODE.</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="c1"># fileName = [fName fEnd];</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>        <span class="c1"># for d = 1:numel(fileData)</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>        <span class="c1">#     fileData(d).binaryFile = fileName;</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>        <span class="c1"># end</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span><span class="p">,</span> <span class="n">Verbosity</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.core.readers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Report</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypamguard.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">CriticalException</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="n">last_root</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="n">last_mask</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="n">master_list</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="n">master_dict</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="n">MAX_NAME_LEN</span> <span class="o">=</span> <span class="mi">80</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="k">def</span><span class="w"> </span><span class="nf">find_binary_file</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="k">global</span> <span class="n">last_mask</span><span class="p">,</span> <span class="n">last_root</span><span class="p">,</span> <span class="n">master_list</span><span class="p">,</span> <span class="n">master_dict</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">last_root</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">last_mask</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">last_root</span> <span class="o">!=</span> <span class="n">root</span> <span class="ow">or</span> <span class="n">last_mask</span> <span class="o">!=</span> <span class="n">mask</span><span class="p">):</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="n">master_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pathname</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">root_dir</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>        <span class="n">master_dict</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>        <span class="k">for</span> <span class="n">reldir</span> <span class="ow">in</span> <span class="n">master_list</span><span class="p">:</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">reldir</span><span class="p">)</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>            <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>            <span class="n">short_name</span> <span class="o">=</span> <span class="n">fname</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">-</span><span class="n">MAX_NAME_LEN</span><span class="p">:]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_NAME_LEN</span> <span class="k">else</span> <span class="n">fname</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>            <span class="k">if</span> <span class="n">short_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">master_dict</span><span class="p">:</span> 
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>                <span class="n">master_dict</span><span class="p">[</span><span class="n">short_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="n">last_root</span> <span class="o">=</span> <span class="n">root</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>        <span class="n">last_mask</span> <span class="o">=</span> <span class="n">mask</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>    <span class="k">if</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">master_dict</span><span class="p">:</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>        <span class="k">return</span> <span class="n">master_dict</span><span class="p">[</span><span class="n">file</span><span class="p">]</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="k">return</span> <span class="kc">None</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a><span class="k">def</span><span class="w"> </span><span class="nf">load_pamguard_multi_file</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">file_names</span><span class="p">,</span> <span class="n">item_uids</span><span class="p">):</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a><span class="sd">    A function to load a number of PAMGuard data chunks at once from</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a><span class="sd">    various binary files, filtering by UID.</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a><span class="sd">    For example</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a><span class="sd">    `file_names=[&quot;file1.pgdf&quot;, &quot;file1.pgdf&quot;, &quot;file2.pgdf&quot;, &quot;file3.pgdf&quot;, &quot;file3.pgdf&quot;]`</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a><span class="sd">    `item_uids=[7000001, 7000199, 10000001, 10002893, 6000001]`</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a><span class="sd">    Will expect to find 3 files: &quot;file1.pgdf&quot;, &quot;file2.pgdf&quot;, and &quot;file3.pgdf&quot;. In</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="sd">    &quot;file1.pgdf&quot; will expect to find uids 7000001, 7000199. In &quot;file2.pgdf&quot; will expect</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a><span class="sd">    to find uid 10000001. In &quot;file3.pgdf&quot; will expect to find uids 10002893, 6000001.</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a><span class="sd">    </span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="sd">    If `len(file_names) != len(item_uids)`, will raise an error.</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a><span class="sd">    If a particular file name is not found in the data directory, will raise a warning.</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a><span class="sd">    If a particular uid is not found in an expected file, will raise a warning.</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="n">file_name_dict</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>    <span class="n">report</span> <span class="o">=</span> <span class="n">Report</span><span class="p">()</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">item_uids</span><span class="p">):</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>        <span class="n">report</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="n">CriticalException</span><span class="p">(</span><span class="s2">&quot;file_names and item_uids must be the same length.&quot;</span><span class="p">))</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>    <span class="n">event_data</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="n">logger</span><span class="o">.</span><span class="n">set_verbosity</span><span class="p">(</span><span class="n">verbosity</span><span class="o">=</span><span class="n">Verbosity</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>        
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>    <span class="c1"># Each file name has one or more UIDs. Better represented by dict.</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>    <span class="k">for</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">uid</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">file_names</span><span class="p">,</span> <span class="n">item_uids</span><span class="p">):</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>        <span class="k">if</span> <span class="n">file_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_name_dict</span><span class="p">:</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>            <span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>        <span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_name_dict</span><span class="p">:</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>        <span class="n">filter_obj</span> <span class="o">=</span> <span class="n">Filters</span><span class="p">({</span><span class="s2">&quot;uidlist&quot;</span><span class="p">:</span> <span class="n">WhitelistFilter</span><span class="p">(</span><span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">])})</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>        <span class="n">file_path</span> <span class="o">=</span> <span class="n">find_binary_file</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;**/*.pgdf&quot;</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>        <span class="n">file_data</span> <span class="o">=</span> <span class="n">load_pamguard_binary_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filter_obj</span><span class="p">,</span> <span class="n">report</span> <span class="o">=</span> <span class="n">report</span><span class="p">)</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_data</span><span class="p">:</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>            <span class="n">report</span><span class="o">.</span><span class="n">add_warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2"> not found in </span><span class="si">{</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">. Skipping.&quot;</span><span class="p">)</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>            <span class="k">continue</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>        <span class="n">event_data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">file_data</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a>
+</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>    <span class="k">return</span> <span class="n">event_data</span><span class="p">,</span> <span class="n">report</span>
 </span></pre></div>
 
 
             </section>
+                <section id="last_root">
+                    <div class="attr variable">
+            <span class="name">last_root</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#last_root"></a>
+    
+    
+
+                </section>
+                <section id="last_mask">
+                    <div class="attr variable">
+            <span class="name">last_mask</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#last_mask"></a>
+    
+    
+
+                </section>
+                <section id="master_list">
+                    <div class="attr variable">
+            <span class="name">master_list</span>        =
+<span class="default_value">[]</span>
+
+        
+    </div>
+    <a class="headerlink" href="#master_list"></a>
+    
+    
+
+                </section>
+                <section id="master_dict">
+                    <div class="attr variable">
+            <span class="name">master_dict</span>        =
+<span class="default_value">{}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#master_dict"></a>
+    
+    
+
+                </section>
+                <section id="MAX_NAME_LEN">
+                    <div class="attr variable">
+            <span class="name">MAX_NAME_LEN</span>        =
+<span class="default_value">80</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MAX_NAME_LEN"></a>
+    
+    
+
+                </section>
+                <section id="find_binary_file">
+                            <input id="find_binary_file-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">find_binary_file</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">root</span>, </span><span class="param"><span class="n">mask</span>, </span><span class="param"><span class="n">file</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="find_binary_file-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#find_binary_file"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="find_binary_file-15"><a href="#find_binary_file-15"><span class="linenos">15</span></a><span class="k">def</span><span class="w"> </span><span class="nf">find_binary_file</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+</span><span id="find_binary_file-16"><a href="#find_binary_file-16"><span class="linenos">16</span></a>    <span class="k">global</span> <span class="n">last_mask</span><span class="p">,</span> <span class="n">last_root</span><span class="p">,</span> <span class="n">master_list</span><span class="p">,</span> <span class="n">master_dict</span>
+</span><span id="find_binary_file-17"><a href="#find_binary_file-17"><span class="linenos">17</span></a>    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">last_root</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">last_mask</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">last_root</span> <span class="o">!=</span> <span class="n">root</span> <span class="ow">or</span> <span class="n">last_mask</span> <span class="o">!=</span> <span class="n">mask</span><span class="p">):</span>
+</span><span id="find_binary_file-18"><a href="#find_binary_file-18"><span class="linenos">18</span></a>        <span class="n">master_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pathname</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">root_dir</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="find_binary_file-19"><a href="#find_binary_file-19"><span class="linenos">19</span></a>        <span class="n">master_dict</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="find_binary_file-20"><a href="#find_binary_file-20"><span class="linenos">20</span></a>        <span class="k">for</span> <span class="n">reldir</span> <span class="ow">in</span> <span class="n">master_list</span><span class="p">:</span>
+</span><span id="find_binary_file-21"><a href="#find_binary_file-21"><span class="linenos">21</span></a>            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">reldir</span><span class="p">)</span>
+</span><span id="find_binary_file-22"><a href="#find_binary_file-22"><span class="linenos">22</span></a>            <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span id="find_binary_file-23"><a href="#find_binary_file-23"><span class="linenos">23</span></a>            <span class="n">short_name</span> <span class="o">=</span> <span class="n">fname</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span><span class="o">-</span><span class="n">MAX_NAME_LEN</span><span class="p">:]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_NAME_LEN</span> <span class="k">else</span> <span class="n">fname</span>
+</span><span id="find_binary_file-24"><a href="#find_binary_file-24"><span class="linenos">24</span></a>            <span class="k">if</span> <span class="n">short_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">master_dict</span><span class="p">:</span> 
+</span><span id="find_binary_file-25"><a href="#find_binary_file-25"><span class="linenos">25</span></a>                <span class="n">master_dict</span><span class="p">[</span><span class="n">short_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
+</span><span id="find_binary_file-26"><a href="#find_binary_file-26"><span class="linenos">26</span></a>        <span class="n">last_root</span> <span class="o">=</span> <span class="n">root</span>
+</span><span id="find_binary_file-27"><a href="#find_binary_file-27"><span class="linenos">27</span></a>        <span class="n">last_mask</span> <span class="o">=</span> <span class="n">mask</span>
+</span><span id="find_binary_file-28"><a href="#find_binary_file-28"><span class="linenos">28</span></a>    <span class="k">if</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">master_dict</span><span class="p">:</span>
+</span><span id="find_binary_file-29"><a href="#find_binary_file-29"><span class="linenos">29</span></a>        <span class="k">return</span> <span class="n">master_dict</span><span class="p">[</span><span class="n">file</span><span class="p">]</span>
+</span><span id="find_binary_file-30"><a href="#find_binary_file-30"><span class="linenos">30</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="find_binary_file-31"><a href="#find_binary_file-31"><span class="linenos">31</span></a>        <span class="k">return</span> <span class="kc">None</span>
+</span></pre></div>
+
+
+    
+
+                </section>
                 <section id="load_pamguard_multi_file">
                             <input id="load_pamguard_multi_file-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">load_pamguard_multi_file</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">data_dir</span>,</span><span class="param">	<span class="n">file_names</span>,</span><span class="param">	<span class="n">item_uid</span>,</span><span class="param">	<span class="n">verbosity</span><span class="p">:</span> <span class="n"><a href="logger.html#Verbosity">pypamguard.logger.Verbosity</a></span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">Verbosity</span><span class="o">.</span><span class="n">WARNING</span><span class="p">:</span> <span class="mi">2</span><span class="o">&gt;</span></span><span class="return-annotation">):</span></span>
+        <span class="name">load_pamguard_multi_file</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">data_dir</span>, </span><span class="param"><span class="n">file_names</span>, </span><span class="param"><span class="n">item_uids</span></span><span class="return-annotation">):</span></span>
 
                 <label class="view-source-button" for="load_pamguard_multi_file-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#load_pamguard_multi_file"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="load_pamguard_multi_file-7"><a href="#load_pamguard_multi_file-7"><span class="linenos"> 7</span></a><span class="k">def</span><span class="w"> </span><span class="nf">load_pamguard_multi_file</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">file_names</span><span class="p">,</span> <span class="n">item_uid</span><span class="p">,</span> <span class="n">verbosity</span><span class="p">:</span> <span class="n">Verbosity</span> <span class="o">=</span> <span class="n">Verbosity</span><span class="o">.</span><span class="n">WARNING</span><span class="p">):</span>
-</span><span id="load_pamguard_multi_file-8"><a href="#load_pamguard_multi_file-8"><span class="linenos"> 8</span></a>    <span class="n">file_name_dict</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="load_pamguard_multi_file-9"><a href="#load_pamguard_multi_file-9"><span class="linenos"> 9</span></a>
-</span><span id="load_pamguard_multi_file-10"><a href="#load_pamguard_multi_file-10"><span class="linenos">10</span></a>    <span class="n">event_data</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="load_pamguard_multi_file-11"><a href="#load_pamguard_multi_file-11"><span class="linenos">11</span></a>    <span class="n">event_data_list</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="load_pamguard_multi_file-12"><a href="#load_pamguard_multi_file-12"><span class="linenos">12</span></a>
-</span><span id="load_pamguard_multi_file-13"><a href="#load_pamguard_multi_file-13"><span class="linenos">13</span></a>    <span class="c1"># Each file name has one or more UIDs. Better represented by dict.</span>
-</span><span id="load_pamguard_multi_file-14"><a href="#load_pamguard_multi_file-14"><span class="linenos">14</span></a>    <span class="k">for</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">uid</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">file_names</span><span class="p">,</span> <span class="n">item_uid</span><span class="p">):</span>
-</span><span id="load_pamguard_multi_file-15"><a href="#load_pamguard_multi_file-15"><span class="linenos">15</span></a>        <span class="k">if</span> <span class="n">file_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_name_dict</span><span class="p">:</span>
-</span><span id="load_pamguard_multi_file-16"><a href="#load_pamguard_multi_file-16"><span class="linenos">16</span></a>            <span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="load_pamguard_multi_file-17"><a href="#load_pamguard_multi_file-17"><span class="linenos">17</span></a>        <span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
-</span><span id="load_pamguard_multi_file-18"><a href="#load_pamguard_multi_file-18"><span class="linenos">18</span></a>
-</span><span id="load_pamguard_multi_file-19"><a href="#load_pamguard_multi_file-19"><span class="linenos">19</span></a>    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_name_dict</span><span class="p">:</span>
-</span><span id="load_pamguard_multi_file-20"><a href="#load_pamguard_multi_file-20"><span class="linenos">20</span></a>        <span class="n">filter_obj</span> <span class="o">=</span> <span class="n">Filters</span><span class="p">({</span>
-</span><span id="load_pamguard_multi_file-21"><a href="#load_pamguard_multi_file-21"><span class="linenos">21</span></a>            <span class="s2">&quot;uid_list&quot;</span><span class="p">:</span> <span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span>
-</span><span id="load_pamguard_multi_file-22"><a href="#load_pamguard_multi_file-22"><span class="linenos">22</span></a>        <span class="p">})</span>
-</span><span id="load_pamguard_multi_file-23"><a href="#load_pamguard_multi_file-23"><span class="linenos">23</span></a>        <span class="n">file_data</span> <span class="o">=</span> <span class="n">load_pamguard_binary_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="n">filters</span><span class="o">=</span><span class="n">filter_obj</span><span class="p">)</span>
-</span><span id="load_pamguard_multi_file-24"><a href="#load_pamguard_multi_file-24"><span class="linenos">24</span></a>        <span class="c1"># event_data[file_name] = file_data</span>
-</span><span id="load_pamguard_multi_file-25"><a href="#load_pamguard_multi_file-25"><span class="linenos">25</span></a>        <span class="c1"># OR</span>
-</span><span id="load_pamguard_multi_file-26"><a href="#load_pamguard_multi_file-26"><span class="linenos">26</span></a>        <span class="n">event_data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_data</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-</span><span id="load_pamguard_multi_file-27"><a href="#load_pamguard_multi_file-27"><span class="linenos">27</span></a>        <span class="c1"># TODO: PUT FILENAME IN load_pamguard_binary_file()</span>
-</span><span id="load_pamguard_multi_file-28"><a href="#load_pamguard_multi_file-28"><span class="linenos">28</span></a>
-</span><span id="load_pamguard_multi_file-29"><a href="#load_pamguard_multi_file-29"><span class="linenos">29</span></a>        <span class="c1"># THIS SEEMS LIKE A ROUNDABOUT WAY OF DOING OPTION 1</span>
-</span><span id="load_pamguard_multi_file-30"><a href="#load_pamguard_multi_file-30"><span class="linenos">30</span></a>        <span class="c1"># FROM MATLAB CODE.</span>
-</span><span id="load_pamguard_multi_file-31"><a href="#load_pamguard_multi_file-31"><span class="linenos">31</span></a>        <span class="c1"># fileName = [fName fEnd];</span>
-</span><span id="load_pamguard_multi_file-32"><a href="#load_pamguard_multi_file-32"><span class="linenos">32</span></a>        <span class="c1"># for d = 1:numel(fileData)</span>
-</span><span id="load_pamguard_multi_file-33"><a href="#load_pamguard_multi_file-33"><span class="linenos">33</span></a>        <span class="c1">#     fileData(d).binaryFile = fileName;</span>
-</span><span id="load_pamguard_multi_file-34"><a href="#load_pamguard_multi_file-34"><span class="linenos">34</span></a>        <span class="c1"># end</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="load_pamguard_multi_file-33"><a href="#load_pamguard_multi_file-33"><span class="linenos">33</span></a><span class="k">def</span><span class="w"> </span><span class="nf">load_pamguard_multi_file</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">file_names</span><span class="p">,</span> <span class="n">item_uids</span><span class="p">):</span>
+</span><span id="load_pamguard_multi_file-34"><a href="#load_pamguard_multi_file-34"><span class="linenos">34</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="load_pamguard_multi_file-35"><a href="#load_pamguard_multi_file-35"><span class="linenos">35</span></a><span class="sd">    A function to load a number of PAMGuard data chunks at once from</span>
+</span><span id="load_pamguard_multi_file-36"><a href="#load_pamguard_multi_file-36"><span class="linenos">36</span></a><span class="sd">    various binary files, filtering by UID.</span>
+</span><span id="load_pamguard_multi_file-37"><a href="#load_pamguard_multi_file-37"><span class="linenos">37</span></a>
+</span><span id="load_pamguard_multi_file-38"><a href="#load_pamguard_multi_file-38"><span class="linenos">38</span></a><span class="sd">    For example</span>
+</span><span id="load_pamguard_multi_file-39"><a href="#load_pamguard_multi_file-39"><span class="linenos">39</span></a><span class="sd">    `file_names=[&quot;file1.pgdf&quot;, &quot;file1.pgdf&quot;, &quot;file2.pgdf&quot;, &quot;file3.pgdf&quot;, &quot;file3.pgdf&quot;]`</span>
+</span><span id="load_pamguard_multi_file-40"><a href="#load_pamguard_multi_file-40"><span class="linenos">40</span></a><span class="sd">    `item_uids=[7000001, 7000199, 10000001, 10002893, 6000001]`</span>
+</span><span id="load_pamguard_multi_file-41"><a href="#load_pamguard_multi_file-41"><span class="linenos">41</span></a><span class="sd">    Will expect to find 3 files: &quot;file1.pgdf&quot;, &quot;file2.pgdf&quot;, and &quot;file3.pgdf&quot;. In</span>
+</span><span id="load_pamguard_multi_file-42"><a href="#load_pamguard_multi_file-42"><span class="linenos">42</span></a><span class="sd">    &quot;file1.pgdf&quot; will expect to find uids 7000001, 7000199. In &quot;file2.pgdf&quot; will expect</span>
+</span><span id="load_pamguard_multi_file-43"><a href="#load_pamguard_multi_file-43"><span class="linenos">43</span></a><span class="sd">    to find uid 10000001. In &quot;file3.pgdf&quot; will expect to find uids 10002893, 6000001.</span>
+</span><span id="load_pamguard_multi_file-44"><a href="#load_pamguard_multi_file-44"><span class="linenos">44</span></a><span class="sd">    </span>
+</span><span id="load_pamguard_multi_file-45"><a href="#load_pamguard_multi_file-45"><span class="linenos">45</span></a><span class="sd">    If `len(file_names) != len(item_uids)`, will raise an error.</span>
+</span><span id="load_pamguard_multi_file-46"><a href="#load_pamguard_multi_file-46"><span class="linenos">46</span></a><span class="sd">    If a particular file name is not found in the data directory, will raise a warning.</span>
+</span><span id="load_pamguard_multi_file-47"><a href="#load_pamguard_multi_file-47"><span class="linenos">47</span></a><span class="sd">    If a particular uid is not found in an expected file, will raise a warning.</span>
+</span><span id="load_pamguard_multi_file-48"><a href="#load_pamguard_multi_file-48"><span class="linenos">48</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="load_pamguard_multi_file-49"><a href="#load_pamguard_multi_file-49"><span class="linenos">49</span></a>
+</span><span id="load_pamguard_multi_file-50"><a href="#load_pamguard_multi_file-50"><span class="linenos">50</span></a>
+</span><span id="load_pamguard_multi_file-51"><a href="#load_pamguard_multi_file-51"><span class="linenos">51</span></a>    <span class="n">file_name_dict</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="load_pamguard_multi_file-52"><a href="#load_pamguard_multi_file-52"><span class="linenos">52</span></a>    <span class="n">report</span> <span class="o">=</span> <span class="n">Report</span><span class="p">()</span>
+</span><span id="load_pamguard_multi_file-53"><a href="#load_pamguard_multi_file-53"><span class="linenos">53</span></a>
+</span><span id="load_pamguard_multi_file-54"><a href="#load_pamguard_multi_file-54"><span class="linenos">54</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">item_uids</span><span class="p">):</span>
+</span><span id="load_pamguard_multi_file-55"><a href="#load_pamguard_multi_file-55"><span class="linenos">55</span></a>        <span class="n">report</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="n">CriticalException</span><span class="p">(</span><span class="s2">&quot;file_names and item_uids must be the same length.&quot;</span><span class="p">))</span>
+</span><span id="load_pamguard_multi_file-56"><a href="#load_pamguard_multi_file-56"><span class="linenos">56</span></a>
+</span><span id="load_pamguard_multi_file-57"><a href="#load_pamguard_multi_file-57"><span class="linenos">57</span></a>    <span class="n">event_data</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="load_pamguard_multi_file-58"><a href="#load_pamguard_multi_file-58"><span class="linenos">58</span></a>    <span class="n">logger</span><span class="o">.</span><span class="n">set_verbosity</span><span class="p">(</span><span class="n">verbosity</span><span class="o">=</span><span class="n">Verbosity</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+</span><span id="load_pamguard_multi_file-59"><a href="#load_pamguard_multi_file-59"><span class="linenos">59</span></a>        
+</span><span id="load_pamguard_multi_file-60"><a href="#load_pamguard_multi_file-60"><span class="linenos">60</span></a>    <span class="c1"># Each file name has one or more UIDs. Better represented by dict.</span>
+</span><span id="load_pamguard_multi_file-61"><a href="#load_pamguard_multi_file-61"><span class="linenos">61</span></a>    <span class="k">for</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">uid</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">file_names</span><span class="p">,</span> <span class="n">item_uids</span><span class="p">):</span>
+</span><span id="load_pamguard_multi_file-62"><a href="#load_pamguard_multi_file-62"><span class="linenos">62</span></a>        <span class="k">if</span> <span class="n">file_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_name_dict</span><span class="p">:</span>
+</span><span id="load_pamguard_multi_file-63"><a href="#load_pamguard_multi_file-63"><span class="linenos">63</span></a>            <span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="load_pamguard_multi_file-64"><a href="#load_pamguard_multi_file-64"><span class="linenos">64</span></a>        <span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+</span><span id="load_pamguard_multi_file-65"><a href="#load_pamguard_multi_file-65"><span class="linenos">65</span></a>
+</span><span id="load_pamguard_multi_file-66"><a href="#load_pamguard_multi_file-66"><span class="linenos">66</span></a>    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_name_dict</span><span class="p">:</span>
+</span><span id="load_pamguard_multi_file-67"><a href="#load_pamguard_multi_file-67"><span class="linenos">67</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="load_pamguard_multi_file-68"><a href="#load_pamguard_multi_file-68"><span class="linenos">68</span></a>        <span class="n">filter_obj</span> <span class="o">=</span> <span class="n">Filters</span><span class="p">({</span><span class="s2">&quot;uidlist&quot;</span><span class="p">:</span> <span class="n">WhitelistFilter</span><span class="p">(</span><span class="n">file_name_dict</span><span class="p">[</span><span class="n">file_name</span><span class="p">])})</span>
+</span><span id="load_pamguard_multi_file-69"><a href="#load_pamguard_multi_file-69"><span class="linenos">69</span></a>        <span class="n">file_path</span> <span class="o">=</span> <span class="n">find_binary_file</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s2">&quot;**/*.pgdf&quot;</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+</span><span id="load_pamguard_multi_file-70"><a href="#load_pamguard_multi_file-70"><span class="linenos">70</span></a>        <span class="n">file_data</span> <span class="o">=</span> <span class="n">load_pamguard_binary_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filter_obj</span><span class="p">,</span> <span class="n">report</span> <span class="o">=</span> <span class="n">report</span><span class="p">)</span>
+</span><span id="load_pamguard_multi_file-71"><a href="#load_pamguard_multi_file-71"><span class="linenos">71</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_data</span><span class="p">:</span>
+</span><span id="load_pamguard_multi_file-72"><a href="#load_pamguard_multi_file-72"><span class="linenos">72</span></a>            <span class="n">report</span><span class="o">.</span><span class="n">add_warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2"> not found in </span><span class="si">{</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">. Skipping.&quot;</span><span class="p">)</span>
+</span><span id="load_pamguard_multi_file-73"><a href="#load_pamguard_multi_file-73"><span class="linenos">73</span></a>            <span class="k">continue</span>
+</span><span id="load_pamguard_multi_file-74"><a href="#load_pamguard_multi_file-74"><span class="linenos">74</span></a>        <span class="n">event_data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">file_data</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</span><span id="load_pamguard_multi_file-75"><a href="#load_pamguard_multi_file-75"><span class="linenos">75</span></a>
+</span><span id="load_pamguard_multi_file-76"><a href="#load_pamguard_multi_file-76"><span class="linenos">76</span></a>    <span class="k">return</span> <span class="n">event_data</span><span class="p">,</span> <span class="n">report</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>A function to load a number of PAMGuard data chunks at once from
+various binary files, filtering by UID.</p>
+
+<p>For example
+<code>file_names=["file1.pgdf", "file1.pgdf", "file2.pgdf", "file3.pgdf", "file3.pgdf"]</code>
+<code>item_uids=[7000001, 7000199, 10000001, 10002893, 6000001]</code>
+Will expect to find 3 files: "file1.pgdf", "file2.pgdf", and "file3.pgdf". In
+"file1.pgdf" will expect to find uids 7000001, 7000199. In "file2.pgdf" will expect
+to find uid 10000001. In "file3.pgdf" will expect to find uids 10002893, 6000001.</p>
+
+<p>If <code>len(file_names) != len(item_uids)</code>, will raise an error.
+If a particular file name is not found in the data directory, will raise a warning.
+If a particular uid is not found in an expected file, will raise a warning.</p>
+</div>
+
 
                 </section>
     </main>

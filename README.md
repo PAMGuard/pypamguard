@@ -48,7 +48,7 @@ for chunk in df.data: # Looping through the data
     print(chunk.identifier)
 ```
 
-For more information, see the (documentation)[https://www.pamguard.org/pypamguard/].
+For more information, see the [documentation](https://www.pamguard.org/pypamguard/).
 
 ## Bugs/Requests
 
@@ -56,7 +56,7 @@ Please use the [Github issue tracker](https://github.com/PAMGuard/pypamguard/iss
 
 ## License
 
-This software is distributed under the terms of the [GNU](https://github.com/PAMGuard/pypamguard/blob/main/LICENSE) general public license. pypamguard is free and open source.
+This software is distributed under the terms of the MIT license. pypamguard is free and open source.
 
 ## Contributing
 

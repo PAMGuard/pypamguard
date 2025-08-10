@@ -99,17 +99,17 @@ pypamguard    </h1>
 <div class="pdoc-code codehilite">
 <pre><span></span><code><span class="c1"># file.py</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pypamguard</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pypamguard</span><span class="o">.</span><span class="n">load_binary_data_file</span><span class="p">(</span><span class="s1">&#39;path/to/data/file.pgdf&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pypamguard</span><span class="o">.</span><span class="n">load_pamguard_data_file</span><span class="p">(</span><span class="s1">&#39;path/to/data/file.pgdf&#39;</span><span class="p">)</span>
 </code></pre>
 </div>
 
 <p>You can then access the file headers and footers from the object like so.</p>
 
 <div class="pdoc-code codehilite">
-<pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">file_header</span> <span class="c1"># file header</span>
-<span class="n">df</span><span class="o">.</span><span class="n">module_header</span> <span class="c1"># module header</span>
-<span class="n">df</span><span class="o">.</span><span class="n">module_footer</span> <span class="c1"># module footer</span>
-<span class="n">df</span><span class="o">.</span><span class="n">file_footer</span> <span class="c1"># file footer</span>
+<pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">file_info</span><span class="o">.</span><span class="n">file_header</span> <span class="c1"># file header</span>
+<span class="n">df</span><span class="o">.</span><span class="n">file_info</span><span class="o">.</span><span class="n">module_header</span> <span class="c1"># module header</span>
+<span class="n">df</span><span class="o">.</span><span class="n">file_info</span><span class="o">.</span><span class="n">module_footer</span> <span class="c1"># module footer</span>
+<span class="n">df</span><span class="o">.</span><span class="n">file_info</span><span class="o">.</span><span class="n">file_footer</span> <span class="c1"># file footer</span>
 </code></pre>
 </div>
 
@@ -124,15 +124,15 @@ pypamguard    </h1>
 <p>All headers, footers, and module data, contain attributes that were read from the binary file. For example, each file header will <strong>always</strong> contain a <code>version</code>. This can intuitively be accessed like an attribute of an object. Some example are shown below.</p>
 
 <div class="pdoc-code codehilite">
-<pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">file_header</span><span class="o">.</span><span class="n">version</span> <span class="c1"># integer</span>
-<span class="n">df</span><span class="o">.</span><span class="n">file_header</span><span class="o">.</span><span class="n">module_type</span> <span class="c1"># bytes</span>
+<pre><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">file_info</span><span class="o">.</span><span class="n">file_header</span><span class="o">.</span><span class="n">version</span> <span class="c1"># integer</span>
+<span class="n">df</span><span class="o">.</span><span class="n">file_info</span><span class="o">.</span><span class="n">file_header</span><span class="o">.</span><span class="n">module_type</span> <span class="c1"># bytes</span>
 </code></pre>
 </div>
 
 <p>You can access a detailed list of all attributes of each chunk by converting it to a string and/or printing it. Exact attributes of each header, footer or module data chunk are not listed in this README as they may change in between file versions. It is recommended to run the library yourself on a particular data file and find the attributes yourself.</p>
 
 <div class="pdoc-code codehilite">
-<pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">file_header</span><span class="p">)</span>
+<pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">file_info</span><span class="o">.</span><span class="n">file_header</span><span class="p">)</span>
 
 <span class="c1"># OUTPUT</span>
 <span class="c1">#</span>
@@ -159,12 +159,13 @@ pypamguard    </h1>
 
 <h3 id="logger-verbosity">Logger Verbosity</h3>
 
-<p>PyPAMGuard has its own logging capabilities to Python's standard output stream. You can pass in an argument <code>verbosity</code> to <code>load_pamguard_data_file</code> using a class of imported enums from <code><a href="pypamguard/logger.html">pypamguard.logger</a></code> (see below).</p>
+<p>PyPAMGuard has its own logging capabilities to Python's standard output stream. You can pass in an argument <code>verbosity</code> to <code>load_pamguard_binary_file</code> using a class of imported enums from <code><a href="pypamguard/logger.html">pypamguard.logger</a></code> (see below).</p>
 
 <div class="pdoc-code codehilite">
 <pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pypamguard</span>
-<span class="n">debug_verbosity</span> <span class="o">=</span> <span class="n"><a href="pypamguard/logger.html#Verbosity.DEBUG">pypamguard.logger.Verbosity.DEBUG</a></span>
-<span class="n"><a href="pypamguard/load_pamguard_binary_file.html">pypamguard.load_pamguard_binary_file</a></span><span class="p">(</span><span class="s1">&#39;path/to/data/file.pgdf&#39;</span> <span class="n">verbosity</span><span class="o">=</span><span class="n">debug_verbosity</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn"><a href="pypamguard/logger.html">pypamguard.logger</a></span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span><span class="p">,</span> <span class="n">Verbosity</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">set_verbosity</span><span class="p">(</span><span class="n">Verbosity</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n"><a href="pypamguard/load_pamguard_binary_file.html">pypamguard.load_pamguard_binary_file</a></span><span class="p">(</span><span class="s1">&#39;path/to/data/file.pgdf&#39;</span><span class="p">)</span>
 </code></pre>
 </div>
 

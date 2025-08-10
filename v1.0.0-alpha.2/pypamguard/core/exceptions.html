@@ -31,6 +31,18 @@
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
+                    <a class="class" href="#MultiFileException">MultiFileException</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#MultiFileException.__init__">MultiFileException</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MultiFileException.fname">fname</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
                     <a class="class" href="#BinaryFileException">BinaryFileException</a>
                             <ul class="memberlist">
                         <li>
@@ -165,79 +177,145 @@
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
 </span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="c1"># from pypamguard.core.readers import BinaryReader</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a>
-</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BinaryFileException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">br</span> <span class="o">=</span> <span class="n">br</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="k">class</span><span class="w"> </span><span class="nc">MultiFileException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Error reading </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
 </span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>  
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BinaryFileException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 </span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="si">}</span><span class="s2"> at position </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="si">}</span><span class="s2"> bytes&quot;</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="k">class</span><span class="w"> </span><span class="nc">WarningException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ErrorException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">, reading </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>
-</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ChunkLengthMismatch</span><span class="p">(</span><span class="n">WarningException</span><span class="p">):</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">chunk_info</span><span class="p">,</span> <span class="n">chunk_obj</span><span class="p">):</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span> <span class="o">=</span> <span class="n">chunk_info</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span> <span class="o">=</span> <span class="n">chunk_obj</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">br</span> <span class="o">=</span> <span class="n">br</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>  
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="si">}</span><span class="s2"> at position </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="si">}</span><span class="s2"> bytes&quot;</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a><span class="k">class</span><span class="w"> </span><span class="nc">WarningException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ErrorException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
 </span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    
 </span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;, expected chunk length </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="o">.</span><span class="n">length</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2"> bytes, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span><span class="o">.</span><span class="n">_measured_length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="o">.</span><span class="n">_measured_length</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2"> bytes&quot;</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">, reading </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
 </span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>
-</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="k">class</span><span class="w"> </span><span class="nc">CriticalException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>    <span class="k">pass</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>
-</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModuleNotFoundException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    <span class="k">pass</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>
-</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FileCorruptedException</span><span class="p">(</span><span class="n">CriticalException</span><span class="p">):</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>    <span class="k">pass</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ChunkLengthMismatch</span><span class="p">(</span><span class="n">WarningException</span><span class="p">):</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">chunk_info</span><span class="p">,</span> <span class="n">chunk_obj</span><span class="p">):</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span> <span class="o">=</span> <span class="n">chunk_info</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span> <span class="o">=</span> <span class="n">chunk_obj</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>    
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;, expected chunk length </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="o">.</span><span class="n">length</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2"> bytes, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span><span class="o">.</span><span class="n">_measured_length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="o">.</span><span class="n">_measured_length</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2"> bytes&quot;</span>
 </span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>
-</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StructuralException</span><span class="p">(</span><span class="n">FileCorruptedException</span><span class="p">):</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>    
-</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">io</span><span class="o">.</span><span class="n">BufferedReader</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>    
-</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="k">class</span><span class="w"> </span><span class="nc">CriticalException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>    <span class="k">pass</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModuleNotFoundException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="k">pass</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FileCorruptedException</span><span class="p">(</span><span class="n">CriticalException</span><span class="p">):</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>    <span class="k">pass</span>
 </span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>
-</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoFileHeaderException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>    <span class="k">pass</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>
-</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoModuleHeaderException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>    <span class="k">pass</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>
-</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoModuleFooterException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>    <span class="k">pass</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StructuralException</span><span class="p">(</span><span class="n">FileCorruptedException</span><span class="p">):</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>    
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">io</span><span class="o">.</span><span class="n">BufferedReader</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>    
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
 </span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>
-</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoFileFooterException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoFileHeaderException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
 </span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>    <span class="k">pass</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoModuleHeaderException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>    <span class="k">pass</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a>
+</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoModuleFooterException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a>    <span class="k">pass</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>
+</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoFileFooterException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 
             </section>
+                <section id="MultiFileException">
+                            <input id="MultiFileException-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">MultiFileException</span><wbr>(<span class="base">builtins.Exception</span>):
+
+                <label class="view-source-button" for="MultiFileException-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#MultiFileException"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="MultiFileException-5"><a href="#MultiFileException-5"><span class="linenos"> 5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">MultiFileException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="MultiFileException-6"><a href="#MultiFileException-6"><span class="linenos"> 6</span></a>
+</span><span id="MultiFileException-7"><a href="#MultiFileException-7"><span class="linenos"> 7</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="MultiFileException-8"><a href="#MultiFileException-8"><span class="linenos"> 8</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span id="MultiFileException-9"><a href="#MultiFileException-9"><span class="linenos"> 9</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span>
+</span><span id="MultiFileException-10"><a href="#MultiFileException-10"><span class="linenos">10</span></a>
+</span><span id="MultiFileException-11"><a href="#MultiFileException-11"><span class="linenos">11</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="MultiFileException-12"><a href="#MultiFileException-12"><span class="linenos">12</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Error reading </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Common base class for all non-exit exceptions.</p>
+</div>
+
+
+                            <div id="MultiFileException.__init__" class="classattr">
+                                        <input id="MultiFileException.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">MultiFileException</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">fname</span>, </span><span class="param"><span class="o">*</span><span class="n">args</span>, </span><span class="param"><span class="o">**</span><span class="n">kwargs</span></span>)</span>
+
+                <label class="view-source-button" for="MultiFileException.__init__-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#MultiFileException.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="MultiFileException.__init__-7"><a href="#MultiFileException.__init__-7"><span class="linenos">7</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="MultiFileException.__init__-8"><a href="#MultiFileException.__init__-8"><span class="linenos">8</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span id="MultiFileException.__init__-9"><a href="#MultiFileException.__init__-9"><span class="linenos">9</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="MultiFileException.fname" class="classattr">
+                                <div class="attr variable">
+            <span class="name">fname</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MultiFileException.fname"></a>
+    
+    
+
+                            </div>
+                </section>
                 <section id="BinaryFileException">
                             <input id="BinaryFileException-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
@@ -249,19 +327,19 @@
 
     </div>
     <a class="headerlink" href="#BinaryFileException"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="BinaryFileException-6"><a href="#BinaryFileException-6"><span class="linenos"> 6</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BinaryFileException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-</span><span id="BinaryFileException-7"><a href="#BinaryFileException-7"><span class="linenos"> 7</span></a>
-</span><span id="BinaryFileException-8"><a href="#BinaryFileException-8"><span class="linenos"> 8</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
-</span><span id="BinaryFileException-9"><a href="#BinaryFileException-9"><span class="linenos"> 9</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-</span><span id="BinaryFileException-10"><a href="#BinaryFileException-10"><span class="linenos">10</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">br</span> <span class="o">=</span> <span class="n">br</span>
-</span><span id="BinaryFileException-11"><a href="#BinaryFileException-11"><span class="linenos">11</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
-</span><span id="BinaryFileException-12"><a href="#BinaryFileException-12"><span class="linenos">12</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="BinaryFileException-13"><a href="#BinaryFileException-13"><span class="linenos">13</span></a>
-</span><span id="BinaryFileException-14"><a href="#BinaryFileException-14"><span class="linenos">14</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-</span><span id="BinaryFileException-15"><a href="#BinaryFileException-15"><span class="linenos">15</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>  
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BinaryFileException-15"><a href="#BinaryFileException-15"><span class="linenos">15</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BinaryFileException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 </span><span id="BinaryFileException-16"><a href="#BinaryFileException-16"><span class="linenos">16</span></a>
-</span><span id="BinaryFileException-17"><a href="#BinaryFileException-17"><span class="linenos">17</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="BinaryFileException-18"><a href="#BinaryFileException-18"><span class="linenos">18</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="si">}</span><span class="s2"> at position </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="si">}</span><span class="s2"> bytes&quot;</span>
+</span><span id="BinaryFileException-17"><a href="#BinaryFileException-17"><span class="linenos">17</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
+</span><span id="BinaryFileException-18"><a href="#BinaryFileException-18"><span class="linenos">18</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span><span id="BinaryFileException-19"><a href="#BinaryFileException-19"><span class="linenos">19</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">br</span> <span class="o">=</span> <span class="n">br</span>
+</span><span id="BinaryFileException-20"><a href="#BinaryFileException-20"><span class="linenos">20</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+</span><span id="BinaryFileException-21"><a href="#BinaryFileException-21"><span class="linenos">21</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="BinaryFileException-22"><a href="#BinaryFileException-22"><span class="linenos">22</span></a>
+</span><span id="BinaryFileException-23"><a href="#BinaryFileException-23"><span class="linenos">23</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+</span><span id="BinaryFileException-24"><a href="#BinaryFileException-24"><span class="linenos">24</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>  
+</span><span id="BinaryFileException-25"><a href="#BinaryFileException-25"><span class="linenos">25</span></a>
+</span><span id="BinaryFileException-26"><a href="#BinaryFileException-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="BinaryFileException-27"><a href="#BinaryFileException-27"><span class="linenos">27</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="si">}</span><span class="s2"> at position </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="si">}</span><span class="s2"> bytes&quot;</span>
 </span></pre></div>
 
 
@@ -279,11 +357,11 @@
 
     </div>
     <a class="headerlink" href="#BinaryFileException.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="BinaryFileException.__init__-8"><a href="#BinaryFileException.__init__-8"><span class="linenos"> 8</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
-</span><span id="BinaryFileException.__init__-9"><a href="#BinaryFileException.__init__-9"><span class="linenos"> 9</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-</span><span id="BinaryFileException.__init__-10"><a href="#BinaryFileException.__init__-10"><span class="linenos">10</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">br</span> <span class="o">=</span> <span class="n">br</span>
-</span><span id="BinaryFileException.__init__-11"><a href="#BinaryFileException.__init__-11"><span class="linenos">11</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
-</span><span id="BinaryFileException.__init__-12"><a href="#BinaryFileException.__init__-12"><span class="linenos">12</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BinaryFileException.__init__-17"><a href="#BinaryFileException.__init__-17"><span class="linenos">17</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
+</span><span id="BinaryFileException.__init__-18"><a href="#BinaryFileException.__init__-18"><span class="linenos">18</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span><span id="BinaryFileException.__init__-19"><a href="#BinaryFileException.__init__-19"><span class="linenos">19</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">br</span> <span class="o">=</span> <span class="n">br</span>
+</span><span id="BinaryFileException.__init__-20"><a href="#BinaryFileException.__init__-20"><span class="linenos">20</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+</span><span id="BinaryFileException.__init__-21"><a href="#BinaryFileException.__init__-21"><span class="linenos">21</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span></pre></div>
 
 
@@ -334,8 +412,8 @@
 
     </div>
     <a class="headerlink" href="#BinaryFileException.add_context"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="BinaryFileException.add_context-14"><a href="#BinaryFileException.add_context-14"><span class="linenos">14</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-</span><span id="BinaryFileException.add_context-15"><a href="#BinaryFileException.add_context-15"><span class="linenos">15</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>  
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BinaryFileException.add_context-23"><a href="#BinaryFileException.add_context-23"><span class="linenos">23</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+</span><span id="BinaryFileException.add_context-24"><a href="#BinaryFileException.add_context-24"><span class="linenos">24</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>  
 </span></pre></div>
 
 
@@ -354,13 +432,13 @@
 
     </div>
     <a class="headerlink" href="#WarningException"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="WarningException-20"><a href="#WarningException-20"><span class="linenos">20</span></a><span class="k">class</span><span class="w"> </span><span class="nc">WarningException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
-</span><span id="WarningException-21"><a href="#WarningException-21"><span class="linenos">21</span></a>    
-</span><span id="WarningException-22"><a href="#WarningException-22"><span class="linenos">22</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
-</span><span id="WarningException-23"><a href="#WarningException-23"><span class="linenos">23</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
-</span><span id="WarningException-24"><a href="#WarningException-24"><span class="linenos">24</span></a>
-</span><span id="WarningException-25"><a href="#WarningException-25"><span class="linenos">25</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="WarningException-26"><a href="#WarningException-26"><span class="linenos">26</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="WarningException-29"><a href="#WarningException-29"><span class="linenos">29</span></a><span class="k">class</span><span class="w"> </span><span class="nc">WarningException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
+</span><span id="WarningException-30"><a href="#WarningException-30"><span class="linenos">30</span></a>    
+</span><span id="WarningException-31"><a href="#WarningException-31"><span class="linenos">31</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
+</span><span id="WarningException-32"><a href="#WarningException-32"><span class="linenos">32</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+</span><span id="WarningException-33"><a href="#WarningException-33"><span class="linenos">33</span></a>
+</span><span id="WarningException-34"><a href="#WarningException-34"><span class="linenos">34</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="WarningException-35"><a href="#WarningException-35"><span class="linenos">35</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
 </span></pre></div>
 
 
@@ -378,8 +456,8 @@
 
     </div>
     <a class="headerlink" href="#WarningException.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="WarningException.__init__-22"><a href="#WarningException.__init__-22"><span class="linenos">22</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
-</span><span id="WarningException.__init__-23"><a href="#WarningException.__init__-23"><span class="linenos">23</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="WarningException.__init__-31"><a href="#WarningException.__init__-31"><span class="linenos">31</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">):</span>
+</span><span id="WarningException.__init__-32"><a href="#WarningException.__init__-32"><span class="linenos">32</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -410,13 +488,13 @@
 
     </div>
     <a class="headerlink" href="#ErrorException"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ErrorException-28"><a href="#ErrorException-28"><span class="linenos">28</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ErrorException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
-</span><span id="ErrorException-29"><a href="#ErrorException-29"><span class="linenos">29</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-</span><span id="ErrorException-30"><a href="#ErrorException-30"><span class="linenos">30</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
-</span><span id="ErrorException-31"><a href="#ErrorException-31"><span class="linenos">31</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
-</span><span id="ErrorException-32"><a href="#ErrorException-32"><span class="linenos">32</span></a>    
-</span><span id="ErrorException-33"><a href="#ErrorException-33"><span class="linenos">33</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="ErrorException-34"><a href="#ErrorException-34"><span class="linenos">34</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">, reading </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ErrorException-37"><a href="#ErrorException-37"><span class="linenos">37</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ErrorException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
+</span><span id="ErrorException-38"><a href="#ErrorException-38"><span class="linenos">38</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+</span><span id="ErrorException-39"><a href="#ErrorException-39"><span class="linenos">39</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+</span><span id="ErrorException-40"><a href="#ErrorException-40"><span class="linenos">40</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+</span><span id="ErrorException-41"><a href="#ErrorException-41"><span class="linenos">41</span></a>    
+</span><span id="ErrorException-42"><a href="#ErrorException-42"><span class="linenos">42</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="ErrorException-43"><a href="#ErrorException-43"><span class="linenos">43</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">, reading </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
 </span></pre></div>
 
 
@@ -434,9 +512,9 @@
 
     </div>
     <a class="headerlink" href="#ErrorException.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ErrorException.__init__-29"><a href="#ErrorException.__init__-29"><span class="linenos">29</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-</span><span id="ErrorException.__init__-30"><a href="#ErrorException.__init__-30"><span class="linenos">30</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
-</span><span id="ErrorException.__init__-31"><a href="#ErrorException.__init__-31"><span class="linenos">31</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ErrorException.__init__-38"><a href="#ErrorException.__init__-38"><span class="linenos">38</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+</span><span id="ErrorException.__init__-39"><a href="#ErrorException.__init__-39"><span class="linenos">39</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+</span><span id="ErrorException.__init__-40"><a href="#ErrorException.__init__-40"><span class="linenos">40</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
 </span></pre></div>
 
 
@@ -478,14 +556,14 @@
 
     </div>
     <a class="headerlink" href="#ChunkLengthMismatch"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ChunkLengthMismatch-36"><a href="#ChunkLengthMismatch-36"><span class="linenos">36</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ChunkLengthMismatch</span><span class="p">(</span><span class="n">WarningException</span><span class="p">):</span>
-</span><span id="ChunkLengthMismatch-37"><a href="#ChunkLengthMismatch-37"><span class="linenos">37</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">chunk_info</span><span class="p">,</span> <span class="n">chunk_obj</span><span class="p">):</span>
-</span><span id="ChunkLengthMismatch-38"><a href="#ChunkLengthMismatch-38"><span class="linenos">38</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
-</span><span id="ChunkLengthMismatch-39"><a href="#ChunkLengthMismatch-39"><span class="linenos">39</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span> <span class="o">=</span> <span class="n">chunk_info</span>
-</span><span id="ChunkLengthMismatch-40"><a href="#ChunkLengthMismatch-40"><span class="linenos">40</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span> <span class="o">=</span> <span class="n">chunk_obj</span>
-</span><span id="ChunkLengthMismatch-41"><a href="#ChunkLengthMismatch-41"><span class="linenos">41</span></a>    
-</span><span id="ChunkLengthMismatch-42"><a href="#ChunkLengthMismatch-42"><span class="linenos">42</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="ChunkLengthMismatch-43"><a href="#ChunkLengthMismatch-43"><span class="linenos">43</span></a>        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;, expected chunk length </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="o">.</span><span class="n">length</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2"> bytes, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span><span class="o">.</span><span class="n">_measured_length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="o">.</span><span class="n">_measured_length</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2"> bytes&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ChunkLengthMismatch-45"><a href="#ChunkLengthMismatch-45"><span class="linenos">45</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ChunkLengthMismatch</span><span class="p">(</span><span class="n">WarningException</span><span class="p">):</span>
+</span><span id="ChunkLengthMismatch-46"><a href="#ChunkLengthMismatch-46"><span class="linenos">46</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">chunk_info</span><span class="p">,</span> <span class="n">chunk_obj</span><span class="p">):</span>
+</span><span id="ChunkLengthMismatch-47"><a href="#ChunkLengthMismatch-47"><span class="linenos">47</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+</span><span id="ChunkLengthMismatch-48"><a href="#ChunkLengthMismatch-48"><span class="linenos">48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span> <span class="o">=</span> <span class="n">chunk_info</span>
+</span><span id="ChunkLengthMismatch-49"><a href="#ChunkLengthMismatch-49"><span class="linenos">49</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span> <span class="o">=</span> <span class="n">chunk_obj</span>
+</span><span id="ChunkLengthMismatch-50"><a href="#ChunkLengthMismatch-50"><span class="linenos">50</span></a>    
+</span><span id="ChunkLengthMismatch-51"><a href="#ChunkLengthMismatch-51"><span class="linenos">51</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="ChunkLengthMismatch-52"><a href="#ChunkLengthMismatch-52"><span class="linenos">52</span></a>        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;, expected chunk length </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="o">.</span><span class="n">length</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2"> bytes, got </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span><span class="o">.</span><span class="n">_measured_length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span><span class="o">.</span><span class="n">_measured_length</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="si">}</span><span class="s2"> bytes&quot;</span>
 </span></pre></div>
 
 
@@ -503,10 +581,10 @@
 
     </div>
     <a class="headerlink" href="#ChunkLengthMismatch.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ChunkLengthMismatch.__init__-37"><a href="#ChunkLengthMismatch.__init__-37"><span class="linenos">37</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">chunk_info</span><span class="p">,</span> <span class="n">chunk_obj</span><span class="p">):</span>
-</span><span id="ChunkLengthMismatch.__init__-38"><a href="#ChunkLengthMismatch.__init__-38"><span class="linenos">38</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
-</span><span id="ChunkLengthMismatch.__init__-39"><a href="#ChunkLengthMismatch.__init__-39"><span class="linenos">39</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span> <span class="o">=</span> <span class="n">chunk_info</span>
-</span><span id="ChunkLengthMismatch.__init__-40"><a href="#ChunkLengthMismatch.__init__-40"><span class="linenos">40</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span> <span class="o">=</span> <span class="n">chunk_obj</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ChunkLengthMismatch.__init__-46"><a href="#ChunkLengthMismatch.__init__-46"><span class="linenos">46</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">chunk_info</span><span class="p">,</span> <span class="n">chunk_obj</span><span class="p">):</span>
+</span><span id="ChunkLengthMismatch.__init__-47"><a href="#ChunkLengthMismatch.__init__-47"><span class="linenos">47</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">br</span><span class="p">)</span>
+</span><span id="ChunkLengthMismatch.__init__-48"><a href="#ChunkLengthMismatch.__init__-48"><span class="linenos">48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_info</span> <span class="o">=</span> <span class="n">chunk_info</span>
+</span><span id="ChunkLengthMismatch.__init__-49"><a href="#ChunkLengthMismatch.__init__-49"><span class="linenos">49</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">chunk_obj</span> <span class="o">=</span> <span class="n">chunk_obj</span>
 </span></pre></div>
 
 
@@ -559,8 +637,8 @@
 
     </div>
     <a class="headerlink" href="#CriticalException"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CriticalException-45"><a href="#CriticalException-45"><span class="linenos">45</span></a><span class="k">class</span><span class="w"> </span><span class="nc">CriticalException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
-</span><span id="CriticalException-46"><a href="#CriticalException-46"><span class="linenos">46</span></a>    <span class="k">pass</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CriticalException-54"><a href="#CriticalException-54"><span class="linenos">54</span></a><span class="k">class</span><span class="w"> </span><span class="nc">CriticalException</span><span class="p">(</span><span class="n">BinaryFileException</span><span class="p">):</span>
+</span><span id="CriticalException-55"><a href="#CriticalException-55"><span class="linenos">55</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 
@@ -593,8 +671,8 @@
 
     </div>
     <a class="headerlink" href="#ModuleNotFoundException"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ModuleNotFoundException-48"><a href="#ModuleNotFoundException-48"><span class="linenos">48</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModuleNotFoundException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-</span><span id="ModuleNotFoundException-49"><a href="#ModuleNotFoundException-49"><span class="linenos">49</span></a>    <span class="k">pass</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ModuleNotFoundException-57"><a href="#ModuleNotFoundException-57"><span class="linenos">57</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModuleNotFoundException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="ModuleNotFoundException-58"><a href="#ModuleNotFoundException-58"><span class="linenos">58</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 
@@ -614,8 +692,8 @@
 
     </div>
     <a class="headerlink" href="#FileCorruptedException"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="FileCorruptedException-51"><a href="#FileCorruptedException-51"><span class="linenos">51</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FileCorruptedException</span><span class="p">(</span><span class="n">CriticalException</span><span class="p">):</span>
-</span><span id="FileCorruptedException-52"><a href="#FileCorruptedException-52"><span class="linenos">52</span></a>    <span class="k">pass</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="FileCorruptedException-60"><a href="#FileCorruptedException-60"><span class="linenos">60</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FileCorruptedException</span><span class="p">(</span><span class="n">CriticalException</span><span class="p">):</span>
+</span><span id="FileCorruptedException-61"><a href="#FileCorruptedException-61"><span class="linenos">61</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 
@@ -648,14 +726,14 @@
 
     </div>
     <a class="headerlink" href="#StructuralException"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="StructuralException-54"><a href="#StructuralException-54"><span class="linenos">54</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StructuralException</span><span class="p">(</span><span class="n">FileCorruptedException</span><span class="p">):</span>
-</span><span id="StructuralException-55"><a href="#StructuralException-55"><span class="linenos">55</span></a>    
-</span><span id="StructuralException-56"><a href="#StructuralException-56"><span class="linenos">56</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">io</span><span class="o">.</span><span class="n">BufferedReader</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="StructuralException-57"><a href="#StructuralException-57"><span class="linenos">57</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-</span><span id="StructuralException-58"><a href="#StructuralException-58"><span class="linenos">58</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
-</span><span id="StructuralException-59"><a href="#StructuralException-59"><span class="linenos">59</span></a>    
-</span><span id="StructuralException-60"><a href="#StructuralException-60"><span class="linenos">60</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="StructuralException-61"><a href="#StructuralException-61"><span class="linenos">61</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="StructuralException-63"><a href="#StructuralException-63"><span class="linenos">63</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StructuralException</span><span class="p">(</span><span class="n">FileCorruptedException</span><span class="p">):</span>
+</span><span id="StructuralException-64"><a href="#StructuralException-64"><span class="linenos">64</span></a>    
+</span><span id="StructuralException-65"><a href="#StructuralException-65"><span class="linenos">65</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">io</span><span class="o">.</span><span class="n">BufferedReader</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="StructuralException-66"><a href="#StructuralException-66"><span class="linenos">66</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span><span id="StructuralException-67"><a href="#StructuralException-67"><span class="linenos">67</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+</span><span id="StructuralException-68"><a href="#StructuralException-68"><span class="linenos">68</span></a>    
+</span><span id="StructuralException-69"><a href="#StructuralException-69"><span class="linenos">69</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="StructuralException-70"><a href="#StructuralException-70"><span class="linenos">70</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
 </span></pre></div>
 
 
@@ -673,9 +751,9 @@
 
     </div>
     <a class="headerlink" href="#StructuralException.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="StructuralException.__init__-56"><a href="#StructuralException.__init__-56"><span class="linenos">56</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">io</span><span class="o">.</span><span class="n">BufferedReader</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-</span><span id="StructuralException.__init__-57"><a href="#StructuralException.__init__-57"><span class="linenos">57</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-</span><span id="StructuralException.__init__-58"><a href="#StructuralException.__init__-58"><span class="linenos">58</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="StructuralException.__init__-65"><a href="#StructuralException.__init__-65"><span class="linenos">65</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">io</span><span class="o">.</span><span class="n">BufferedReader</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="StructuralException.__init__-66"><a href="#StructuralException.__init__-66"><span class="linenos">66</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span><span id="StructuralException.__init__-67"><a href="#StructuralException.__init__-67"><span class="linenos">67</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
 </span></pre></div>
 
 
@@ -717,8 +795,8 @@
 
     </div>
     <a class="headerlink" href="#NoFileHeaderException"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="NoFileHeaderException-63"><a href="#NoFileHeaderException-63"><span class="linenos">63</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoFileHeaderException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
-</span><span id="NoFileHeaderException-64"><a href="#NoFileHeaderException-64"><span class="linenos">64</span></a>    <span class="k">pass</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="NoFileHeaderException-72"><a href="#NoFileHeaderException-72"><span class="linenos">72</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoFileHeaderException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
+</span><span id="NoFileHeaderException-73"><a href="#NoFileHeaderException-73"><span class="linenos">73</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 
@@ -755,8 +833,8 @@
 
     </div>
     <a class="headerlink" href="#NoModuleHeaderException"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="NoModuleHeaderException-66"><a href="#NoModuleHeaderException-66"><span class="linenos">66</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoModuleHeaderException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
-</span><span id="NoModuleHeaderException-67"><a href="#NoModuleHeaderException-67"><span class="linenos">67</span></a>    <span class="k">pass</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="NoModuleHeaderException-75"><a href="#NoModuleHeaderException-75"><span class="linenos">75</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoModuleHeaderException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
+</span><span id="NoModuleHeaderException-76"><a href="#NoModuleHeaderException-76"><span class="linenos">76</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 
@@ -793,8 +871,8 @@
 
     </div>
     <a class="headerlink" href="#NoModuleFooterException"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="NoModuleFooterException-69"><a href="#NoModuleFooterException-69"><span class="linenos">69</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoModuleFooterException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
-</span><span id="NoModuleFooterException-70"><a href="#NoModuleFooterException-70"><span class="linenos">70</span></a>    <span class="k">pass</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="NoModuleFooterException-78"><a href="#NoModuleFooterException-78"><span class="linenos">78</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoModuleFooterException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
+</span><span id="NoModuleFooterException-79"><a href="#NoModuleFooterException-79"><span class="linenos">79</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 
@@ -831,8 +909,8 @@
 
     </div>
     <a class="headerlink" href="#NoFileFooterException"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="NoFileFooterException-72"><a href="#NoFileFooterException-72"><span class="linenos">72</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoFileFooterException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
-</span><span id="NoFileFooterException-73"><a href="#NoFileFooterException-73"><span class="linenos">73</span></a>    <span class="k">pass</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="NoFileFooterException-81"><a href="#NoFileFooterException-81"><span class="linenos">81</span></a><span class="k">class</span><span class="w"> </span><span class="nc">NoFileFooterException</span><span class="p">(</span><span class="n">StructuralException</span><span class="p">):</span>
+</span><span id="NoFileFooterException-82"><a href="#NoFileFooterException-82"><span class="linenos">82</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 

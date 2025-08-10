@@ -165,6 +165,9 @@
                         <li>
                                 <a class="function" href="#Filters.filter">filter</a>
                         </li>
+                        <li>
+                                <a class="variable" href="#Filters.filters">filters</a>
+                        </li>
                 </ul>
 
             </li>
@@ -427,6 +430,10 @@
 </span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a>    
 </span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">)</span>
+</span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a>
+</span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a>    <span class="nd">@property</span>
+</span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span>
 </span></pre></div>
 
 
@@ -1281,6 +1288,10 @@ from the <code><a href="#FILTER_POSITION">FILTER_POSITION</a></code> enum.</p>
 </span><span id="Filters-237"><a href="#Filters-237"><span class="linenos">237</span></a>    
 </span><span id="Filters-238"><a href="#Filters-238"><span class="linenos">238</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="Filters-239"><a href="#Filters-239"><span class="linenos">239</span></a>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">)</span>
+</span><span id="Filters-240"><a href="#Filters-240"><span class="linenos">240</span></a>
+</span><span id="Filters-241"><a href="#Filters-241"><span class="linenos">241</span></a>    <span class="nd">@property</span>
+</span><span id="Filters-242"><a href="#Filters-242"><span class="linenos">242</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Filters-243"><a href="#Filters-243"><span class="linenos">243</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span>
 </span></pre></div>
 
 
@@ -1506,6 +1517,24 @@ Raises <code><a href="#FilterMismatchException">FilterMismatchException</a></cod
 @param value: The value to apply the filter to.</p>
 </div>
 
+
+                            </div>
+                            <div id="Filters.filters" class="classattr">
+                                        <input id="Filters.filters-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">filters</span>
+
+                <label class="view-source-button" for="Filters.filters-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Filters.filters"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Filters.filters-241"><a href="#Filters.filters-241"><span class="linenos">241</span></a>    <span class="nd">@property</span>
+</span><span id="Filters.filters-242"><a href="#Filters.filters-242"><span class="linenos">242</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Filters.filters-243"><a href="#Filters.filters-243"><span class="linenos">243</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span>
+</span></pre></div>
+
+
+    
 
                             </div>
                 </section>

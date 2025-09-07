@@ -179,6 +179,34 @@ filters = Filters({
 load_pamguard_binary_file('path/to/data/file.pgdf', filters=filters)
 ```
 
+### Custom Filter
+
+Define a custom filter function which is run once each chunk is loaded.
+Use the template below for this.
+
+```python
+from pypamguard.core.filters import Filters, FILTER_POSITION
+from pypamguard.chunks.standard import StandardModule
+from pypamguard import load_pamguard_binary_file
+
+def custom_filter(data: StandardModule):
+    if data.uid == 10:
+        # Keep UID 10
+        return FILTER_POSITION.KEEP
+    elif data.uid < 10:
+        # Skip all chunks before UID 10
+        return FILTER_POSITION.SKIP
+    elif data.uid > 11:
+        # Stop executing at UID 12
+        return FILTER_POSITION.STOP
+    # Keep UID 11 (as returning None is the
+    # same as returning FILTER_POSITION.KEEP
+
+filters = Filters()
+filters.add_custom_filter(custom_filter)
+load_pamguard_binary_file('path/to/data/file.pgdf', filters=filters)
+```
+
 ## Fundamentals
 
 ### Data Types

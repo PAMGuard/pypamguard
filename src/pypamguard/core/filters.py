@@ -141,15 +141,6 @@ class DateFilter(RangeFilter):
         return cls(datetime.datetime.fromtimestamp(json["start"], tz=datetime.UTC), datetime.datetime.fromtimestamp(json["end"], tz=datetime.UTC), json["ordered"], json["ignore_timezone"], json["ignore_none"])
 
 class Filters:
-    """
-    A class to manage zero or more filters to be applied to a `PAMGuardFile` object.
-    Apply a filter to a particular value by calling `filter()` method. Then check the
-    `position` (type `FILTER_POSITION`) attribute to check the position of the filter.
-
-    To see all available filters, see attribute `INSTALLED_FILTERS`. You can also add
-    your own custom filters using the method `add_custom_filter()` and passing a 
-    custom function. 
-    """
 
     INSTALLED_FILTERS = {
         'uidlist': WhitelistFilter,
@@ -161,11 +152,47 @@ class Filters:
     def __init__(self, filters: dict[str, BaseFilter] = None):
         """
         A class to manage zero or more filters to apply to a `PAMGuardFile` object.
+        You can see the available filters to apply through `Filters.INSTALLED_FILTERS`.
 
         @param filters: A dictionary of filters to apply to a `PAMGuardFile` object.
                         The dictionary key is hte name of the filter (which is important
                         for in-built filters such as `uidlist`) and the value is the
                         filter object (extends `BaseFilter`). Defaults to `None`.
+
+        Example 1: create a range filter:
+            ```python
+            from_timestamp: datetime.datetime # some UTC datetime object
+            to_timestamp: datetime.datetime # some UTC datetime object
+
+            filters = Filters({
+                'daterange': DateFilter(from_timestamp, to_timestamp, ordered=True)
+            })
+            load_pamguard_binary_file('path/to/data/file.pgdf', filters=filters)
+            ```
+
+        Example 2: create a custom filter:
+            ```python
+            from pypamguard.core.filters import Filters, FILTER_POSITION
+            from pypamguard.chunks.standard import StandardModule
+            from pypamguard import load_pamguard_binary_file
+
+            def custom_filter(data: StandardModule):
+                if data.uid == 10:
+                    # Keep UID 10
+                    return FILTER_POSITION.KEEP
+                elif data.uid < 10:
+                    # Skip all chunks before UID 10
+                    return FILTER_POSITION.SKIP
+                elif data.uid > 11:
+                    # Stop executing at UID 12
+                    return FILTER_POSITION.STOP
+                # Keep UID 11 (as returning None is the
+                # same as returning FILTER_POSITION.KEEP
+
+            filters = Filters()
+            filters.add_custom_filter(custom_filter)
+            load_pamguard_binary_file('path/to/data/file.pgdf', filters=filters)
+            ```
         """
 
         if not filters: filters = {}
@@ -175,12 +202,14 @@ class Filters:
         self.position: FILTER_POSITION = None
         self.custom_filters = []
     
-    def add_custom_filter(self, func: Callable[[any], bool]):
+    def add_custom_filter(self, func: Callable[[any], FILTER_POSITION]):
         """
-        Add a custom filter function. The function should take a single argument
-        (extends `BaseChunk`) and return a boolean (whether the filter succeeds).
-        Custom filters are usually called just after an entire chunk has been read
-        and determines if that chunk should be saved or not."""
+        Add a custom filter function. The filter functino should have the following signature:
+
+        ```python
+        def custom_filter(data_obj: StandardModule | StandardBackground) -> FILTER_POSITION: ...
+        ```
+        """
         self.custom_filters.append(func)
     
     def call_custom_filters(self, chunk_obj):
@@ -192,9 +221,10 @@ class Filters:
 
     def add(self, key: str, value: BaseFilter):
         """
-        Add a filter. `key` is the name of the filter (which is important
-        for in-built filters such as `uidlist`) and the value is the
-        filter object (extends `BaseFilter`).
+        Add a filter. `key` is the name of the filter (which should exist in
+        `Filters.INSTALLED_FILTERS` and the value is an implementation of
+        `BaseFilter` which is an object of the class defined in the `Filters.
+        INSTALLED_FILTERS`.
         """
         self.__validate(key, value)
         self.__filters[key] = value

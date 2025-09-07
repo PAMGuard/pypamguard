@@ -28,7 +28,6 @@ MANIFEST
 Data/
 ignore/
 exercise*.py
-src/pypamguard/_version.py
 docs/
 .idea/
 

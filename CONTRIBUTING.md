@@ -95,6 +95,13 @@ executed (allow 1 - 3 minutes for these to complete):
 is put in an archive and attached to the release. 
 2. A wheel and tarball of the archive are sent to
 PyPI.
+3. Documentation using `pdoc3` is automatically generated
+from the [src/pypamguard/documentation.md](src/pypamguard/documentation.md)
+file and docstrings.
+
+> Ensure you keep your docstrings up-to-date as these are
+> used in the official PyPAMGuard documentation each time
+> a new release is created!
 
 Releases should be semantically named and tagged like
 so. These tags are dynamically inserted in the tarball

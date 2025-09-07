@@ -132,7 +132,6 @@ class ModuleRegistry:
         return 0
     
     def get_module(self, module_name: str, module_stream) -> GenericModule:
-        logger.info(f"{module_name} {module_stream}")
         if module_name in self.modules and type(self.modules[module_name]) == dict:
             if module_stream in self.modules[module_name]: return self.modules[module_name][module_stream]
             raise ModuleNotFoundException(f"Module '{module_name}' is not registered for stream '{module_stream}'.")

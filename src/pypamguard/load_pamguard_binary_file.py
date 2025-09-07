@@ -31,7 +31,7 @@ def load_pamguard_binary_file(filename: str | Path, order: BYTE_ORDERS = BYTE_OR
     :param clear_fields: list of fields to remove from data objects in the PAMGuardFile (for memory)
     :return: PAMGuardFile
     """
-    if not filters: filters = Filters()
+    if filters is None: filters = Filters()
 
     with timer("loading PAMGuard binary file"):
         if not os.path.exists(filename):

@@ -6,6 +6,7 @@ from pathlib import Path
 
 from pypamguard.chunks.generics import GenericModule, GenericBackground
 from pypamguard.load_pamguard_binary_file import load_pamguard_binary_file
+from pypamguard.core.pamguardfile import PAMGuardFile
 from pypamguard.core.filters import FILTER_POSITION, Filters
 from pypamguard.core.readers import Report
 import os

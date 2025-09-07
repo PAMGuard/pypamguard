@@ -1,21 +1,29 @@
+from pypamguard.chunks.standard import StandardModule
+from pypamguard.chunks.standard.stddata import StandardDataMixin
 from . import *
 from .logger import logger, Verbosity
-from pypamguard.core.filters import Filters, DateFilter, WhitelistFilter
+from pypamguard.core.filters import Filters, DateFilter, WhitelistFilter, FILTER_POSITION
 import datetime
 
 if __name__ == "__main__":
 
-    d1 = datetime.datetime.fromtimestamp(1499572333281 / 1000, tz = datetime.UTC)
-    d2 = datetime.datetime.fromtimestamp(1499572363281 / 1000, tz = datetime.UTC)
+    d1 = datetime.datetime.fromtimestamp(0 / 1000, tz = datetime.UTC)
+    d2 = datetime.datetime.fromtimestamp(14995723632810 / 1000, tz = datetime.UTC)
 
     pg_filters = Filters({
         # 'daterange': DateFilter(d1, d2, ordered=True),
         # 'uidlist': WhitelistFilter([2000006, 2000003])
     })
 
-    # click_v4_test1_daterange = load_pamguard_binary_file("../tests/dataset/detectors/click/click_v4_test1.pgdf", json_path="click_v4_test1.json", filters=Filters({'daterange': DateFilter(datetime.datetime.fromtimestamp(1504477746918 / 1000, tz = datetime.UTC), datetime.datetime.fromtimestamp(1504477758412 / 1000, tz = datetime.UTC), ordered=True)}))
-    # click_v4_test1 = load_pamguard_binary_file("../tests/dataset/detectors/click/click_v4_test1.pgdf")
+    def f(d: StandardDataMixin):
+        if d.uid == 5000010 or d.uid == 5000020:
+             return FILTER_POSITION.SKIP
+        return FILTER_POSITION.KEEP
 
+    pg_filters.add_custom_filter(f)
+    # click_v4_test1_daterange = load_pamguard_binary_file("../tests/dataset/detectors/click/click_v4_test1.pgdf", json_path="click_v4_test1.json", filters=Filters({'daterange': DateFilter(datetime.datetime.fromtimestamp(1504477746918 / 1000, tz = datetime.UTC), datetime.datetime.fromtimestamp(1504477758412 / 1000, tz = datetime.UTC), ordered=True)}))
+    click_v4_test1 = load_pamguard_binary_file("../tests/dataset/detectors/click/click_v4_test1.pgdf", filters=pg_filters)
+    print(click_v4_test1)
     # print(click_v4_test1.data[0])
     # filterednoisemeasurement_v3_test1 = load_pamguard_binary_file("../tests/dataset/processing/filterednoisemeasurement/filterednoisemeasurement_v3_test1.pgdf", json_path="filterednoisemeasurement_v3_test1.json")
 

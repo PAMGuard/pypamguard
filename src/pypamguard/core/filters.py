@@ -185,9 +185,9 @@ class Filters:
     
     def call_custom_filters(self, chunk_obj):
         for func in self.custom_filters:
-            if func(chunk_obj):
-                return FILTER_POSITION.KEEP
-            else:
+            res = func(chunk_obj)
+            if res is not None and type(res) == FILTER_POSITION and res != FILTER_POSITION.KEEP:
+                self.position = res
                 raise FilterMismatchException()
 
     def add(self, key: str, value: BaseFilter):
@@ -226,13 +226,13 @@ class Filters:
         if not self.position == FILTER_POSITION.KEEP:
             raise FilterMismatchException()
 
-    def __str__(self):
-        if len(self.__filters) == 0:
-            return "No filters"
-        ret = f"Filters ({len(self.__filters)}):\n"
-        for filter in self.__filters:
-            ret += f"\t{filter}: {self.__filters[filter]}\n"
-        return ret
+    # def __str__(self):
+    #     if len(self.__filters) == 0:
+    #         return "No filters"
+    #     ret = f"Filters ({len(self.__filters)}):\n"
+    #     for filter in self.__filters:
+    #         ret += f"\t{filter}: {self.__filters[filter]}\n"
+    #     return ret
     
     def __len__(self):
         return len(self.__filters)

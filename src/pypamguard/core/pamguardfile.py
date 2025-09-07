@@ -71,7 +71,7 @@ class PAMGuardFile(Serializable):
         :param filters: The filters passed as a `core.filters.Filters` object (optional)
         :param report: A `core.readers.Report` object used for logging (optional)
         """
-        if not report: self.report = Report()
+        if report is None: self.report = Report()
         else: self.report = report
         self.__file_info = FileInfo()
         self.__file_info.file_header = StandardFileHeader()
@@ -92,9 +92,13 @@ class PAMGuardFile(Serializable):
 
     def __process_chunk(self, br: BinaryReader, chunk_obj: BaseChunk, chunk_info: GenericChunkInfo, correct_chunk_length = True):
         try:
-            if type(chunk_info) in (GenericModule, GenericBackground) and self.__filters.position == FILTER_POSITION.STOP: raise FilterMismatchException()
             logger.debug(f"Processing chunk: {type(chunk_obj)}", br)
             chunk_obj.process(br, chunk_info)
+            if issubclass(type(chunk_obj), (GenericModule, GenericBackground)):
+                if self.__filters.position == FILTER_POSITION.KEEP:
+                    self.__filters.call_custom_filters(chunk_obj)
+                if self.__filters.position == FILTER_POSITION.STOP:
+                    raise FilterMismatchException()
             if not br.at_checkpoint(): raise ChunkLengthMismatch(br, chunk_info, chunk_obj)
         except WarningException as e:
             self.report.add_warning(e)
@@ -103,8 +107,10 @@ class PAMGuardFile(Serializable):
             return None
         except CriticalException as e:
             raise e
-        except Exception as e:
+        except ErrorException as e:
             self.report.add_error(e)
+        except Exception as e:
+            raise e
         if correct_chunk_length and not br.at_checkpoint(): br.goto_checkpoint()
         return chunk_obj
 
@@ -186,7 +192,6 @@ class PAMGuardFile(Serializable):
                 raise StructuralException(self.__fp, f"Unknown chunk identifier: {chunk_info.identifier}")
                 
         self.__total_time = time.time() - start_time
-        logger.info("File processed in %.2f ms" % (self.__total_time * 1000))
 
     def to_json(self):
         return {
@@ -200,7 +205,7 @@ class PAMGuardFile(Serializable):
         }
 
     def __str__(self):
-        ret = f"PAMGuard Binary File (filename={self.__path}, size={self.size} bytes, order={self.__order})\n\n"
+        ret = f"PAMGuard Binary File (filename={self.__path}, size={self.__size} bytes, order={self.__order})\n\n"
         ret += f"{self.__filters}\n"
         ret += f"{self.report}"
         ret += f"File Header\n{self.__file_info.file_header}\n\n"
